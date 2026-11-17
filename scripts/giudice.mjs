@@ -108,10 +108,27 @@ function squalifiche(lines) {
   });
 }
 
+// Tutte le altre voci del comunicato (ammende alle società, ammonizioni, sanzioni a dirigenti e tecnici...):
+// una voce per ogni riga che comincia con "-", con il titolo della sezione in cui si trova.
+// Le squalifiche dei giocatori restano nel blocco SQUALIFICHE e qui non vengono ripetute.
+const SEZ = /^(ILLECITI|SANZIONI|AMMEND|AMMONIZION|PROVVEDIMENT|INIBIZION|SQUALIFIC|RECLAM|OMOLOGAZION|RISULTAT|DECISION|DELIBER|RICHIAM|DIFFID|PENALIZZAZ)/i;
+const STOP = /^(Il\s+Segretario|Il\s+Giudice|ATTENZIONE|Roma,?\s)/i;
+function altreSanzioni(lines) {
+  const voci = [];let sez = null;
+  for (const l of lines) {
+    if (STOP.test(l)) { sez = null; continue; }
+    if (!/^[-–•]/.test(l) && SEZ.test(l) && l === l.toUpperCase()) { sez = INIZIO.test(l) ? null : l.replace(/\s+/g, " ").trim(); continue; }
+    if (!sez || /^Segue$|^Com\.?\s*A\s*Masch/i.test(l)) continue;
+    if (/^[-–•]\s+/.test(l)) voci.push({ sezione: sez, testo: l.replace(/^[-–•]\s+/, "") });
+    else if (voci.length && voci[voci.length - 1].sezione === sez) voci[voci.length - 1].testo += " " + l;
+  }
+  return voci.map(v => ({ sezione: v.sezione, testo: v.testo.replace(/\s+/g, " ").trim() }));
+}
+
 // prova senza rete: node scripts/giudice.mjs --file dump.txt  (testo come lo stampa --dump)
 if (process.argv.includes("--file")) {
   const t = fs.readFileSync(process.argv[process.argv.indexOf("--file") + 1], "utf8").split(/\n===== /).slice(1);
-  for (const blk of t) { const lines = blk.split("\n"); console.log("\n#" + lines[0], riunione(lines.slice(1))); squalifiche(lines.slice(1)).forEach(x => console.log(JSON.stringify(x))); }
+  for (const blk of t) { const lines = blk.split("\n"); console.log("\n#" + lines[0], riunione(lines.slice(1))); squalifiche(lines.slice(1)).forEach(x => console.log(JSON.stringify(x))); altreSanzioni(lines.slice(1)).forEach(x => console.log("altro", JSON.stringify(x))); }
   process.exit(0);
 }
 
@@ -120,17 +137,27 @@ const bm = html.match(/\/\*SQUALIFICHE-INIZIO\*\/([\s\S]*?)\/\*SQUALIFICHE-FINE\
 if (!bm && !DUMP) throw new Error("Blocco SQUALIFICHE-INIZIO / SQUALIFICHE-FINE non trovato in index.html");
 const OLD = bm ? JSON.parse(bm[1]) : [];
 const giaFatti = new Set(OLD.map(s => s.pdf));    // i comunicati già letti non si toccano: restano le correzioni a mano
+const zm = html.match(/\/\*SANZIONI-INIZIO\*\/([\s\S]*?)\/\*SANZIONI-FINE\*\//);
+const OLDZ = zm ? JSON.parse(zm[1]) : [];
+const giaFattiZ = new Set(OLDZ.map(s => s.pdf));
 
 const list = await comunicati();
 console.log(`Comunicati trovati: ${list.map(c => c.num).join(", ") || "nessuno"}`);
-const nuovi = [], problemi = [];
+const nuovi = [], nuoviZ = [], problemi = [];
 for (const c of list) {
-  if (!DUMP && giaFatti.has(c.pdf)) continue;
+  if (!DUMP && giaFatti.has(c.pdf) && (!zm || giaFattiZ.has(c.pdf))) continue;
   const r = await fetch(c.pdf, { headers: UA });
   if (!r.ok) { problemi.push(`${c.pdf}: risposta ${r.status}`); continue; }
   const lines = await pdfText(await r.arrayBuffer());
   if (DUMP) { console.log(`\n===== ${c.num} ${c.pdf}\n` + lines.join("\n")); continue; }
   const data = riunione(lines);
+  if (zm && !giaFattiZ.has(c.pdf)) {
+    const z = altreSanzioni(lines);
+    z.forEach(x => nuoviZ.push({ com: c.num, data, pdf: c.pdf, ...x }));
+    if (!z.length) nuoviZ.push({ com: c.num, data, pdf: c.pdf, vuoto: true });
+    console.log(`Comunicato ${c.num} (${data}): ${z.length} altre voci (ammende, ammonizioni...)`);
+  }
+  if (giaFatti.has(c.pdf)) continue;
   const sq = squalifiche(lines);
   sq.forEach(s => nuovi.push({ com: c.num, data, pdf: c.pdf, ...s }));
   if (!sq.length) nuovi.push({ com: c.num, data, pdf: c.pdf, vuoto: true });   // segna il comunicato come letto
@@ -139,12 +166,19 @@ for (const c of list) {
 }
 if (DUMP) process.exit(0);
 
+let out = html;
+if (nuoviZ.length) {
+  const all = [...OLDZ, ...nuoviZ].sort((a, b) => a.com - b.com);
+  out = out.replace(zm[0], "/*SANZIONI-INIZIO*/[\n" + all.map(s => JSON.stringify(s)).join(",\n") + "\n]/*SANZIONI-FINE*/");
+  console.log(`Aggiunte ${nuoviZ.filter(s => !s.vuoto).length} altre voci del Giudice Sportivo.`);
+}
 if (nuovi.length) {
   const all = [...OLD, ...nuovi].sort((a, b) => a.com - b.com);
   const block = "/*SQUALIFICHE-INIZIO*/[\n" + all.map(s => JSON.stringify(s)).join(",\n") + "\n]/*SQUALIFICHE-FINE*/";
-  fs.writeFileSync(FILE, html.replace(bm[0], block));
+  out = out.replace(bm[0], block);
   console.log(`Aggiunte ${nuovi.filter(s => !s.vuoto).length} squalifiche da ${new Set(nuovi.map(s => s.com)).size} comunicati.`);
 } else console.log("Nessun comunicato nuovo.");
+if (out !== html) fs.writeFileSync(FILE, out);
 
 if (process.env.GITHUB_STEP_SUMMARY) {
   let md = `### Giudice Sportivo\n\nComunicati letti: ${list.map(c => c.num).join(", ") || "nessuno"}. Squalifiche nuove: ${nuovi.filter(s => !s.vuoto).length}.\n`;

@@ -72,6 +72,19 @@ table.st tr.tot td{font-weight:700;border-top:2px solid var(--bd)}
 .sk .lab{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}.sk .tn{font-weight:600;display:flex;align-items:center;margin-bottom:2px}.sk .big{font-size:30px;font-weight:700;color:var(--ac);line-height:1.1;margin-top:6px}
 ol.rk{list-style:none;margin:0;padding:0}ol.rk li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}ol.rk li:last-child{border-bottom:0}.rk .ps{width:20px;color:var(--mu);text-align:right;font-size:13px}.rk .pn{flex:1;display:flex;flex-direction:column;min-width:0}.rk .pn small{color:var(--mu);font-size:12px}.rk .pv{font-weight:700;font-size:17px;color:var(--ac);text-align:right;white-space:nowrap}.rk .pv small{font-size:11px;color:var(--mu);font-weight:500;margin-left:3px}
 ol.rk li.more{display:block}ol.rk li.more summary{color:var(--ac);font-size:13.5px;font-weight:600;padding:2px 0}ol.rk li.more ol.rk{margin-top:4px}
+.res [data-mt]{cursor:pointer}.res [data-mt].hv{background:var(--acbg);border-radius:4px}
+.mh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;text-align:center;margin:4px 0 6px}.mh .tn{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:600}.mh .lg{width:56px;height:56px}
+.mh .sc{font-size:34px;font-weight:800;white-space:nowrap}.mh .sc small{display:block;font-size:12px;font-weight:400;color:var(--mu)}
+.mi{color:var(--mu);font-size:13px;text-align:center;margin-bottom:12px}
+.mdl h3{font-size:14px;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
+table.lu{min-width:0;font-size:13.5px}table.lu td{white-space:normal;padding:5px 6px}table.lu td.h{text-align:right;width:44%}table.lu td.a{text-align:left;width:44%}table.lu td.nn{text-align:center;color:var(--mu);font-weight:700;width:12%}table.lu td.nn small{display:block;font-weight:400;font-size:10.5px}
+table.lu th{text-align:center}table.lu th.h{text-align:right}table.lu th.a{text-align:left}tbody tr.nc{cursor:default}
+.ic{display:inline-block;font-size:11px;font-weight:700;padding:0 4px;border-radius:3px;margin:0 2px;vertical-align:1px;white-space:nowrap}.ic.m{background:var(--acbg);color:var(--ac)}
+.cd{display:inline-block;width:9px;height:12px;border-radius:2px;margin:0 2px;vertical-align:-1px}.cd.y{background:#f2c200}.cd.r{background:#d7263d}
+.ev2{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}.ev2>div{min-width:0}.ev2 .a{text-align:left}
+ul.el{list-style:none;margin:0;padding:0;font-size:13.5px}ul.el li{padding:4px 0;border-bottom:1px solid var(--bd)}ul.el li:last-child{border-bottom:0}ul.el .mn{display:inline-block;min-width:34px;font-weight:700;color:var(--ac)}ul.el small{color:var(--mu)}
+.nt{font-size:13px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.mh .sc{font-size:26px}.ev2{grid-template-columns:1fr}table.lu{font-size:12.5px}}
 .srs{gap:4px}.srs button{padding:4px 10px;font-size:13.5px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.g3 .rk .bd{display:none}
 @media(max-width:720px){.g3{grid-template-columns:1fr}}
@@ -328,7 +341,7 @@ function render(){
   h+=`<tr data-n="${o.n}" class="${o.n===SEL?"sel":""}${o.n===HOV?" hov":""}"><td>${o.pos}</td><td>${d}</td><td class="t">${bdg(o.n)}${nm(o.n)}</td><td class="pt">${o.pt}</td><td>${o.g}</td><td>${o.v}</td><td>${o.pa}</td><td>${o.p}</td><td>${o.me}</td><td>${o.pf}</td><td>${o.ps}</td><td>${df>0?"+":""}${df}</td><td>${o.pen||""}</td></tr>`});
  document.getElementById("tb").innerHTML=h+"</tbody>";
  const rs=fixtures(G,R);
- document.getElementById("res").innerHTML=rs.map(x=>`<div>${bdg(x.h)}${nm(x.h)}</div><div class="s${x.hs==null?" x":""}">${x.hs==null?"-- – --":x.hs+" – "+x.as}</div><div class="a">${bdg(x.a)}${nm(x.a)}</div>`).join("")||"Nessuna partita.";
+ document.getElementById("res").innerHTML=rs.map(x=>{const k=x.hs==null?"":` data-mt="${R}|${x.h.replace(/&/g,"&amp;")}|${x.a.replace(/&/g,"&amp;")}" title="Vedi formazioni, mete e cartellini"`;return `<div${k}>${bdg(x.h)}${nm(x.h)}</div><div class="s${x.hs==null?" x":""}"${k}>${x.hs==null?"-- – --":x.hs+" – "+x.as}</div><div class="a"${k}>${bdg(x.a)}${nm(x.a)}</div>`}).join("")||"Nessuna partita.";
  bump();renderTeamPanel();
 }
 function bump(){
@@ -356,6 +369,7 @@ document.getElementById("rng").oninput=e=>{R=+e.target.value;render()};
 let HOV=null;
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>render());
 const setHov=n=>{if(HOV===n)return;HOV=n;bump();document.querySelectorAll("#tb tr[data-n]").forEach(r=>r.classList.toggle("hov",r.dataset.n===n))};
+document.addEventListener("mouseover",e=>{const q=e.target.closest("[data-mt]");document.querySelectorAll("#res .hv").forEach(x=>{if(!q||x.dataset.mt!==q.dataset.mt)x.classList.remove("hv")});if(q)document.querySelectorAll("#res [data-mt]").forEach(x=>{if(x.dataset.mt===q.dataset.mt)x.classList.add("hv")})});
 document.addEventListener("mouseover",e=>{const t=e.target.closest("#bump [data-t],#tb tr[data-n]");setHov(t?(t.dataset.t||t.dataset.n):null)});
 R=lastR(G);render();
 
@@ -531,6 +545,13 @@ const SQUALIFICHE=/*SQUALIFICHE-INIZIO*/[
 {"com": 4, "data": "2026-11-11", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH04GS2026.2027.pdf", "nome": "MAINA FACUNDO SANTIAGO", "squadra": "ASD UNIONE MONFERRATO RUGBY", "motivo": "pugno", "squalifica": "due settimane di squalifica", "periodo": "dal 9/11/2026 al 22 Novembre 2026 compresi", "minuto": 28, "testo": "espulso al 28° del 1°tempo, infraz. Art. 027/01 lett. k) (pugno), DUE SETTIMANE DI SQUALIFICA (dal 9/11/2026 al 22 Novembre 2026 compresi)"}
 ]/*SQUALIFICHE-FINE*/;
 
+/* ===== SANZIONI =====
+   Le altre voci dei comunicati del Giudice Sportivo (ammende alle società, ammonizioni, sanzioni a dirigenti e tecnici...).
+   Le aggiunge in automatico scripts/giudice.mjs; si possono correggere a mano. La pagina le mostra nella scheda della partita
+   quando la voce nomina una delle due squadre ed è nel primo comunicato uscito dopo la partita. */
+const SANZIONI=/*SANZIONI-INIZIO*/[
+]/*SANZIONI-FINE*/;
+
 const NUMR={15:"estremo",14:"ala",13:"centro",12:"centro",11:"ala",10:"apertura",9:"m. mischia",8:"terza linea",7:"terza linea",6:"terza linea",5:"seconda linea",4:"seconda linea",3:"pilone",2:"tallonatore",1:"pilone"};
 const norm=s=>String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’'`´]/g,"").replace(/\.\s*/g,". ").replace(/\s+/g," ").trim().toUpperCase();
 const TALIAS={"ASR MILANO":"Rugby Milano","MILANO":"Rugby Milano","NAPOLI AFRAGOLA":"RNA","NAPOLI":"RNA","LAZIO":"Lazio Rugby 1927","RUGBY ROMA":"Roma Olimpic"};
@@ -585,7 +606,8 @@ function parseTab(txt){
  const re=/([A-ZÀ-Ý0-9][A-ZÀ-Ý0-9 .&'’\-]{1,40}):\s*(.+?)\s*All\.\s*[^.]+\./g;let m;
  while((m=re.exec(body))){const tm=findT(m[1].trim());if(tm&&(tm.n===H.n||tm.n===A.n)&&!side[tm.n])side[tm.n]=m[2]}
  if(!side[H.n]||!side[A.n])return{err:"formazioni non trovate: "+hm[1]+" – "+hm[2]};
- const res={h:H.n,a:A.n,hs:+hm[3],as:+hm[4],hth:+hm[5],hta:+hm[6],T:{},warn:[]};
+ const res={h:H.n,a:A.n,hs:+hm[3],as:+hm[4],hth:+hm[5],hta:+hm[6],T:{},warn:[],ev:[],cards:[]};
+ res.arb=((body.match(/Arbitro:\s*(.*?)\s*(?:Marcatori:|Note:|$)/)||[,""])[1]).replace(/\.\s*$/,"").trim();
  [H.n,A.n].forEach(tn=>{
   const items=splitTop(side[tn],",;");if(items.length!==15)res.warn.push(tn+": "+items.length+" titolari invece di 15");
   const P={},order=[];
@@ -603,23 +625,26 @@ function parseTab(txt){
  const nt=(body.match(/Note:\s*(.*)$/)||[,""])[1];
  for(const x of nt.matchAll(new RegExp(`espuls[oi]\\s+(.+?)\\s+all?[\\s’']+(\\d+)\\s*${AP}\\s*(pt|st)?(\\s*\\(doppio giallo\\))?`,"g"))){
   const tt=tconv(x[2],x[3]);x[1].split(/\s+e\s+|,\s*/).forEach(n=>{const p=who(n);if(!p){res.warn.push("espulso non trovato: "+n);return}
-   p.r++;if(x[4])p.y++;p.segs=p.segs.map(([a,b])=>[a,Math.min(b,tt)]).filter(([a,b])=>b>a)})}
+   p.r++;if(x[4])p.y++;res.cards.push({k:"r",t:tt,name:n.trim(),p,dg:!!x[4]});p.segs=p.segs.map(([a,b])=>[a,Math.min(b,tt)]).filter(([a,b])=>b>a)})}
  const yseg=nt.match(/esp\.?\s*temp\.?\s*(?:di\s+)?(.*)$/i);
- if(yseg)splitTop(yseg[1].replace(/\.\s*$/,""),",;").flatMap(x=>x.split(/\s+ed?\s+(?![^(]*\))/)).forEach(x=>{const n=x.replace(/\([^)]*\)/g,"").replace(/\.\s*$/,"").trim();if(!n)return;const p=who(n);if(p)p.y++;else res.warn.push("giallo non assegnato: "+n)});
+ if(yseg)splitTop(yseg[1].replace(/\.\s*$/,""),",;").flatMap(x=>x.split(/\s+ed?\s+(?![^(]*\))/)).forEach(x=>{const n=x.replace(/\([^)]*\)/g,"").replace(/\.\s*$/,"").trim();if(!n)return;const p=who(n);if(p)p.y++;else res.warn.push("giallo non assegnato: "+n);
+  const pm=x.match(/\(([^)]*)\)/),sp=pm?parseEntry(pm[1]+" x").specs[0]:null;res.cards.push({k:"y",t:sp?sp.a:null,end:sp&&sp.b!=null?sp.b:null,name:n,p})});
+ res.note=nt.trim();
  // marcatori
  const mk=(body.match(/Marcatori:\s*(.*?)(?:\s*Note:|$)/)||[,""])[1].replace(/\(\d+\s*-\s*\d+\)/g,"").replace(new RegExp(`(\\d+\\s*${AP})\\s*,\\s*(?=\\d+\\s*${AP})`,"g"),"$1 e ");
  const unk=[];
- splitTop(mk.replace(/;\s*st:?\s*/g," , "),",").forEach(tok=>{tok=tok.replace(/\.\s*$/,"").trim();if(!tok)return;
-  const n=(tok.match(new RegExp(`\\d+\\s*${AP}`,"g"))||[""]).length;
+ mk.split(/;\s*st:?\s*/).forEach((half,hi)=>splitTop(half,",").forEach(tok=>{tok=tok.replace(/\.\s*$/,"").trim();if(!tok)return;
+  const mins=[...tok.matchAll(new RegExp(`(\\d+)\\s*${AP}`,"g"))].map(x=>tconv(x[1],hi?"st":"pt")),n=Math.max(1,mins.length);
+  const evs=k=>(mins.length?mins:[null]).map(t=>{const e={t,k};res.ev.push(e);return e});
   const b2=tok.replace(new RegExp(`^(?:\\s*\\d+\\s*${AP}\\s*(?:e|,)?\\s*)+`),"").trim();
   const add=(name,k,c)=>{const p=who(name);if(p)p[k]+=c;else unk.push({name,k,c})};
   let mm;
-  if((mm=b2.match(/^m\.?\s*tecnica\s+(.+)$/i))){const tm=findT(mm[1]);if(tm&&res.T[tm.n])res.T[tm.n].mt+=n;else res.warn.push("meta tecnica non assegnata: "+tok);return}
-  if((mm=b2.match(/^m\.?\s+(.+?)(?:\s+tr\.\s*(.+))?$/))||(mm=b2.match(/^m\.(.+?)(?:\s+tr\.\s*(.+))?$/))){add(mm[1],"m",n);if(mm[2])add(mm[2],"tr",n);return}
-  if((mm=b2.match(/^(?:c\.\s*p\.|cp\.?)\s*(.+)$/i))){add(mm[1],"cp",n);return}
-  if((mm=b2.match(/^(?:drop|d\.)\s*(.+)$/i))){add(mm[1],"dr",n);return}
-  if((mm=b2.match(/^tr\.\s*(.+)$/))){add(mm[1],"tr",1);return}
-  res.warn.push("voce non riconosciuta: "+tok)});
+  if((mm=b2.match(/^m\.?\s*tecnica\s+(.+)$/i))){const tm=findT(mm[1]);if(tm&&res.T[tm.n]){res.T[tm.n].mt+=n;evs("mt").forEach(e=>e.tn=tm.n)}else res.warn.push("meta tecnica non assegnata: "+tok);return}
+  if((mm=b2.match(/^m\.?\s+(.+?)(?:\s+tr\.\s*(.+))?$/))||(mm=b2.match(/^m\.(.+?)(?:\s+tr\.\s*(.+))?$/))){add(mm[1],"m",n);if(mm[2])add(mm[2],"tr",n);evs("m").forEach(e=>{e.name=mm[1].trim();if(mm[2])e.conv=mm[2].trim()});return}
+  if((mm=b2.match(/^(?:c\.\s*p\.|cp\.?)\s*(.+)$/i))){add(mm[1],"cp",n);evs("cp").forEach(e=>e.name=mm[1].trim());return}
+  if((mm=b2.match(/^(?:drop|d\.)\s*(.+)$/i))){add(mm[1],"dr",n);evs("dr").forEach(e=>e.name=mm[1].trim());return}
+  if((mm=b2.match(/^tr\.\s*(.+)$/))){add(mm[1],"tr",1);evs("tr").forEach(e=>e.name=mm[1].trim());return}
+  res.warn.push("voce non riconosciuta: "+tok)}));
  const PT={m:5,tr:2,cp:3,dr:3};
  const tot=tn=>{const o=res.T[tn];return o.pl.reduce((s,p)=>s+p.m*5+p.tr*2+p.cp*3+p.dr*3,0)+o.mt*7};
  // marcatori non presenti in formazione: li assegno alla squadra a cui mancano quei punti
@@ -633,6 +658,14 @@ function parseTab(txt){
   o.pl=o.pl.filter(p=>p.st||p.ghost||p.min===null||p.min>0||p.pts||p.y||p.r);
   o.pts=tot(tn);const exp=tn===H.n?res.hs:res.as;
   if(o.pts!==exp){o.diff=exp-o.pts;res.warn.push(`${tn}: i marcatori del tabellino danno ${o.pts} punti, il risultato dice ${exp}`)}});
+ // squadra e giocatore di ogni evento (mete, calci, cartellini), anche dei marcatori non in formazione
+ const all2=[H.n,A.n].flatMap(tn=>res.T[tn].pl.map(p=>[tn,p]));
+ const whoT=n=>{const k=norm(n);let c=all2.filter(([,p])=>norm(p.name)===k);
+  if(!c.length)c=all2.filter(([,p])=>{const q=norm(p.name);return q.endsWith(" "+k)||norm(p.name.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""))===k||k.endsWith(" "+q)});return c.length===1?c[0]:null};
+ res.ev.forEach(e=>{if(e.k==="mt")return;const w=whoT(e.name);if(w){e.tn=w[0];e.p=w[1]}
+  if(e.conv){const c=whoT(e.conv);if(c)e.cp_=c[1]}});
+ res.cards.forEach(c=>{const w=c.p?all2.find(([,p])=>p===c.p):whoT(c.name);if(w){c.tn=w[0];c.p=w[1]}});
+ res.ev.sort((a,b)=>(a.t==null?999:a.t)-(b.t==null?999:b.t));res.cards.sort((a,b)=>(a.t==null?999:a.t)-(b.t==null?999:b.t));
  // giornata
  const g=H.g;res.g=g;res.ri=-1;
  for(let i=0;i<NGT;i++){if((rounds[i]||[]).some(x=>x.h===H.n&&x.a===A.n)){res.ri=i;break}}
@@ -710,9 +743,68 @@ function playerModal(pk){
  if(reds.length)h+=`<div class="card" style="margin:12px 0 0"><h3 class="rl">Cartellini rossi</h3>`+reds.map(([m,p])=>{const q=p.sq;
   return `<div class="msg" style="color:var(--tx)"><b>${m.ri+1}ª giornata</b> contro ${nm(opp(m,tn))}${q&&q.minuto?` · ${q.minuto}'`:""} · ${esc(sqTxt(q))}${q&&q.periodo?` <span class="eq">(${esc(q.periodo)})</span>`:""}${q?` · <a href="${esc(q.pdf)}" target="_blank" rel="noopener">comunicato n. ${q.com}</a>`:""}</div>`}).join("")+`</div>`;
  const ov=document.getElementById("ov");ov.innerHTML=h;ov.classList.remove("hide");document.body.style.overflow="hidden"}
+/* ===== SCHEDA PARTITA =====
+   Si apre toccando un risultato: i due XV titolari a confronto, mete e calci con il minuto,
+   cartellini (con il motivo dei rossi dal Giudice Sportivo), note del referto e altre decisioni del Giudice Sportivo. */
+const fmn=t=>t==null?"":t+"’";
+const evName=(m,e,p)=>p&&e.tn?`<a class="pl" data-pk="${esc(pkey(e.tn,p))}">${pdisp(e.tn,p)}</a>`:esc(e.name||"");
+function gsMatch(m){
+ const d=CAL[m.g]&&CAL[m.g][m.ri]?CAL[m.g][m.ri].d:"";if(!d)return null;
+ const coms={};[...SQUALIFICHE,...SANZIONI].forEach(s=>{if(s.data&&s.data>=d&&!coms[s.com])coms[s.com]={com:s.com,data:s.data,pdf:s.pdf}});
+ const c=Object.values(coms).sort((a,b)=>a.data.localeCompare(b.data))[0];if(!c)return null;
+ const rx=[m.h,m.a].map(tn=>T.find(t=>t.n===tn).re);
+ const items=SANZIONI.filter(s=>s.com===c.com&&s.testo&&rx.some(r=>new RegExp(r.source.replace(/^\^/,"\\b")).test(norm(s.testo))));
+ return{c,items}}
+function matchModal(ri,h,a){
+ const m=MATCHES.find(x=>x.ri===ri&&x.h===h&&x.a===a)||MATCHES.find(x=>x.ri===ri&&x.h===a&&x.a===h);
+ const r=fixtures(gOf(h),ri).find(x=>x.h===h&&x.a===a)||{h,a};
+ const g=gOf(h),cd=CAL[g]&&CAL[g][ri]?CAL[g][ri]:null;
+ const H=m?m.h:r.h,A=m?m.a:r.a,hs=m?m.hs:r.hs,as=m?m.as:r.as;
+ let o=`<div class="mdl"><div class="tph"><h2 style="font-size:15px;color:var(--mu);font-weight:500">${ri+1}ª giornata · Girone ${g}${cd?" · "+fdt(cd.d):""}</h2><button data-close="m" aria-label="Chiudi">✕</button></div>`;
+ o+=`<div class="mh"><div class="tn">${logo(H)}${nm(H)}</div><div class="sc">${hs} – ${as}${m?`<small>primo tempo ${m.hth}-${m.hta}</small>`:r.ht!=null?`<small>mete ${r.ht}-${r.at}</small>`:""}</div><div class="tn">${logo(A)}${nm(A)}</div></div>`;
+ if(!m){o+=`<div class="msg" style="text-align:center">Il tabellino ufficiale di questa partita non è ancora disponibile: formazioni, marcatori e cartellini compariranno appena la FIR lo pubblica.</div></div>`;return show(o)}
+ if(m.arb)o+=`<div class="mi">Arbitro: ${esc(m.arb)}</div>`;
+ // formazioni: solo i titolari, numero per numero
+ const st=tn=>{const x={};m.T[tn].pl.filter(p=>p.st).forEach(p=>x[p.num]=p);return x},SH=st(H),SA=st(A);
+ const cnt=(tn,p,k)=>m.ev.filter(e=>e.k===k&&e.p===p).length;
+ const badges=(tn,p)=>{const t=cnt(tn,p,"m");let b=t?`<span class="ic m" title="${t} ${t>1?"mete":"meta"}">${t>1?t+"×":""}M</span>`:"";
+  m.cards.filter(c=>c.p===p).forEach(c=>b+=`<span class="cd ${c.k}" title="${c.k==="y"?"cartellino giallo":"cartellino rosso"}${c.t!=null?" al "+c.t+"’":""}"></span>`);return b};
+ const pc=(tn,p,side)=>{if(!p)return '<span class="eq">–</span>';const n=`<a class="pl" data-pk="${esc(pkey(tn,p))}">${pdisp(tn,p)}</a>`,b=badges(tn,p);return side==="h"?b+" "+n:n+" "+b};
+ o+=`<h3>Formazioni titolari</h3><div class="scroll"><table class="lu"><thead><tr><th class="h">${nm(H)}</th><th>N°</th><th class="a">${nm(A)}</th></tr></thead><tbody>`;
+ for(let i=15;i>=1;i--)o+=`<tr class="nc"><td class="h">${pc(H,SH[i],"h")}</td><td class="nn">${i}<small>${NUMR[i]}</small></td><td class="a">${pc(A,SA[i],"a")}</td></tr>`;
+ o+=`</tbody></table></div>`;
+ // mete
+ const tries=tn=>m.ev.filter(e=>(e.k==="m"||e.k==="mt")&&e.tn===tn);
+ const tli=e=>`<li><span class="mn">${fmn(e.t)}</span>${e.k==="mt"?"<i>meta tecnica</i>":evName(m,e,e.p)}${e.conv?` <small>· tr. ${e.cp_?evName(m,{tn:e.tn},e.cp_):esc(e.conv)}</small>`:e.k==="m"?' <small>· non trasformata</small>':""}</li>`;
+ const tcol=tn=>{const l=tries(tn);return `<div><div style="font-weight:600;margin-bottom:4px">${bdg(tn)}${nm(tn)} <span class="eq" style="font-weight:400">· ${l.length} ${l.length===1?"meta":"mete"}</span></div>${l.length?`<ul class="el">${l.map(tli).join("")}</ul>`:'<div class="msg">Nessuna meta.</div>'}</div>`};
+ o+=`<h3>Mete</h3><div class="ev2">${tcol(H)}${tcol(A)}</div>`;
+ const kicks=m.ev.filter(e=>e.k==="cp"||e.k==="dr"||e.k==="tr");
+ if(kicks.length){const kl=tn=>{const l=kicks.filter(e=>e.tn===tn);return `<div><div style="font-weight:600;margin-bottom:4px">${bdg(tn)}${nm(tn)}</div>${l.length?`<ul class="el">${l.map(e=>`<li><span class="mn">${fmn(e.t)}</span>${evName(m,e,e.p)} <small>· ${e.k==="cp"?"calcio piazzato":e.k==="dr"?"drop":"trasformazione"}</small></li>`).join("")}</ul>`:'<div class="msg">Nessuno.</div>'}</div>`};
+  o+=`<h3>Calci piazzati e drop</h3><div class="ev2">${kl(H)}${kl(A)}</div>`}
+ const lost=m.ev.filter(e=>e.k!=="mt"&&!e.tn);if(lost.length)o+=`<div class="msg">Non attribuiti a una squadra: ${lost.map(e=>fmn(e.t)+" "+esc(e.name||"")).join(", ")}</div>`;
+ // cartellini
+ o+=`<h3>Cartellini</h3>`;
+ if(!m.cards.length)o+='<div class="msg">Nessun cartellino segnato nel tabellino.</div>';
+ else o+=`<ul class="el">`+m.cards.map(c=>{let w="";/*cartellino*/
+  if(c.k==="y")w=`giallo${c.end!=null?` <small>· fuori dal ${c.t}’ al ${c.end}’</small>`:""}`;
+  else{const q=c.p&&c.p.sq;w=`<b>rosso</b>${c.dg?" (doppio giallo)":""}`+(q?` · ${esc(sqTxt(q))}${q.periodo?` <small>(${esc(q.periodo)})</small>`:""} · <a href="${esc(q.pdf)}" target="_blank" rel="noopener">comunicato n. ${q.com}</a>`:` · <small>${c.dg?"squalifica automatica di una giornata; ":""}motivo non ancora pubblicato dal Giudice Sportivo</small>`)}
+  return `<li><span class="mn">${fmn(c.t)}</span><span class="cd ${c.k}"></span> ${c.tn?bdg(c.tn):""}${evName(m,c,c.p)} ${c.tn?`<small>(${esc(c.tn)})</small>`:""} · ${w}</li>`}).join("")+`</ul>`+(m.cards.some(c=>c.k==="y")?'<div class="msg">Il tabellino FIR non riporta il motivo dei cartellini gialli; per i rossi il motivo arriva dal comunicato del Giudice Sportivo.</div>':"");
+ // note del referto
+ o+=`<h3>Note a referto</h3>`+(m.note?`<div class="nt">${esc(m.note)}</div>`:'<div class="msg">Nessuna nota nel tabellino.</div>');
+ // Giudice Sportivo
+ const gs=gsMatch(m);
+ o+=`<h3>Giudice Sportivo</h3>`;
+ if(!gs)o+='<div class="msg">Il comunicato del Giudice Sportivo su questa giornata non è ancora uscito.</div>';
+ else{const sq=SQUALIFICHE.filter(s=>s.com===gs.c.com&&s.nome&&[H,A].includes((findT(s.squadra)||{}).n));
+  const L=[...sq.map(s=>`<li><b>${esc(tcase(s.nome))}</b> <small>(${esc(s.squadra)})</small> · ${esc(sqTxt(s))}${s.periodo?` <small>(${esc(s.periodo)})</small>`:""}</li>`),
+   ...gs.items.map(s=>`<li>${s.sezione?`<small>${esc(s.sezione)}</small><br>`:""}${esc(s.testo)}</li>`)];
+  o+=`<div class="msg" style="margin:0 0 4px"><a href="${esc(gs.c.pdf)}" target="_blank" rel="noopener">Comunicato n. ${gs.c.com}</a> del ${gs.c.data.split("-").reverse().join("/")}</div>`+(L.length?`<ul class="el">${L.join("")}</ul>`:'<div class="msg">Nessuna sanzione (squalifiche, ammende o altro) per queste due squadre.</div>')}
+ o+=`</div>`;return show(o)
+ function show(x){const ov=document.getElementById("ov");ov.innerHTML=x;ov.classList.remove("hide");document.body.style.overflow="hidden";ov.scrollTop=0}}
 function closeModal(){const ov=document.getElementById("ov");ov.classList.add("hide");ov.innerHTML="";document.body.style.overflow=""}
 document.addEventListener("click",e=>{
  const pk=e.target.closest("[data-pk]");if(pk){e.stopPropagation();playerModal(pk.dataset.pk);return}
+ const mt=e.target.closest("[data-mt]");if(mt){e.stopPropagation();const[ri,h,a]=mt.dataset.mt.split("|");matchModal(+ri,h,a);return}
  const tv=e.target.closest("[data-tpv]");if(tv){TPV=tv.dataset.tpv==="tot"?"tot":+tv.dataset.tpv;renderTeamPanel();return}
  const cl=e.target.closest("[data-close]");if(cl){if(cl.dataset.close==="m")closeModal();else{SEL=null;render()}return}
  if(e.target.id==="ov")closeModal()},true);
