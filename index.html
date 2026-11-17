@@ -71,6 +71,7 @@ table.st tr.tot td{font-weight:700;border-top:2px solid var(--bd)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.g2 .card{margin:0}
 .sk .lab{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}.sk .tn{font-weight:600;display:flex;align-items:center;margin-bottom:2px}.sk .big{font-size:30px;font-weight:700;color:var(--ac);line-height:1.1;margin-top:6px}
 ol.rk{list-style:none;margin:0;padding:0}ol.rk li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}ol.rk li:last-child{border-bottom:0}.rk .ps{width:20px;color:var(--mu);text-align:right;font-size:13px}.rk .pn{flex:1;display:flex;flex-direction:column;min-width:0}.rk .pn small{color:var(--mu);font-size:12px}.rk .pv{font-weight:700;font-size:17px;color:var(--ac);text-align:right;white-space:nowrap}.rk .pv small{font-size:11px;color:var(--mu);font-weight:500;margin-left:3px}
+ol.rk li.more{display:block}ol.rk li.more summary{color:var(--ac);font-size:13.5px;font-weight:600;padding:2px 0}ol.rk li.more ol.rk{margin-top:4px}
 .srs{gap:4px}.srs button{padding:4px 10px;font-size:13.5px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.g3 .rk .bd{display:none}
 @media(max-width:720px){.g3{grid-template-columns:1fr}}
@@ -694,22 +695,29 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
    Giocatori: sommati da MATCHES (tabellini). Classifiche con i pari merito: se più giocatori
    sono a pari con l'ultimo posto utile (5° o 3°) vengono mostrati tutti. */
 function topN(a,f,n){const s=a.filter(o=>f(o)>0).sort((x,y)=>f(y)-f(x)||x.nm.localeCompare(y.nm));if(s.length<=n)return s;const c=f(s[n-1]);return s.filter(o=>f(o)>=c)}
-function rankList(a,f,unit,det){let h='<ol class="rk">',pv=null,pos=0;
- a.forEach((o,i)=>{const v=f(o);if(v!==pv){pos=i+1;pv=v}const d=det?det(o):"";
-  h+=`<li><span class="ps">${pos}</span>${bdg(o.tn)}<span class="pn"><a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a><small>${nm(o.tn)}${d?" · "+d:""}</small></span><span class="pv">${v}<small>${typeof unit==="function"?unit(v):unit}</small></span></li>`});
+// Se i pari merito sull'ultimo posto sono tanti (lista oltre 8 nomi), quel gruppo va in un elenco apribile.
+function rankList(a,f,unit,det){const U=v=>typeof unit==="function"?unit(v):unit;
+ const li=(o,pos)=>{const v=f(o),d=det?det(o):"";return `<li><span class="ps">${pos}</span>${bdg(o.tn)}<span class="pn"><a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a><small>${nm(o.tn)}${d?" · "+d:""}</small></span><span class="pv">${v}<small>${U(v)}</small></span></li>`};
+ const cut=a.length?f(a[a.length-1]):0,tail=a.filter(o=>f(o)===cut),head=a.filter(o=>f(o)!==cut);
+ let h='<ol class="rk">',pv=null,pos=0;
+ const big=a.length>8&&tail.length>1,list=big?head:a;
+ list.forEach((o,i)=>{const v=f(o);if(v!==pv){pos=i+1;pv=v}h+=li(o,pos)});
+ if(big){const tp=head.length+1;
+  h+=`<li class="more"><details><summary>${head.length?"e altri ":""}${tail.length} giocatori a pari merito con ${cut} ${U(cut)}</summary><ol class="rk">${tail.map(o=>li(o,tp)).join("")}</ol></details></li>`}
  return h+"</ol>"}
 function pAgg(ms,ok){const A={};
  ms.forEach(m=>[m.h,m.a].filter(ok).forEach(tn=>m.T[tn].pl.forEach(p=>{const k=pkey(tn,p);
-  const a=A[k]||(A[k]={k,tn,disp:pdisp(tn,p),nm:p.name,m:0,tr:0,cp:0,dr:0});a.m+=p.m;a.tr+=p.tr;a.cp+=p.cp;a.dr+=p.dr})));
+  const a=A[k]||(A[k]={k,tn,disp:pdisp(tn,p),nm:p.name,m:0,tr:0,cp:0,dr:0,y:0,r:0});a.m+=p.m;a.tr+=p.tr;a.cp+=p.cp;a.dr+=p.dr;a.y+=p.y||0;a.r+=p.r||0})));
  const P=Object.values(A);P.forEach(a=>{a.pts=a.m*5+a.tr*2+a.cp*3+a.dr*3;a.k2=a.tr*2+a.cp*3});return P}
 const det=o=>[o.m?o.m+(o.m>1?" mete":" meta"):"",o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":"",o.dr?o.dr+" drop":""].filter(Boolean).join(" · ");
+const UY=n=>n>1?"gialli":"giallo",UR=n=>n>1?"rossi":"rosso";
 const kd=o=>[o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":""].filter(Boolean).join(" · ");
 // Migliori giocatori di una squadra (pagina squadra nelle Rose)
 function teamBest(tn){const ms=teamMatches(tn);
  if(!ms.length)return `<div class="card"><h2>Migliori giocatori</h2><div class="msg">Non ci sono ancora tabellini per questa squadra.</div></div>`;
  const P=pAgg(ms,x=>x===tn),box=(t,f,u,d,sub)=>{const a=topN(P,f,5);return `<div><h3 class="rl">${t}</h3>${sub?`<div class="msg" style="margin:-4px 0 4px">${sub}</div>`:""}${a.length?rankList(a,f,u,d).replaceAll(`<small>${nm(tn)} · `,"<small>").replaceAll(`<small>${nm(tn)}</small>`,"<small></small>"):'<div class="msg">Nessuno.</div>'}</div>`};
  return `<div class="card"><h2>Migliori giocatori <span class="c" style="font-weight:400;font-size:12.5px;color:var(--mu)">· ${ms.length} ${ms.length===1?"partita":"partite"} con tabellino</span></h2><div class="g3">`+
-  box("Punti",o=>o.pts,"pt",det)+box("Mete",o=>o.m,n=>n>1?"mete":"meta")+box("Punti al piede",o=>o.k2,"pt",kd,"trasformazioni + punizioni")+`</div></div>`}
+  box("Punti",o=>o.pts,"pt",det)+box("Mete",o=>o.m,n=>n>1?"mete":"meta")+box("Punti al piede",o=>o.k2,"pt",kd,"trasformazioni + punizioni")+`</div><div class="g3" style="margin-top:14px">`+box("Cartellini gialli",o=>o.y,UY,null)+box("Cartellini rossi",o=>o.r,UR,null)+`</div></div>`}
 let SALL=false; // true = riquadro "Tutti i gironi"
 let SR=null;     // null = totale; altrimenti indice della giornata (0 = 1ª)
 function renderStats(){
@@ -751,7 +759,9 @@ function renderStats(){
   `<div class="card"><h2>Top realizzatori</h2>${P.some(o=>o.pts)?rankList(topN(P,o=>o.pts,5),o=>o.pts,"pt",D(det)):'<div class="msg">Nessun tabellino per questa giornata.</div>'}</div>`+
   `<div class="card"><h2>Più mete</h2>${P.some(o=>o.m)?rankList(topN(P,o=>o.m,5),o=>o.m,n=>n>1?"mete":"meta",D(null)):'<div class="msg">Nessuna meta.</div>'}</div>`+
   `<div class="card"><h2>Punti al piede</h2><div class="msg" style="margin:-4px 0 6px">Punti da trasformazioni e calci di punizione (esclusi i drop)</div>${P.some(o=>o.k2)?rankList(topN(P,o=>o.k2,5),o=>o.k2,"pt",D(kd)):'<div class="msg">Nessuno.</div>'}</div>`+
-  `<div class="msg">Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti.</div>`}
+  `<div class="g2"><div class="card"><h2>Cartellini gialli</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni temporanee</div>${P.some(o=>o.y)?rankList(topN(P,o=>o.y,5),o=>o.y,UY,D(null)):'<div class="msg">Nessuno.</div>'}</div>`+
+  `<div class="card"><h2>Cartellini rossi</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni definitive</div>${P.some(o=>o.r)?rankList(topN(P,o=>o.r,5),o=>o.r,UR,D(null)):'<div class="msg">Nessuno.</div>'}</div></div>`+
+  `<div class="msg">Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti (se sono tanti, in un elenco da aprire).</div>`}
 </script>
 </body>
 </html>
