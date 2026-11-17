@@ -392,7 +392,7 @@ function setView(v){
  if(v==="r")renderRose();if(v==="s")renderStats()}
 document.addEventListener("click",e=>{
  const v=e.target.closest("#views [data-v]");if(v){setView(v.dataset.v);return}
- const sg=e.target.closest("[data-sg]");if(sg){G=+sg.dataset.sg;R=lastR(G);render();renderStats();return}
+ const sg=e.target.closest("[data-sg]");if(sg){const g=+sg.dataset.sg;SALL=g===0;if(g){G=g;R=lastR(G);render()}renderStats();return}
  const tm=e.target.closest("[data-team]");if(tm){TEAM=tm.dataset.team;Q="";renderRose();scrollTo(0,0);return}
  if(e.target.closest("[data-back]")){TEAM=null;Q="";renderRose()}});
 
@@ -707,24 +707,36 @@ function teamBest(tn){const ms=teamMatches(tn);
  const P=pAgg(ms,x=>x===tn),box=(t,f,u,d,sub)=>{const a=topN(P,f,5);return `<div><h3 class="rl">${t}</h3>${sub?`<div class="msg" style="margin:-4px 0 4px">${sub}</div>`:""}${a.length?rankList(a,f,u,d).replaceAll(`<small>${nm(tn)} · `,"<small>").replaceAll(`<small>${nm(tn)}</small>`,"<small></small>"):'<div class="msg">Nessuno.</div>'}</div>`};
  return `<div class="card"><h2>Migliori giocatori <span class="c" style="font-weight:400;font-size:12.5px;color:var(--mu)">· ${ms.length} ${ms.length===1?"partita":"partite"} con tabellino</span></h2><div class="g3">`+
   box("Punti",o=>o.pts,"pt",det)+box("Mete",o=>o.m,n=>n>1?"mete":"meta")+box("Punti al piede",o=>o.k2,"pt",kd,"trasformazioni + punizioni")+`</div></div>`}
+let SALL=false; // true = riquadro "Tutti i gironi"
 function renderStats(){
- document.getElementById("stabs").innerHTML=[1,2,3,4].map(g=>`<button class="${g===G?"on":""}" data-sg="${g}">Girone ${g}</button>`).join("");
- const el=document.getElementById("stat"),L=lastR(G),s=stand(G,L);
- if(!s.some(o=>o.g)){el.innerHTML='<div class="msg">Nessuna giornata giocata in questo girone.</div>';return}
- const best=(f,mx)=>{const v=mx?Math.max(...s.map(f)):Math.min(...s.map(f));return s.filter(o=>f(o)===v)};
- const att=best(o=>o.pf,1),def=best(o=>o.ps,0),a0=att[0],d0=def[0];
- const tc=(lab,arr,v,sub)=>`<div class="card sk"><div class="lab">${lab}</div>${arr.map(o=>`<div class="tn">${bdg(o.n)}${nm(o.n)}</div>`).join("")}<div class="big">${v}</div><div class="msg">${sub}</div></div>`;
- // giocatori
- const ms=MATCHES.filter(m=>m.g===G),P=pAgg(ms,()=>true);
- const giocate=rounds.slice(0,L+1).reduce((n,r)=>n+r.filter(x=>gOf(x.h)===G).length,0),cop=ms.filter(m=>m.ri>=0&&m.ri<=L).length;
+ document.getElementById("stabs").innerHTML=[1,2,3,4].map(g=>`<button class="${!SALL&&g===G?"on":""}" data-sg="${g}">Girone ${g}</button>`).join("")+`<button class="${SALL?"on":""}" data-sg="0">Tutti i gironi</button>`;
+ const el=document.getElementById("stat");
+ const gs=(SALL?[1,2,3,4]:[G]).filter(g=>stand(g,lastR(g)).some(o=>o.g));
+ if(!gs.length){el.innerHTML='<div class="msg">Nessuna giornata giocata in questo girone.</div>';return}
+ const LG={};gs.forEach(g=>LG[g]=lastR(g));
+ const s=gs.flatMap(g=>stand(g,LG[g]).filter(o=>o.g));
+ // con tutti i gironi le squadre hanno giocato un numero diverso di partite: si confronta la media a partita
+ const avg=SALL,F=o=>avg?o.pf/o.g:o.pf,S=o=>avg?o.ps/o.g:o.ps,r1=v=>Math.round(v*10)/10;
+ const best=(f,mx)=>{const v=mx?Math.max(...s.map(o=>r1(f(o)))):Math.min(...s.map(o=>r1(f(o))));return s.filter(o=>r1(f(o))===v)};
+ const att=best(F,1),def=best(S,0),a0=att[0],d0=def[0];
+ const gl=n=>SALL?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· Girone ${gOf(n)}</span>`:"";
+ const tc=(lab,arr,v,sub)=>`<div class="card sk"><div class="lab">${lab}</div>${arr.map(o=>`<div class="tn">${bdg(o.n)}${nm(o.n)}${gl(o.n)}</div>`).join("")}<div class="big">${v}</div><div class="msg">${sub}</div></div>`;
+ const ms=MATCHES.filter(m=>gs.includes(m.g)),P=pAgg(ms,()=>true);
+ const giocate=gs.reduce((n,g)=>n+rounds.slice(0,LG[g]+1).reduce((k,r)=>k+r.filter(x=>gOf(x.h)===g).length,0),0),cop=ms.filter(m=>m.ri>=0&&m.ri<=LG[m.g]).length;
  const nota=cop<giocate?` Mancano i tabellini di ${giocate-cop} ${giocate-cop===1?"partita":"partite"} su ${giocate}.`:"";
- el.innerHTML=`<div class="sub">Girone ${G} · aggiornate alla giornata ${L+1}</div><div class="g2">`+
-  tc("Miglior attacco",att,a0.pf,`punti fatti in ${a0.g} partite (${(a0.pf/a0.g).toFixed(1)} a partita) · ${a0.me} mete`)+
-  tc("Miglior difesa",def,d0.ps,`punti subiti in ${d0.g} partite (${(d0.ps/d0.g).toFixed(1)} a partita)`)+`</div>`+
-  `<div class="card"><h2>Top realizzatori</h2>${rankList(topN(P,o=>o.pts,5),o=>o.pts,"pt",det)}</div>`+
-  `<div class="card"><h2>Più mete</h2>${rankList(topN(P,o=>o.m,5),o=>o.m,n=>n>1?"mete":"meta")}</div>`+
-  `<div class="card"><h2>Punti al piede</h2><div class="msg" style="margin:-4px 0 6px">Punti da trasformazioni e calci di punizione (esclusi i drop)</div>${rankList(topN(P,o=>o.k2,5),o=>o.k2,"pt",kd)}</div>`+
-  `<div class="msg">Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti.</div>`}
+ const D=f=>SALL?o=>{const d=f?f(o):"";return `Girone ${gOf(o.tn)}${d?" · "+d:""}`}:f;
+ let sub;if(SALL){const by={};gs.forEach(g=>(by[LG[g]+1]=by[LG[g]+1]||[]).push(g));
+  sub="Tutti i gironi · aggiornate a: "+Object.entries(by).map(([gi,a])=>`${a.length>1?"gironi":"girone"} ${a.join(", ")} alla giornata ${gi}`).join("; ")}
+ else sub=`Girone ${G} · aggiornate alla giornata ${LG[G]+1}`;
+ el.innerHTML=`<div class="sub">${sub}</div><div class="g2">`+
+  (avg?tc("Miglior attacco",att,r1(F(a0)).toFixed(1),`punti fatti a partita · ${a0.pf} in ${a0.g} partite · ${a0.me} mete`)
+      :tc("Miglior attacco",att,a0.pf,`punti fatti in ${a0.g} partite (${(a0.pf/a0.g).toFixed(1)} a partita) · ${a0.me} mete`))+
+  (avg?tc("Miglior difesa",def,r1(S(d0)).toFixed(1),`punti subiti a partita · ${d0.ps} in ${d0.g} partite`)
+      :tc("Miglior difesa",def,d0.ps,`punti subiti in ${d0.g} partite (${(d0.ps/d0.g).toFixed(1)} a partita)`))+`</div>`+
+  `<div class="card"><h2>Top realizzatori</h2>${rankList(topN(P,o=>o.pts,5),o=>o.pts,"pt",D(det))}</div>`+
+  `<div class="card"><h2>Più mete</h2>${rankList(topN(P,o=>o.m,5),o=>o.m,n=>n>1?"mete":"meta",D(null))}</div>`+
+  `<div class="card"><h2>Punti al piede</h2><div class="msg" style="margin:-4px 0 6px">Punti da trasformazioni e calci di punizione (esclusi i drop)</div>${rankList(topN(P,o=>o.k2,5),o=>o.k2,"pt",D(kd))}</div>`+
+  `<div class="msg">${SALL?"Squadre confrontate sulla media a partita, perché i gironi hanno giocato un numero diverso di giornate; giocatori sul totale. ":""}Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti.</div>`}
 </script>
 </body>
 </html>
