@@ -3,8 +3,8 @@ Contiene le classifiche giornata per giornata del campionato di Serie A di rugby
 
 La pagina ha tre sezioni:
 - **Classifiche**: classifica, risultati e calendario di tutte le 22 giornate (le partite da giocare hanno il punteggio `-- – --`). Toccando una squadra si vedono i giocatori scesi in campo, partita per partita o in totale, con minuti, mete, trasformazioni, calci, drop, punti e cartellini.
-- **Statistiche**: per ogni girone, all'ultima giornata giocata, miglior attacco e miglior difesa, i 5 giocatori con più punti, i 5 con più mete e i 3 migliori calciatori (punti da trasformazioni e punizioni). Con pari merito sull'ultimo posto utile compaiono tutti. Si aggiornano da sole con risultati e tabellini.
-- **Rose giocatori**: le rose 2026-27 dall'annuario *Rugby 2027* (Pacitti – Volpe), divise per girone e per ruolo. Toccando un giocatore si vede la sua scheda partita per partita.
+- **Statistiche**: per ogni girone, all'ultima giornata giocata, miglior attacco e miglior difesa, i 5 giocatori con più punti, i 5 con più mete e i 5 migliori al piede (punti da trasformazioni e punizioni). Con pari merito sull'ultimo posto utile compaiono tutti. Si aggiornano da sole con risultati e tabellini.
+- **Rose giocatori**: le rose 2026-27 dall'annuario *Rugby 2027* (Pacitti – Volpe), divise per girone e per ruolo. Nella pagina di ogni squadra, in cima, i 5 migliori per punti, mete e punti al piede. Toccando un giocatore si vede la sua scheda partita per partita.
 
 Le statistiche dei giocatori sono calcolate nella pagina dal testo dei tabellini FIR, salvato nel blocco `TABELLINI` di `index.html`.
 
