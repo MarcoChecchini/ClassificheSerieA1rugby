@@ -68,11 +68,17 @@ table.st tr.tot td{font-weight:700;border-top:2px solid var(--bd)}
 .mdl{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;max-width:980px;width:100%}
 .mdl .th .lg{width:56px;height:56px}
 .rt tbody tr{cursor:pointer}.rt tbody tr:hover td{background:var(--acbg)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.g2 .card{margin:0}
+.sk .lab{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}.sk .tn{font-weight:600;display:flex;align-items:center;margin-bottom:2px}.sk .big{font-size:30px;font-weight:700;color:var(--ac);line-height:1.1;margin-top:6px}
+ol.rk{list-style:none;margin:0;padding:0}ol.rk li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}ol.rk li:last-child{border-bottom:0}.rk .ps{width:20px;color:var(--mu);text-align:right;font-size:13px}.rk .pn{flex:1;display:flex;flex-direction:column;min-width:0}.rk .pn small{color:var(--mu);font-size:12px}.rk .pv{font-weight:700;font-size:17px;color:var(--ac);text-align:right;white-space:nowrap}.rk .pv small{font-size:11px;color:var(--mu);font-weight:500;margin-left:3px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.g3 .rk .bd{display:none}
+@media(max-width:720px){.g3{grid-template-columns:1fr}}
+@media(max-width:520px){.g2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <main>
-<div class="views" id="views"><button data-v="c" class="on">Classifiche</button><button data-v="r">Rose giocatori</button></div>
+<div class="views" id="views"><button data-v="c" class="on">Classifiche</button><button data-v="s">Statistiche</button><button data-v="r">Rose giocatori</button></div>
 <section id="vC">
 <h1>Serie A maschile – classifiche per giornata</h1>
 <div class="sub">Punti federali: 4 vittoria, 2 pareggio, +1 con 4 mete o più, +1 con sconfitta di 7 punti o meno. Ordine: punti, differenza punti, punti fatti. Tocca una squadra per vedere i giocatori scesi in campo.</div>
@@ -90,6 +96,12 @@ table.st tr.tot td{font-weight:700;border-top:2px solid var(--bd)}
 <div class="card"><h2 id="resh">Risultati della giornata</h2><div class="res" id="res"></div></div>
 
 <div class="card scroll"><h2>Andamento delle posizioni</h2><div id="bump"></div></div>
+</section>
+<section id="vS" class="hide">
+<h1>Serie A maschile – statistiche</h1>
+<div class="sub">Miglior attacco e miglior difesa dai risultati; giocatori dai tabellini FIR. Tocca un giocatore per vedere la sua scheda.</div>
+<div class="tabs" id="stabs"></div>
+<div id="stat"></div>
 </section>
 <section id="vR" class="hide">
 <h1>Serie A maschile – rose 2026-27</h1>
@@ -364,7 +376,7 @@ function renderRose(){
  const grp=RUOLI.map(([l,re])=>[l,ps.filter(p=>re.test(p[6].toLowerCase()))]);
  const altri=ps.filter(p=>!RUOLI.some(([,re])=>re.test(p[6].toLowerCase())));if(altri.length)grp.push(["Altri",altri]);
  let h=`<button data-back="1" style="margin-bottom:12px">← Tutte le squadre</button>
- <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div></div></div></div>
+ <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div></div></div></div>${teamBest(TEAM)}
  <input class="flt" id="flt" placeholder="Cerca per nome, luogo di nascita, ruolo…" value="${esc(Q)}">`;
  grp.filter(([,a])=>a.length).forEach(([l,a])=>{
   a.sort((x,y)=>x[1].localeCompare(y[1])||x[0].localeCompare(y[0]));
@@ -376,10 +388,11 @@ function renderRose(){
  f.oninput=e=>{Q=e.target.value;renderRose()}}
 function setView(v){
  document.querySelectorAll("#views button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
- document.getElementById("vC").classList.toggle("hide",v!=="c");document.getElementById("vR").classList.toggle("hide",v!=="r");
- if(v==="r")renderRose()}
+ document.getElementById("vC").classList.toggle("hide",v!=="c");document.getElementById("vS").classList.toggle("hide",v!=="s");document.getElementById("vR").classList.toggle("hide",v!=="r");
+ if(v==="r")renderRose();if(v==="s")renderStats()}
 document.addEventListener("click",e=>{
  const v=e.target.closest("#views [data-v]");if(v){setView(v.dataset.v);return}
+ const sg=e.target.closest("[data-sg]");if(sg){G=+sg.dataset.sg;R=lastR(G);render();renderStats();return}
  const tm=e.target.closest("[data-team]");if(tm){TEAM=tm.dataset.team;Q="";renderRose();scrollTo(0,0);return}
  if(e.target.closest("[data-back]")){TEAM=null;Q="";renderRose()}});
 
@@ -606,6 +619,13 @@ function parseTab(txt){
  if(res.ri<0)for(let i=0;i<NGT;i++){if(CAL[g][i]&&CAL[g][i].m.some(([h,a])=>h===H.n&&a===A.n)){res.ri=i;break}}
  return res}
 const MATCHES=TABELLINI.map(parseTab).filter(m=>{if(m.err){console.warn("Tabellino:",m.err);return false}m.warn.forEach(w=>console.warn("Tabellino:",w));return true});
+// Giocatori scritti senza iniziale ("Marcaggi") quando in rosa ci sono omonimi: li collego al giocatore
+// con lo stesso cognome già riconosciuto in altre partite della squadra (a parità, quello con lo stesso numero di maglia).
+(()=>{const sur=n=>norm(n.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""));
+ MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.rid>=0||p.ghost||/\./.test(p.name))return;
+  const c={};MATCHES.forEach(x=>x.T[tn]&&x.T[tn].pl.forEach(q=>{if(q.rid>=0&&sur(q.name)===sur(p.name))(c[q.rid]=c[q.rid]||new Set()).add(q.num)}));
+  let ids=Object.keys(c);if(ids.length>1&&p.num)ids=ids.filter(i=>c[i].has(p.num));
+  if(ids.length===1)p.rid=+ids[0]})))})();
 const pkey=(tn,p)=>p.rid>=0?tn+"#"+p.rid:tn+"@"+norm(p.name);
 const tcase=s=>s.toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
 function pdisp(tn,p){if(p.rid>=0){const r=ROSE[tn].p[p.rid];return `${esc(r[0])} ${esc(tcase(r[1]))}`}return esc(p.name)}
@@ -665,6 +685,46 @@ document.addEventListener("click",e=>{
  const cl=e.target.closest("[data-close]");if(cl){if(cl.dataset.close==="m")closeModal();else{SEL=null;render()}return}
  if(e.target.id==="ov")closeModal()},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+/* ===== STATISTICHE =====
+   Squadre: da stand() all'ultima giornata giocata del girone.
+   Giocatori: sommati da MATCHES (tabellini). Classifiche con i pari merito: se più giocatori
+   sono a pari con l'ultimo posto utile (5° o 3°) vengono mostrati tutti. */
+function topN(a,f,n){const s=a.filter(o=>f(o)>0).sort((x,y)=>f(y)-f(x)||x.nm.localeCompare(y.nm));if(s.length<=n)return s;const c=f(s[n-1]);return s.filter(o=>f(o)>=c)}
+function rankList(a,f,unit,det){let h='<ol class="rk">',pv=null,pos=0;
+ a.forEach((o,i)=>{const v=f(o);if(v!==pv){pos=i+1;pv=v}const d=det?det(o):"";
+  h+=`<li><span class="ps">${pos}</span>${bdg(o.tn)}<span class="pn"><a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a><small>${nm(o.tn)}${d?" · "+d:""}</small></span><span class="pv">${v}<small>${typeof unit==="function"?unit(v):unit}</small></span></li>`});
+ return h+"</ol>"}
+function pAgg(ms,ok){const A={};
+ ms.forEach(m=>[m.h,m.a].filter(ok).forEach(tn=>m.T[tn].pl.forEach(p=>{const k=pkey(tn,p);
+  const a=A[k]||(A[k]={k,tn,disp:pdisp(tn,p),nm:p.name,m:0,tr:0,cp:0,dr:0});a.m+=p.m;a.tr+=p.tr;a.cp+=p.cp;a.dr+=p.dr})));
+ const P=Object.values(A);P.forEach(a=>{a.pts=a.m*5+a.tr*2+a.cp*3+a.dr*3;a.k2=a.tr*2+a.cp*3});return P}
+const det=o=>[o.m?o.m+(o.m>1?" mete":" meta"):"",o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":"",o.dr?o.dr+" drop":""].filter(Boolean).join(" · ");
+const kd=o=>[o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":""].filter(Boolean).join(" · ");
+// Migliori giocatori di una squadra (pagina squadra nelle Rose)
+function teamBest(tn){const ms=teamMatches(tn);
+ if(!ms.length)return `<div class="card"><h2>Migliori giocatori</h2><div class="msg">Non ci sono ancora tabellini per questa squadra.</div></div>`;
+ const P=pAgg(ms,x=>x===tn),box=(t,f,u,d,sub)=>{const a=topN(P,f,5);return `<div><h3 class="rl">${t}</h3>${sub?`<div class="msg" style="margin:-4px 0 4px">${sub}</div>`:""}${a.length?rankList(a,f,u,d).replaceAll(`<small>${nm(tn)} · `,"<small>").replaceAll(`<small>${nm(tn)}</small>`,"<small></small>"):'<div class="msg">Nessuno.</div>'}</div>`};
+ return `<div class="card"><h2>Migliori giocatori <span class="c" style="font-weight:400;font-size:12.5px;color:var(--mu)">· ${ms.length} ${ms.length===1?"partita":"partite"} con tabellino</span></h2><div class="g3">`+
+  box("Punti",o=>o.pts,"pt",det)+box("Mete",o=>o.m,n=>n>1?"mete":"meta")+box("Punti al piede",o=>o.k2,"pt",kd,"trasformazioni + punizioni")+`</div></div>`}
+function renderStats(){
+ document.getElementById("stabs").innerHTML=[1,2,3,4].map(g=>`<button class="${g===G?"on":""}" data-sg="${g}">Girone ${g}</button>`).join("");
+ const el=document.getElementById("stat"),L=lastR(G),s=stand(G,L);
+ if(!s.some(o=>o.g)){el.innerHTML='<div class="msg">Nessuna giornata giocata in questo girone.</div>';return}
+ const best=(f,mx)=>{const v=mx?Math.max(...s.map(f)):Math.min(...s.map(f));return s.filter(o=>f(o)===v)};
+ const att=best(o=>o.pf,1),def=best(o=>o.ps,0),a0=att[0],d0=def[0];
+ const tc=(lab,arr,v,sub)=>`<div class="card sk"><div class="lab">${lab}</div>${arr.map(o=>`<div class="tn">${bdg(o.n)}${nm(o.n)}</div>`).join("")}<div class="big">${v}</div><div class="msg">${sub}</div></div>`;
+ // giocatori
+ const ms=MATCHES.filter(m=>m.g===G),P=pAgg(ms,()=>true);
+ const giocate=rounds.slice(0,L+1).reduce((n,r)=>n+r.filter(x=>gOf(x.h)===G).length,0),cop=ms.filter(m=>m.ri>=0&&m.ri<=L).length;
+ const nota=cop<giocate?` Mancano i tabellini di ${giocate-cop} ${giocate-cop===1?"partita":"partite"} su ${giocate}.`:"";
+ el.innerHTML=`<div class="sub">Girone ${G} · aggiornate alla giornata ${L+1}</div><div class="g2">`+
+  tc("Miglior attacco",att,a0.pf,`punti fatti in ${a0.g} partite (${(a0.pf/a0.g).toFixed(1)} a partita) · ${a0.me} mete`)+
+  tc("Miglior difesa",def,d0.ps,`punti subiti in ${d0.g} partite (${(d0.ps/d0.g).toFixed(1)} a partita)`)+`</div>`+
+  `<div class="card"><h2>Top realizzatori</h2>${rankList(topN(P,o=>o.pts,5),o=>o.pts,"pt",det)}</div>`+
+  `<div class="card"><h2>Più mete</h2>${rankList(topN(P,o=>o.m,5),o=>o.m,n=>n>1?"mete":"meta")}</div>`+
+  `<div class="card"><h2>Punti al piede</h2><div class="msg" style="margin:-4px 0 6px">Punti da trasformazioni e calci di punizione (esclusi i drop)</div>${rankList(topN(P,o=>o.k2,5),o=>o.k2,"pt",kd)}</div>`+
+  `<div class="msg">Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti.</div>`}
 </script>
 </body>
 </html>
