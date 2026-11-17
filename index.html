@@ -956,7 +956,7 @@ function matchModal(ri,h,a){
  else o+=`<ul class="el">`+m.cards.map(c=>{let w="";/*cartellino*/
   if(c.k==="y")w=`giallo${c.end!=null?` <small>· fuori dal ${c.t}’ al ${c.end}’</small>`:""}`;
   else{const q=c.p&&c.p.sq;w=`<b>rosso</b>${c.dg?" (doppio giallo)":""}`+(q?` · ${esc(sqTxt(q))}${q.periodo?` <small>(${esc(q.periodo)})</small>`:""} · <a href="${esc(q.pdf)}" target="_blank" rel="noopener">comunicato n. ${q.com}</a>`:` · <small>${c.dg?"squalifica automatica di una giornata; ":""}motivo non ancora pubblicato dal Giudice Sportivo</small>`)}
-  return `<li><span class="mn">${fmn(c.t)}</span><span class="cd ${c.k}"></span> ${c.tn?bdg(c.tn):""}${evName(m,c,c.p)} ${c.tn?`<small>(${esc(c.tn)})</small>`:""} · ${w}</li>`}).join("")+`</ul>`+(m.cards.some(c=>c.k==="y")?'<div class="msg">Il tabellino FIR non riporta il motivo dei cartellini gialli; per i rossi il motivo arriva dal comunicato del Giudice Sportivo.</div>':"");
+  return `<li><span class="mn">${fmn(c.t)}</span><span class="cd ${c.k}"></span> ${c.tn?bdg(c.tn):""}${evName(m,c,c.p)} ${c.tn?`<small>(${esc(c.tn)})</small>`:""} · ${w}</li>`}).join("")+`</ul>`;
  const mu=multeMatch(m);
  if(mu.length)o+=`<h3>Multe</h3><ul class="el">`+mu.map(x=>`<li>${bdg(x.tn)}<b>${nm(x.tn)}</b> · ${x.eur?`<b>multa di ${esc(x.eur)} €</b>`:"multa"}${x.ex?" "+esc(x.ex.toLowerCase()):""}${x.mo?` <small>· ${esc(x.mo)}</small>`:""} · <a href="${esc(x.s.pdf)}" target="_blank" rel="noopener">comunicato n. ${x.s.com}</a></li>`).join("")+`</ul>`;
  o+=`<h3>Arbitro</h3>`+(m.arb?`<div>${esc(m.arb)}</div>`:'<div class="msg">Non indicato nel tabellino.</div>');
