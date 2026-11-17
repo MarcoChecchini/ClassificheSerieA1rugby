@@ -3,7 +3,7 @@ Contiene le classifiche giornata per giornata del campionato di Serie A di rugby
 
 La pagina ha tre sezioni:
 - **Classifiche**: classifica, risultati e calendario di tutte le 22 giornate (le partite da giocare hanno il punteggio `-- – --`). Toccando una squadra si vedono i giocatori scesi in campo, partita per partita o in totale, con minuti, mete, trasformazioni, calci, drop, punti e cartellini.
-  Toccando un **risultato** si apre la scheda della partita: i due XV titolari a confronto (numero per numero), le mete di ogni squadra con marcatore, minuto e trasformazione, calci piazzati e drop, i cartellini gialli e rossi con il minuto (per i rossi motivo e squalifica dal Giudice Sportivo), le note del referto e le decisioni del Giudice Sportivo su quella giornata per le due squadre (squalifiche, ammende e altre sanzioni).
+  Toccando un **risultato** si apre la scheda della partita: le due formazioni complete a confronto (i 15 titolari numero per numero e la panchina) con i minuti giocati, ingressi e uscite; le mete di ogni squadra con marcatore, minuto e trasformazione; calci piazzati e drop; i cartellini gialli e rossi con il minuto (per i rossi motivo e squalifica dal Giudice Sportivo); l'arbitro.
 - **Statistiche**: per ogni girone, all'ultima giornata giocata, miglior attacco e miglior difesa, i 5 giocatori con più punti, i 5 con più mete e i 5 migliori al piede (punti da trasformazioni e punizioni) e le classifiche dei cartellini gialli e rossi. Con pari merito sull'ultimo posto utile compaiono tutti. L'ultimo riquadro, **Tutti i gironi**, mette insieme i quattro gironi. Sotto i gironi si sceglie **Totale** oppure una singola giornata. Si aggiornano da sole con risultati e tabellini.
 - **Rose giocatori**: le rose 2026-27 dall'annuario *Rugby 2027* (Pacitti – Volpe), divise per girone e per ruolo. Nella pagina di ogni squadra, in cima, i 5 migliori per punti, mete e punti al piede, più gialli e rossi. Toccando un giocatore si vede la sua scheda partita per partita.
 
@@ -23,11 +23,10 @@ Legge gli articoli "tabellini" della Serie A pubblicati su [federugby.it](https:
 - La stessa Action aggiunge al blocco `TABELLINI` il testo dei tabellini nuovi; quelli già presenti non vengono toccati, così le correzioni fatte a mano restano.
 - Per lanciarla subito: scheda **Actions** → *Aggiorna risultati* → **Run workflow**.
 
-### Squalifiche, ammende e altre sanzioni
+### Squalifiche (motivo dei cartellini rossi)
 
 La stessa Action legge anche i comunicati del Giudice Sportivo della Serie A maschile (PDF su federugby.it) con `scripts/giudice.mjs` e salva le squalifiche dei giocatori nel blocco `SQUALIFICHE` di `index.html`: motivo, durata e periodo. La pagina collega ogni cartellino rosso alla sua squalifica (stessa squadra, stesso cognome, primo comunicato dopo la partita) e la mostra in Statistiche, nella pagina squadra delle Rose e nella scheda del giocatore. Finché il comunicato non esce compare "motivo non ancora pubblicato".
 
-- Tutte le altre voci dei comunicati (ammende alle società, ammonizioni, sanzioni a dirigenti e tecnici...) finiscono nel blocco `SANZIONI`, con il titolo della sezione e il testo così com'è. La scheda della partita mostra quelle che nominano una delle due squadre, prese dal primo comunicato uscito dopo la partita.
 - I comunicati già letti non vengono riscritti: le correzioni a mano restano.
 - Le voci che lo script non riesce a leggere compaiono nel riepilogo dell'esecuzione con un avviso giallo.
 - Per provare senza rete: `node scripts/giudice.mjs --dump` stampa il testo dei PDF; `node scripts/giudice.mjs --file testo.txt` lo analizza.
