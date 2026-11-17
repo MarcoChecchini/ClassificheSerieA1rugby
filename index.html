@@ -515,6 +515,22 @@ const TABELLINI=/*TABELLINI-INIZIO*/[
 "US ROMA – GUBBIO 15-14 (9-0) – US ROMA: Murgia; A. Campanelli, Lo Re (19’ pt Massimi), Carulli (19’-28’ pt Valentini), Onder (28’ pt Valentini); Cellucci, A. Scaringella; Sansoni, F. Campanelli, Napolitano; Pettinelli (1’ st Lezzi), O. Scaringella (28’ st Lezzi); Carparelli, Matera (15’ st Veraldi), Bruzzese (13’ pt Orabona). All. Murer. GUBBIO: Antoine; Ghirelli, Barbacci, Fecchi, Di Fiore; Smacchi, Pascolini (17’ st Tomassoli); Urbanelli, Neethling, R. Fioriti (18’ st Artuso); Caroli, Capannelli; Giacomini, G. Agnelli (22’ st Pretotto), A. Fioriti. All. McDonnell. Arbitro: Bruno di Udine. Marcatori: 10′, 34′ e 40′ cp Murgia; st: 18′ cp Murgia, 25′ m. Barbacci tr. Tomassoli, 36’ m. Urbanelli tr. Tomassoli, 38′ cp Murgia. Note: esp. Temp. di Murgia (20’ st)."
 ]/*TABELLINI-FINE*/;
 
+/* ===== SQUALIFICHE =====
+   Dai comunicati del Giudice Sportivo (PDF su federugby.it): una voce per giocatore squalificato.
+   Le aggiunge in automatico scripts/giudice.mjs; si possono correggere a mano (i comunicati già letti non vengono riscritti). */
+const SQUALIFICHE=/*SQUALIFICHE-INIZIO*/[
+{"com": 1, "data": "2026-10-21", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH01GS2026.2027.pdf", "nome": "LUBIATO MORGAN", "squadra": "RUGBY CASALE ASD", "motivo": "doppio cartellino giallo", "squalifica": "una settimana di squalifica automatica", "periodo": "dal 19/10/2026 al 25 Ottobre 2026 compresi", "minuto": 65, "testo": "espulso temporaneamente al 7° ed al 25° del 2°tempo, infraz. Art. 026/02 lett. b) (doppio cartellino giallo), UNA SETTIMANA DI SQUALIFICA AUTOMATICA (dal 19/10/2026 al 25 Ottobre 2026 compresi)"},
+{"com": 1, "data": "2026-10-21", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH01GS2026.2027.pdf", "nome": "MONFRINO MARCO", "squadra": "VII RUGBY TORINO SSD A R.L.", "motivo": "doppio cartellino giallo", "squalifica": "una settimana di squalifica automatica", "periodo": "dal 19/10/2026 al 25 Ottobre 2026 compresi", "minuto": 53, "testo": "espulso temporaneamente al 20° del 1°tempo ed al 13° del 2°tempo, infraz. Art. 026/02 lett. b) (doppio cartellino giallo), UNA SETTIMANA DI SQUALIFICA AUTOMATICA (dal 19/10/2026 al 25 Ottobre 2026 compresi)"},
+{"com": 1, "data": "2026-10-21", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH01GS2026.2027.pdf", "nome": "GEROMEL SIMONE", "squadra": "ASD RUGBY PAESE", "motivo": "pugno al volto", "squalifica": "quattro settimane di squalifica", "periodo": "dal 19/10/2026 al 15 Novembre 2026 compresi", "minuto": 73, "testo": "espulso su segnalazione del Giudice di linea al 33° del 2°tempo, infraz. Art. 027/01 lett. k) (pungo al volto), DUE SETTIMANE DI SQUALIFICA, viste le circostanze aggravanti di cui all'art. 027/02 lett. a) (circ.aggr.colpo alla testa), e tenuto conto della recidiva ai sensi dell'art. 015/01, QUATTRO SETTIMANE DI SQUALIFICA (dal 19/10/2026 al 15 Novembre 2026 compresi)"},
+{"com": 1, "data": "2026-10-21", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH01GS2026.2027.pdf", "nome": "PELLEGRINI MASSIMILIANO", "squadra": "RUGBY JUNIOR BADIA 2.0 SSD ARL", "motivo": "pugno al volto", "squalifica": "quattro settimane di squalifica", "periodo": "dal 19/10/2026 al 15 Novembre 2026 compresi", "minuto": 73, "testo": "espulso su segnalazione del Giudice di linea al 33° del 2°tempo, infraz. Art. 027/01 lett. k) (pugno al volto), DUE SETTIMANE DI SQUALIFICA, viste le circostanze aggravanti di cui all'art. 027/02 lett. a) (circ.aggr.colpo alla testa), e tenuto conto della recidiva ai sensi dell'art. 015/01, QUATTRO SETTIMANE DI SQUALIFICA (dal 19/10/2026 al 15 Novembre 2026 compresi)"},
+{"com": 2, "data": "2026-10-28", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH02GS2026.2027.pdf", "nome": "SILVESTRI FEDERICO", "squadra": "BOLOGNA RUGBY CLUB ASD", "motivo": "doppio cartellino giallo", "squalifica": "una settimana di squalifica automatica", "periodo": "dal 26/10/2026 al 1 Novembre 2026 compresi", "minuto": 47, "testo": "espulso temporaneamente al 20° del 1°tempo ed al 7° del 2°tempo, infraz. Art. 026/02 lett. b) (doppio cartellino giallo), UNA SETTIMANA DI SQUALIFICA AUTOMATICA (dal 26/10/2026 al 1 Novembre 2026 compresi)"},
+{"com": 2, "data": "2026-10-28", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH02GS2026.2027.pdf", "nome": "CAVAZZA LORENZO", "squadra": "US ROMA RUGBY SSD R.L.", "motivo": "rissa", "squalifica": "quattro settimane di squalifica", "periodo": "dal 26/10/2026 al 22 Novembre 2026 compresi", "minuto": 79, "testo": "espulso dall’arbitro e segnalato dal Giudice di linea al 39° del secondo tempo, infraz. Art. 027/01 lett. y) (rissa), TRE SETTIMANE DI SQUALIFICA, sanzione inasprita ai sensi dell'art. 015/01 in, QUATTRO SETTIMANE DI SQUALIFICA (dal 26/10/2026 al 22 Novembre 2026 compresi)"},
+{"com": 2, "data": "2026-10-28", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH02GS2026.2027.pdf", "nome": "FUMAGALLI ALESSANDRO", "squadra": "MODENA RUGBY 1965 SOC.COOP. SD", "motivo": "placcaggio pericoloso", "squalifica": "tre settimane di squalifica", "periodo": "dal 26/10/2026 al 15 Novembre 2026 compresi", "minuto": 70, "testo": "espulso al 30° del 2°tempo, infraz. Art. 027/01 lett. s) (placcaggio pericoloso), DUE SETTIMANE DI SQUALIFICA, viste le circostanze aggravanti di cui all'art. 027/02 lett. a) (circ.aggr.colpo alla testa), TRE SETTIMANE DI SQUALIFICA, (dal 26/10/2026 al 15 Novembre 2026 compresi)"},
+{"com": 2, "data": "2026-10-28", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH02GS2026.2027.pdf", "nome": "PUGLISI EMILIANO LUCA", "squadra": "ASD CUS CATANIA", "motivo": "rissa", "squalifica": "tre settimane di squalifica", "periodo": "dal 26/10/2026 al 15 Novembre 2026 compresi", "minuto": 79, "testo": "espulso su segnalazione del Giudice di linea al 39° del secondo tempo, infraz. Art. 027/01 lett. y) (rissa), TRE SETTIMANE DI SQUALIFICA (dal 26/10/2026 al 15 Novembre 2026 compresi)"},
+{"com": 3, "data": "2026-11-04", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH03GS2026.2027.pdf", "nome": "FARINACCI LORENZO", "squadra": "RUGBY PERUGIA SSD ARL", "motivo": "ginocchiata", "squalifica": "un mese di squalifica", "periodo": "dal 2/11/2026 al 1° dicembre 2026 compresi", "minuto": 60, "testo": "espulso su segnalazione del Giudice di Linea al 20° del 2°tempo, infraz. Art. 27/01 lett. m) (ginocchiata), UN MESE DI SQUALIFICA (dal 2/11/2026 al 1° dicembre 2026 compresi)"},
+{"com": 4, "data": "2026-11-11", "pdf": "https://www.federugby.it/wp-content/uploads/COMAMASCH04GS2026.2027.pdf", "nome": "MAINA FACUNDO SANTIAGO", "squadra": "ASD UNIONE MONFERRATO RUGBY", "motivo": "pugno", "squalifica": "due settimane di squalifica", "periodo": "dal 9/11/2026 al 22 Novembre 2026 compresi", "minuto": 28, "testo": "espulso al 28° del 1°tempo, infraz. Art. 027/01 lett. k) (pugno), DUE SETTIMANE DI SQUALIFICA (dal 9/11/2026 al 22 Novembre 2026 compresi)"}
+]/*SQUALIFICHE-FINE*/;
+
 const NUMR={15:"estremo",14:"ala",13:"centro",12:"centro",11:"ala",10:"apertura",9:"m. mischia",8:"terza linea",7:"terza linea",6:"terza linea",5:"seconda linea",4:"seconda linea",3:"pilone",2:"tallonatore",1:"pilone"};
 const norm=s=>String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’'`´]/g,"").replace(/\.\s*/g,". ").replace(/\s+/g," ").trim().toUpperCase();
 const TALIAS={"ASR MILANO":"Rugby Milano","MILANO":"Rugby Milano","NAPOLI AFRAGOLA":"RNA","NAPOLI":"RNA","LAZIO":"Lazio Rugby 1927","RUGBY ROMA":"Roma Olimpic"};
@@ -623,6 +639,15 @@ function parseTab(txt){
  if(res.ri<0)for(let i=0;i<NGT;i++){if(CAL[g][i]&&CAL[g][i].m.some(([h,a])=>h===H.n&&a===A.n)){res.ri=i;break}}
  return res}
 const MATCHES=TABELLINI.map(parseTab).filter(m=>{if(m.err){console.warn("Tabellino:",m.err);return false}m.warn.forEach(w=>console.warn("Tabellino:",w));return true});
+// Ogni cartellino rosso viene collegato alla squalifica del Giudice Sportivo: stessa squadra, stesso cognome,
+// comunicato uscito dopo la partita (il primo utile).
+(()=>{const used=new Set();
+ const items=[];MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.r)items.push({m,tn,p,d:CAL[m.g]&&CAL[m.g][m.ri]?CAL[m.g][m.ri].d:""})})));
+ items.sort((a,b)=>a.d.localeCompare(b.d)).forEach(({m,tn,p,d})=>{
+  const sur=norm(p.rid>=0?ROSE[tn].p[p.rid][1]:p.name.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""));
+  const c=SQUALIFICHE.map((s,i)=>[s,i]).filter(([s,i])=>s.nome&&!used.has(i)&&(findT(s.squadra)||{}).n===tn&&(norm(s.nome)+" ").startsWith(sur+" ")&&(!d||!s.data||s.data>=d)).sort((a,b)=>(a[0].data||"").localeCompare(b[0].data||""));
+  if(c.length){used.add(c[0][1]);p.sq=c[0][0]}})})();
+const sqTxt=s=>s?[s.motivo,s.squalifica].filter(Boolean).join(" · "):"motivo non ancora pubblicato dal Giudice Sportivo";
 // Giocatori scritti senza iniziale ("Marcaggi") quando in rosa ci sono omonimi: li collego al giocatore
 // con lo stesso cognome già riconosciuto in altre partite della squadra (a parità, quello con lo stesso numero di maglia).
 (()=>{const sur=n=>norm(n.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""));
@@ -681,6 +706,9 @@ function playerModal(pk){
   rows.map(([m,p])=>{const home=m.h===tn,mine=home?m.hs:m.as,their=home?m.as:m.hs;
    return `<tr><td class="t">${m.ri+1}ª · ${CAL[m.g][m.ri]?CAL[m.g][m.ri].d.split("-").reverse().join("/"):""}</td><td class="t">${home?"":"@ "}${bdg(opp(m,tn))}${nm(opp(m,tn))}</td><td class="${mine>their?"up":mine<their?"dn":"eq"}">${mine}-${their}</td><td class="t">${p.st?p.num+" · "+NUMR[p.num]:"panchina"}</td>${strow(p)}</tr>`}).join("")+
   `<tr class="tot"><td class="t">Totale</td><td class="t">${rows.length} ${rows.length===1?"presenza":"presenze"}, ${rows.filter(([,p])=>p.st).length} da titolare</td><td></td><td></td>${strow(tot)}</tr></tbody></table></div>`}
+ const reds=rows.filter(([,p])=>p.r);
+ if(reds.length)h+=`<div class="card" style="margin:12px 0 0"><h3 class="rl">Cartellini rossi</h3>`+reds.map(([m,p])=>{const q=p.sq;
+  return `<div class="msg" style="color:var(--tx)"><b>${m.ri+1}ª giornata</b> contro ${nm(opp(m,tn))}${q&&q.minuto?` · ${q.minuto}'`:""} · ${esc(sqTxt(q))}${q&&q.periodo?` <span class="eq">(${esc(q.periodo)})</span>`:""}${q?` · <a href="${esc(q.pdf)}" target="_blank" rel="noopener">comunicato n. ${q.com}</a>`:""}</div>`}).join("")+`</div>`;
  const ov=document.getElementById("ov");ov.innerHTML=h;ov.classList.remove("hide");document.body.style.overflow="hidden"}
 function closeModal(){const ov=document.getElementById("ov");ov.classList.add("hide");ov.innerHTML="";document.body.style.overflow=""}
 document.addEventListener("click",e=>{
@@ -707,9 +735,10 @@ function rankList(a,f,unit,det){const U=v=>typeof unit==="function"?unit(v):unit
  return h+"</ol>"}
 function pAgg(ms,ok){const A={};
  ms.forEach(m=>[m.h,m.a].filter(ok).forEach(tn=>m.T[tn].pl.forEach(p=>{const k=pkey(tn,p);
-  const a=A[k]||(A[k]={k,tn,disp:pdisp(tn,p),nm:p.name,m:0,tr:0,cp:0,dr:0,y:0,r:0});a.m+=p.m;a.tr+=p.tr;a.cp+=p.cp;a.dr+=p.dr;a.y+=p.y||0;a.r+=p.r||0})));
+  const a=A[k]||(A[k]={k,tn,disp:pdisp(tn,p),nm:p.name,m:0,tr:0,cp:0,dr:0,y:0,r:0,sq:[]});a.m+=p.m;a.tr+=p.tr;a.cp+=p.cp;a.dr+=p.dr;a.y+=p.y||0;a.r+=p.r||0;if(p.r)a.sq.push(p.sq||null)})));
  const P=Object.values(A);P.forEach(a=>{a.pts=a.m*5+a.tr*2+a.cp*3+a.dr*3;a.k2=a.tr*2+a.cp*3});return P}
 const det=o=>[o.m?o.m+(o.m>1?" mete":" meta"):"",o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":"",o.dr?o.dr+" drop":""].filter(Boolean).join(" · ");
+const rd=o=>o.sq.map(sqTxt).join("; ");
 const UY=n=>n>1?"gialli":"giallo",UR=n=>n>1?"rossi":"rosso";
 const kd=o=>[o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":""].filter(Boolean).join(" · ");
 // Migliori giocatori di una squadra (pagina squadra nelle Rose)
@@ -717,7 +746,7 @@ function teamBest(tn){const ms=teamMatches(tn);
  if(!ms.length)return `<div class="card"><h2>Migliori giocatori</h2><div class="msg">Non ci sono ancora tabellini per questa squadra.</div></div>`;
  const P=pAgg(ms,x=>x===tn),box=(t,f,u,d,sub)=>{const a=topN(P,f,5);return `<div><h3 class="rl">${t}</h3>${sub?`<div class="msg" style="margin:-4px 0 4px">${sub}</div>`:""}${a.length?rankList(a,f,u,d).replaceAll(`<small>${nm(tn)} · `,"<small>").replaceAll(`<small>${nm(tn)}</small>`,"<small></small>"):'<div class="msg">Nessuno.</div>'}</div>`};
  return `<div class="card"><h2>Migliori giocatori <span class="c" style="font-weight:400;font-size:12.5px;color:var(--mu)">· ${ms.length} ${ms.length===1?"partita":"partite"} con tabellino</span></h2><div class="g3">`+
-  box("Punti",o=>o.pts,"pt",det)+box("Mete",o=>o.m,n=>n>1?"mete":"meta")+box("Punti al piede",o=>o.k2,"pt",kd,"trasformazioni + punizioni")+`</div><div class="g3" style="margin-top:14px">`+box("Cartellini gialli",o=>o.y,UY,null)+box("Cartellini rossi",o=>o.r,UR,null)+`</div></div>`}
+  box("Punti",o=>o.pts,"pt",det)+box("Mete",o=>o.m,n=>n>1?"mete":"meta")+box("Punti al piede",o=>o.k2,"pt",kd,"trasformazioni + punizioni")+`</div><div class="g3" style="margin-top:14px">`+box("Cartellini gialli",o=>o.y,UY,null)+box("Cartellini rossi",o=>o.r,UR,rd)+`</div></div>`}
 let SALL=false; // true = riquadro "Tutti i gironi"
 let SR=null;     // null = totale; altrimenti indice della giornata (0 = 1ª)
 function renderStats(){
@@ -760,7 +789,7 @@ function renderStats(){
   `<div class="card"><h2>Più mete</h2>${P.some(o=>o.m)?rankList(topN(P,o=>o.m,5),o=>o.m,n=>n>1?"mete":"meta",D(null)):'<div class="msg">Nessuna meta.</div>'}</div>`+
   `<div class="card"><h2>Punti al piede</h2><div class="msg" style="margin:-4px 0 6px">Punti da trasformazioni e calci di punizione (esclusi i drop)</div>${P.some(o=>o.k2)?rankList(topN(P,o=>o.k2,5),o=>o.k2,"pt",D(kd)):'<div class="msg">Nessuno.</div>'}</div>`+
   `<div class="g2"><div class="card"><h2>Cartellini gialli</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni temporanee</div>${P.some(o=>o.y)?rankList(topN(P,o=>o.y,5),o=>o.y,UY,D(null)):'<div class="msg">Nessuno.</div>'}</div>`+
-  `<div class="card"><h2>Cartellini rossi</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni definitive</div>${P.some(o=>o.r)?rankList(topN(P,o=>o.r,5),o=>o.r,UR,D(null)):'<div class="msg">Nessuno.</div>'}</div></div>`+
+  `<div class="card"><h2>Cartellini rossi</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni definitive</div>${P.some(o=>o.r)?rankList(topN(P,o=>o.r,5),o=>o.r,UR,D(rd)):'<div class="msg">Nessuno.</div>'}</div></div>`+
   `<div class="msg">Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti (se sono tanti, in un elenco da aprire).</div>`}
 </script>
 </body>

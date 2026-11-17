@@ -22,5 +22,13 @@ Legge gli articoli "tabellini" della Serie A pubblicati su [federugby.it](https:
 - La stessa Action aggiunge al blocco `TABELLINI` il testo dei tabellini nuovi; quelli già presenti non vengono toccati, così le correzioni fatte a mano restano.
 - Per lanciarla subito: scheda **Actions** → *Aggiorna risultati* → **Run workflow**.
 
-Il codice è in `scripts/aggiorna.mjs` (aggiornamento del file) e `scripts/tabellini.mjs` (lettura degli articoli).
+### Squalifiche (motivo dei cartellini rossi)
+
+La stessa Action legge anche i comunicati del Giudice Sportivo della Serie A maschile (PDF su federugby.it) con `scripts/giudice.mjs` e salva le squalifiche dei giocatori nel blocco `SQUALIFICHE` di `index.html`: motivo, durata e periodo. La pagina collega ogni cartellino rosso alla sua squalifica (stessa squadra, stesso cognome, primo comunicato dopo la partita) e la mostra in Statistiche, nella pagina squadra delle Rose e nella scheda del giocatore. Finché il comunicato non esce compare "motivo non ancora pubblicato".
+
+- I comunicati già letti non vengono riscritti: le correzioni a mano restano.
+- Le voci che lo script non riesce a leggere compaiono nel riepilogo dell'esecuzione con un avviso giallo.
+- Per provare senza rete: `node scripts/giudice.mjs --dump` stampa il testo dei PDF; `node scripts/giudice.mjs --file testo.txt` lo analizza.
+
+Il codice è in `scripts/aggiorna.mjs` (aggiornamento del file) e `scripts/tabellini.mjs` (lettura degli articoli) e `scripts/giudice.mjs` (comunicati del Giudice Sportivo).
 Se una squadra compare negli articoli con un nome nuovo, basta aggiungere l'alias alla sua espressione regolare nella tabella `T` di `index.html`.

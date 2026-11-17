@@ -7,6 +7,9 @@ on:
     - cron: "17 7-21/2 * * 1-3"   # lunedì-mercoledì, ogni 2 ore: i tabellini escono di solito il lunedì
     - cron: "17 19 * * 4,5,6,0"   # gli altri giorni una volta, per eventuali rettifiche
   workflow_dispatch:              # pulsante "Run workflow" nella scheda Actions
+  push:                           # e quando cambiano gli script di aggiornamento
+    branches: [main]
+    paths: ["scripts/**", ".github/workflows/aggiorna.yml"]
 
 permissions:
   contents: write
@@ -29,15 +32,28 @@ jobs:
         id: agg
         run: node scripts/aggiorna.mjs
 
+      - name: Installa il lettore di PDF
+        run: npm i --no-save --no-package-lock pdfjs-dist@4
+
+      - name: Leggi i comunicati del Giudice Sportivo (squalifiche e motivi dei rossi)
+        id: gs
+        continue-on-error: true       # se il sito dei PDF non risponde, i risultati si salvano lo stesso
+        run: node scripts/giudice.mjs
+
       - name: Salva le modifiche
         run: |
           if git diff --quiet; then echo "Niente da salvare"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Aggiorna risultati dai tabellini FIR"
+          git commit -am "Aggiorna risultati, tabellini e squalifiche dalla FIR"
           git push
 
       - name: Segnala le partite da inserire a mano
         if: steps.agg.outputs.problemi != '0'
         run: |
           echo "::warning::Ci sono ${{ steps.agg.outputs.problemi }} partite che non sono riuscito a leggere: vedi il riepilogo dell'esecuzione."
+
+      - name: Segnala le squalifiche da controllare
+        if: steps.gs.outcome == 'failure' || (steps.gs.outputs.problemi_gs != '' && steps.gs.outputs.problemi_gs != '0')
+        run: |
+          echo "::warning::Comunicati del Giudice Sportivo: lettura non riuscita o voci da controllare. Vedi il riepilogo dell'esecuzione."
