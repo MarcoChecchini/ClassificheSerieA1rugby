@@ -1,0 +1,43 @@
+name: Aggiorna risultati
+
+# Legge i "tabellini" della Serie A su federugby.it e aggiorna index.html.
+# Orari in UTC (in Italia +1 d'inverno, +2 d'estate).
+on:
+  schedule:
+    - cron: "17 7-21/2 * * 1-3"   # lunedì-mercoledì, ogni 2 ore: i tabellini escono di solito il lunedì
+    - cron: "17 19 * * 4,5,6,0"   # gli altri giorni una volta, per eventuali rettifiche
+  workflow_dispatch:              # pulsante "Run workflow" nella scheda Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aggiorna-risultati
+  cancel-in-progress: false
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Leggi i tabellini e aggiorna index.html
+        id: agg
+        run: node scripts/aggiorna.mjs
+
+      - name: Salva le modifiche
+        run: |
+          if git diff --quiet; then echo "Niente da salvare"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Aggiorna risultati dai tabellini FIR"
+          git push
+
+      - name: Segnala le partite da inserire a mano
+        if: steps.agg.outputs.problemi != '0'
+        run: |
+          echo "::warning::Ci sono ${{ steps.agg.outputs.problemi }} partite che non sono riuscito a leggere: vedi il riepilogo dell'esecuzione."
