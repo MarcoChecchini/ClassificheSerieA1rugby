@@ -141,3 +141,29 @@ export function parseArticle(html, teams) {
 
 // Riga nel formato usato da index.html
 export const toLine = x => `${plain(x.h).toUpperCase()} - ${plain(x.a).toUpperCase()} ${x.hs} - ${x.as} ( ${x.ht}- ${x.at})`;
+
+// Testo completo di ogni partita dell'articolo (formazioni, marcatori, note), per la pagina dei giocatori.
+// Le righe che seguono una partita senza iniziarne un'altra (note o arbitro andati a capo) vengono riunite.
+export function matchTexts(html, teams) {
+  const find = s => { s = plain(s).toUpperCase().trim(); return teams.find(t => t.re.test(s)); };
+  const out = [];
+  let cur = null;
+  for (let line of htmlToText(html).split("\n")) {
+    const heads = [...line.matchAll(HEAD_RE)];
+    if (heads.length) { cur = null; const l = heads[heads.length - 1]; line = line.slice(l.index + l[0].length); }
+    line = line.trim();
+    if (!line) continue;
+    const m = line.match(MATCH_RE);
+    if (m) {
+      const H = find(m[1]), A = find(m[2]);
+      cur = H && A && H.g === A.g ? { h: H.n, a: A.n, text: line } : null;
+      if (cur) out.push(cur);
+      continue;
+    }
+    if (/^(serie\s+a|girone|tabellino non)\b/i.test(line)) { cur = null; continue; }
+    // riga spezzata (formazione, arbitro o note andati a capo): si riunisce finché la partita non è chiusa dalle note
+    if (cur && !/Note\s*:/i.test(cur.text)) cur.text += " " + line;
+    else cur = null;
+  }
+  return out;
+}
