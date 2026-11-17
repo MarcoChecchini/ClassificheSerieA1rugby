@@ -72,6 +72,10 @@ table.st tr.tot td{font-weight:700;border-top:2px solid var(--bd)}
 .sk .lab{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}.sk .tn{font-weight:600;display:flex;align-items:center;margin-bottom:2px}.sk .big{font-size:30px;font-weight:700;color:var(--ac);line-height:1.1;margin-top:6px}
 ol.rk{list-style:none;margin:0;padding:0}ol.rk li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}ol.rk li:last-child{border-bottom:0}.rk .ps{width:20px;color:var(--mu);text-align:right;font-size:13px}.rk .pn{flex:1;display:flex;flex-direction:column;min-width:0}.rk .pn small{color:var(--mu);font-size:12px}.rk .pv{font-weight:700;font-size:17px;color:var(--ac);text-align:right;white-space:nowrap}.rk .pv small{font-size:11px;color:var(--mu);font-weight:500;margin-left:3px}
 ol.rk li.more{display:block}ol.rk li.more summary{color:var(--ac);font-size:13.5px;font-weight:600;padding:2px 0}ol.rk li.more ol.rk{margin-top:4px}
+.lnav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin:2px 0 8px}.lnav button{font-size:20px;padding:8px 14px}
+.lt{display:flex;align-items:center;justify-content:center;gap:12px}.lt .lg{width:52px;height:52px}.lt .ln{font-size:18px;font-weight:700}.lt .c{color:var(--mu);font-size:13px}
+table.lt2{min-width:0}table.lt2 td.t{white-space:nowrap}
+@media(max-width:560px){table.lt2 .cr{display:none}table.lt2{font-size:12.5px}table.lt2 td,table.lt2 th{padding:5px 3px}table.lt2 td.t{white-space:normal}.lt .lg{width:40px;height:40px}.lt .ln{font-size:16px}.lnav button{padding:6px 10px}}
 h2.sh{font-size:16px;margin:18px 0 8px}
 .mcs{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
 .mc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;display:grid;grid-template-columns:1fr auto 1fr 20px;align-items:center;gap:12px}
@@ -380,7 +384,7 @@ function bump(){
 
 document.addEventListener("click",e=>{
  const b=e.target.closest("[data-g]");if(b){G=+b.dataset.g;R=lastR(G);render();return}
- const r=e.target.closest("tr[data-n]");if(r){SEL=SEL===r.dataset.n?null:r.dataset.n;TPV=null;render()}});
+ const r=e.target.closest("tr[data-n]");if(r){teamLineup(r.dataset.n)}});
 document.getElementById("prev").onclick=()=>{R=Math.max(0,R-1);render()};
 document.getElementById("next").onclick=()=>{R=Math.min(NGT-1,R+1);render()};
 document.getElementById("rng").oninput=e=>{R=+e.target.value;render()};
@@ -930,6 +934,35 @@ function multeMatch(m){
   const im=[...s.testo.matchAll(/(?:MULTA|AMMENDA)\s+DI\s+EURO\s*([\d.,]+)/gi)].map(x=>x[1].replace(/,00$/,"").replace(/[.,]$/,""));
   const ex=(s.testo.match(/MULTA\s+DI\s+EURO\s*[\d.,]+(?:=?\s*\([^)]*\))?\s*(E\s+[^.]+)/i)||[])[1]||"";
   return{tn:t.n,s,mo,eur:im[im.length-1]||"",ex:ex.replace(/[=.\s]+$/,"")}}).filter(Boolean)}
+/* ===== FORMAZIONE DI UNA SQUADRA =====
+   Toccando una squadra in classifica: la sua formazione nella giornata scelta; con le frecce
+   si passa alle formazioni delle altre squadre del girone, in ordine di classifica. */
+let LU=null; // {tn, ri, order}
+function teamLineup(tn,keep){
+ const g=gOf(tn),ri=R,LP=lastR(g),order=keep&&LU?LU.order:stand(g,Math.min(ri,LP)).map(o=>o.n);
+ LU={tn,ri,order};const pos=order.indexOf(tn),n=order.length;
+ const st=stand(g,Math.min(ri,LP)).find(o=>o.n===tn);
+ const m=MATCHES.find(x=>x.ri===ri&&(x.h===tn||x.a===tn));
+ const fx=fixtures(g,ri).find(x=>x.h===tn||x.a===tn);
+ let o=`<div class="mdl"><div class="tph"><h2 style="font-size:15px;color:var(--mu);font-weight:500">Formazione · ${ri+1}ª giornata · Girone ${g}</h2><button data-close="m" aria-label="Chiudi">✕</button></div>`;
+ o+=`<div class="lnav"><button data-lu="-1" aria-label="Squadra precedente">←</button><div class="lt">${logo(tn)}<div><div class="ln">${nm(tn)}</div><div class="c">${pos+1}° in classifica${st?` · ${st.pt} punti`:""}</div></div></div><button data-lu="1" aria-label="Squadra successiva">→</button></div>`;
+ if(fx){const home=fx.h===tn,ot=home?fx.a:fx.h;
+  o+=`<div class="mi">${home?"In casa contro":"In trasferta contro"} ${bdg(ot)}${nm(ot)}${fx.hs!=null?` · <b class="${(home?fx.hs>fx.as:fx.as>fx.hs)?"up":(fx.hs===fx.as?"eq":"dn")}">${fx.hs} – ${fx.as}</b> · <a class="pl" data-mt="${ri}|${fx.h.replace(/&/g,"&amp;")}|${fx.a.replace(/&/g,"&amp;")}">vedi la partita</a>`:" · da giocare"}</div>`}
+ else o+=`<div class="mi">Turno di riposo in questa giornata.</div>`;
+ if(!m)o+=`<div class="msg" style="text-align:center">${fx&&fx.hs==null?"La partita non è ancora stata giocata.":"Il tabellino di questa partita non è ancora disponibile."}</div>`;
+ else{
+  const pl=m.T[tn].pl,ST=pl.filter(p=>p.st).sort((a,b)=>b.num-a.num),BN=pl.filter(p=>!p.st&&!p.ghost).sort((a,b)=>a.tin-b.tin);
+  const cnt=p=>m.ev.filter(e=>e.k==="m"&&e.p===p).length;
+  const badges=p=>{const t=cnt(p);let b=t?`<span class="ic m" title="${t} ${t>1?"mete":"meta"}">${t>1?t+"×":""}M</span>`:"";
+   m.cards.filter(c=>c.p===p).forEach(c=>b+=`<span class="cd ${c.k}" title="${c.k==="y"?"cartellino giallo":"cartellino rosso"}${c.t!=null?" al "+c.t+"’":""}"></span>`);return b};
+  const io=p=>{if(p.unk||p.min==null)return '<span class="eq">n.d.</span>';const o2=[];[...p.segs].sort((x,y)=>x[0]-y[0]).forEach(([x,y])=>{if(x>0)o2.push(`<span class="up">▲${x}’</span>`);if(y<80)o2.push(`<span class="dn">▼${y}’</span>`)});return o2.join(" ")};
+  const row=p=>`<tr class="nc"><td class="n">${p.st?p.num:""}</td><td class="t"><a class="pl" data-pk="${esc(pkey(tn,p))}">${pdisp(tn,p)}</a> ${badges(p)}</td><td class="t eq cr">${p.st?NUMR[p.num]:(p.rid>=0?esc(ROSE[tn].p[p.rid][6]):"")}</td><td class="n"><b>${p.min==null?"":p.min+"’"}</b></td><td class="t">${io(p)}</td><td class="n">${p.pts||""}</td></tr>`;
+  o+=`<div class="scroll"><table class="st lt2"><thead><tr><th class="n">N°</th><th class="t">Giocatore</th><th class="t cr">Ruolo</th><th class="n">Min.</th><th class="t">Entrato / uscito</th><th class="n">Punti</th></tr></thead><tbody>`+
+   ST.map(row).join("")+(BN.length?`<tr class="sep nc"><td colspan="6">Panchina</td></tr>`+BN.map(row).join(""):"")+`</tbody></table></div>`;
+  o+=`<div class="msg"><span class="ic m">M</span> meta · <span class="cd y"></span> giallo · <span class="cd r"></span> rosso · <span class="up">▲</span> entrato al minuto · <span class="dn">▼</span> uscito al minuto</div>`}
+ o+=`<div class="msg" style="margin-top:10px">${pos+1} di ${n} · usa le frecce per vedere le altre squadre · <a class="pl" data-tsel="${tn.replace(/&/g,"&amp;")}">tutte le partite e il totale della stagione</a></div></div>`;
+ const ov=document.getElementById("ov");ov.innerHTML=o;ov.classList.remove("hide");document.body.style.overflow="hidden"}
+function luStep(d){if(!LU)return;const k=LU.order.indexOf(LU.tn),n=LU.order.length;R=LU.ri;teamLineup(LU.order[(k+d+n)%n],true)}
 function matchModal(ri,h,a){
  const m=MATCHES.find(x=>x.ri===ri&&x.h===h&&x.a===a)||MATCHES.find(x=>x.ri===ri&&x.h===a&&x.a===h);
  const r=fixtures(gOf(h),ri).find(x=>x.h===h&&x.a===a)||{h,a};
@@ -981,11 +1014,14 @@ function matchModal(ri,h,a){
 function closeModal(){const ov=document.getElementById("ov");ov.classList.add("hide");ov.innerHTML="";document.body.style.overflow=""}
 document.addEventListener("click",e=>{
  const pk=e.target.closest("[data-pk]");if(pk){e.stopPropagation();playerModal(pk.dataset.pk);return}
+ const lu=e.target.closest("[data-lu]");if(lu){e.stopPropagation();luStep(+lu.dataset.lu);return}
+ const ts=e.target.closest("[data-tsel]");if(ts){e.stopPropagation();closeModal();SEL=ts.dataset.tsel;TPV=null;render();document.getElementById("tp").scrollIntoView({behavior:"smooth"});return}
  const mt=e.target.closest("[data-mt]");if(mt){e.stopPropagation();const[ri,h,a]=mt.dataset.mt.split("|");matchModal(+ri,h,a);return}
  const tv=e.target.closest("[data-tpv]");if(tv){TPV=tv.dataset.tpv==="tot"?"tot":+tv.dataset.tpv;renderTeamPanel();return}
  const cl=e.target.closest("[data-close]");if(cl){if(cl.dataset.close==="m")closeModal();else{SEL=null;render()}return}
  if(e.target.id==="ov")closeModal()},true);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();
+ if(LU&&!document.getElementById("ov").classList.contains("hide")&&document.querySelector("#ov [data-lu]")){if(e.key==="ArrowLeft")luStep(-1);if(e.key==="ArrowRight")luStep(1)}});
 
 /* ===== STATISTICHE =====
    Squadre: da stand() all'ultima giornata giocata del girone.
