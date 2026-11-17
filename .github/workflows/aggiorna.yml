@@ -5,7 +5,8 @@ name: Aggiorna risultati
 on:
   schedule:
     - cron: "17 7-21/2 * * 1-3"   # lunedì-mercoledì, ogni 2 ore: i tabellini escono di solito il lunedì
-    - cron: "17 19 * * 4,5,6,0"   # gli altri giorni una volta, per eventuali rettifiche
+    - cron: "17 19 * * 5,6,0"     # venerdì-domenica una volta, per eventuali rettifiche
+    - cron: "47 9-20/2 * * 4"     # giovedì ogni 2 ore: escono le designazioni arbitrali
   workflow_dispatch:              # pulsante "Run workflow" nella scheda Actions
   push:                           # e quando cambiano gli script di aggiornamento
     branches: [main]
@@ -32,6 +33,11 @@ jobs:
         id: agg
         run: node scripts/aggiorna.mjs
 
+      - name: Leggi arbitri e giudici di linea dal Match Centre FIR
+        id: arb
+        continue-on-error: true       # se il Match Centre non risponde, il resto si salva lo stesso
+        run: node scripts/arbitri.mjs
+
       - name: Installa il lettore di PDF
         run: npm i --no-save --no-package-lock pdfjs-dist@4
 
@@ -45,13 +51,18 @@ jobs:
           if git diff --quiet; then echo "Niente da salvare"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Aggiorna risultati, tabellini e squalifiche dalla FIR"
+          git commit -am "Aggiorna risultati, tabellini, squalifiche e arbitri dalla FIR"
           git push
 
       - name: Segnala le partite da inserire a mano
         if: steps.agg.outputs.problemi != '0'
         run: |
           echo "::warning::Ci sono ${{ steps.agg.outputs.problemi }} partite che non sono riuscito a leggere: vedi il riepilogo dell'esecuzione."
+
+      - name: Segnala gli arbitri da controllare
+        if: steps.arb.outcome == 'failure' || (steps.arb.outputs.problemi_arb != '' && steps.arb.outputs.problemi_arb != '0')
+        run: |
+          echo "::warning::Arbitri dal Match Centre FIR: lettura non riuscita o squadre non riconosciute. Vedi il riepilogo dell'esecuzione."
 
       - name: Segnala le squalifiche da controllare
         if: steps.gs.outcome == 'failure' || (steps.gs.outputs.problemi_gs != '' && steps.gs.outputs.problemi_gs != '0')

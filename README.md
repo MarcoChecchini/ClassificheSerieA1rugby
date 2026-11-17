@@ -23,6 +23,13 @@ Legge gli articoli "tabellini" della Serie A pubblicati su [federugby.it](https:
 - La stessa Action aggiunge al blocco `TABELLINI` il testo dei tabellini nuovi; quelli già presenti non vengono toccati, così le correzioni fatte a mano restano.
 - Per lanciarla subito: scheda **Actions** → *Aggiorna risultati* → **Run workflow**.
 
+### Arbitri e giudici di linea
+
+La stessa Action legge dal Match Centre della FIR (quello della pagina [federugby.it/campionati](https://www.federugby.it/campionati/)) gli ufficiali di gara di ogni partita della Serie A maschile — arbitro, due giudici di linea e TMO — con data, ora e campo, e li salva nel blocco `ARBITRI` di `index.html` (`scripts/arbitri.mjs`). Il blocco viene riscritto a ogni esecuzione con i dati della FIR. Le designazioni escono di solito il giovedì, per questo il giovedì l'Action gira ogni 2 ore. Nella pagina compaiono nella scheda della partita (sezione **Ufficiali di gara**) e, per le partite da giocare, anche nella riga del risultato.
+
+- Se una squadra non viene riconosciuta compare un avviso giallo nel riepilogo dell'esecuzione: basta aggiungere l'alias nella tabella `T` di `index.html`.
+- Per provare senza rete: `node scripts/arbitri.mjs risposta.json` con una risposta del Match Centre salvata.
+
 ### Squalifiche (motivo dei cartellini rossi)
 
 La stessa Action legge anche i comunicati del Giudice Sportivo della Serie A maschile (PDF su federugby.it) con `scripts/giudice.mjs` e salva le squalifiche dei giocatori nel blocco `SQUALIFICHE` di `index.html`: motivo, durata e periodo. La pagina collega ogni cartellino rosso alla sua squalifica (stessa squadra, stesso cognome, primo comunicato dopo la partita) e la mostra in Statistiche, nella pagina squadra delle Rose e nella scheda del giocatore. Finché il comunicato non esce compare "motivo non ancora pubblicato".
