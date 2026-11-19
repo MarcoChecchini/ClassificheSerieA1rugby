@@ -201,15 +201,13 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 .fx-m{display:flex;flex-direction:column;padding:5px 0;color:var(--tx);text-decoration:none;cursor:pointer;font-size:14px}
 .fx-m small{color:var(--mu);font-size:12.5px}.fx-m:hover b{color:var(--ac)}
 .fx-sk{display:inline-block;font-size:13px;margin-top:2px}
-.sf-tg{margin-top:6px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--ac);background:var(--acbg);border-color:transparent;border-radius:999px}
-.sfo .sf-tg .chev{transform:rotate(180deg)}.sf{display:none;margin-top:12px;padding-top:10px;border-top:1px solid var(--bd)}.sfo .sf{display:block}
-.sf-g{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px}
-@media (max-width:620px){.sf-g{grid-template-columns:1fr}}
-.sf h3.rl{margin:6px 0 2px}
-.sf-r{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:14px}.sf-r:last-child{border-bottom:0}
-.sf-l{flex:0 0 42%;color:var(--mu);font-size:13px}.sf-v{flex:1;font-weight:600}
-.sf-i{margin-top:8px}.sf-i summary{list-style:none;cursor:pointer;color:var(--ac);font-weight:600;font-size:13.5px;padding:4px 0}
-.sf-i summary::-webkit-details-marker{display:none}.sf-i .sf-v{font-weight:400}.sf a{color:var(--ac)}
+.sf-tg{margin-top:6px;padding:4px 12px;font-size:13px;font-weight:600;color:var(--tf,#fff);background:var(--tc,var(--ac));border-color:transparent;border-radius:999px}
+.sf-tg .chev{color:inherit;opacity:.85}.sfo .sf-tg .chev{transform:rotate(180deg)}
+.sf{display:none;margin-top:10px;border-top:1px solid var(--bd)}.sfo .sf{display:block}
+.sf-h{margin:12px 0 2px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tc)}
+.sf-r{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.sf-l{flex:0 0 38%;color:var(--mu);font-size:13px}.sf-v{flex:1}
+.sf-co .sf-v{font-weight:700}.sf a{color:var(--tc)}
 </style>
 </head>
 <body>
@@ -1066,7 +1064,7 @@ function renderRose(){
  const grp=RUOLI.map(([l,re])=>[l,ps.filter(p=>re.test(p[6].toLowerCase()))]);
  const altri=ps.filter(p=>!RUOLI.some(([,re])=>re.test(p[6].toLowerCase())));if(altri.length)grp.push(["Altri",altri]);
  let h=`<button data-back="1" style="margin-bottom:12px">← Tutte le squadre</button>
- <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div>${STAFF[TEAM]?`<button class="sf-tg" onclick="const c=this.closest('.card');c.classList.toggle('sfo')">Info società <span class="chev">▾</span></button>`:""}</div></div>${staffBox(TEAM)}</div>${teamBest(TEAM)}
+ <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div>${STAFF[TEAM]?`<button class="sf-tg" style="--tc:${tcx(TEAM)};--tf:${sfInk(tcx(TEAM))}" onclick="const c=this.closest('.card');c.classList.toggle('sfo')">Info società <span class="chev">▾</span></button>`:""}</div></div>${staffBox(TEAM)}</div>${teamBest(TEAM)}
  <input class="flt" id="flt" placeholder="Cerca per nome, luogo di nascita, ruolo…" value="${esc(Q)}">`;
  grp.filter(([,a])=>a.length).forEach(([l,a])=>{
   a.sort((x,y)=>x[1].localeCompare(y[1])||x[0].localeCompare(y[0]));
@@ -1763,18 +1761,22 @@ const det=o=>[o.m?o.m+(o.m>1?" mete":" meta"):"",o.tr?o.tr+" tr":"",o.cp?o.cp+" 
 const rd=o=>o.sq.map(sqTxt).join("; ");
 const UY=n=>n>1?"gialli":"giallo",UR=n=>n>1?"rossi":"rosso";
 const kd=o=>[o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":""].filter(Boolean).join(" · ");
-// Riquadro Staff nella pagina squadra delle Rose (dati STAFF dall'annuario)
+// Riquadro Staff nella pagina squadra delle Rose (dati STAFF dall'annuario): elenco semplice nei colori della squadra
+const sfInk=c=>{const m=/^#?([0-9a-f]{6})$/i.exec(c||"");if(!m)return "#fff";const n=parseInt(m[1],16),L=(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255;return L>0.6?"#1c1c1a":"#fff"};
 function staffBox(tn){const o=STAFF[tn];if(!o)return "";
  const TEC=/^(allenator|assistent|direttore tecnico|director of rugby|team manager|responsabile seniores|coordinatore sportivo)/i;
- const row=([r,v])=>`<div class="sf-r"><span class="sf-l">${esc(r)}</span><span class="sf-v">${v.map(esc).join("<br>")}</span></div>`;
+ const row=(l,v,cl)=>`<div class="sf-r${cl?" "+cl:""}"><span class="sf-l">${l}</span><span class="sf-v">${v}</span></div>`;
+ const rr=([r,v])=>row(esc(r),v.map(esc).join(", "),/^allenator/i.test(r)?"sf-co":"");
  const tec=o.ruoli.filter(([r])=>TEC.test(r)),soc=o.ruoli.filter(([r])=>!TEC.test(r));
- const info=[o.fond?["Fondazione",[o.fond]]:null,o.colori?["Colori sociali",[o.colori]]:null,
-  ...(o.campi||[]).map(([l,v])=>[l,[v.join(", ")]]),o.sponsor?["Sponsor",[o.sponsor]]:null].filter(Boolean);
  const url=o.sito?(/^https?:/.test(o.sito)?o.sito:"https://"+o.sito):"";
- return `<div class="sf"><h3 class="rl" style="margin-top:0">Staff 2026-27</h3>
- <div class="sf-g">${tec.length?`<div><h3 class="rl">Staff tecnico</h3>${tec.map(row).join("")}</div>`:""}${soc.length?`<div><h3 class="rl">Società</h3>${soc.map(row).join("")}</div>`:""}</div>
- ${info.length?`<div class="sf-i"><h3 class="rl">Club, campo e sponsor</h3>${info.map(row).join("")}${url?`<div class="sf-r"><span class="sf-l">Sito</span><span class="sf-v"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\//,""))}</a></span></div>`:""}</div>`:""}
- <div class="msg" style="margin-top:6px">Dall'annuario Rugby 2027, pag. ${o.pag}.</div></div>`}
+ const club=[o.fond?row("Fondazione",esc(o.fond)):"",o.colori?row("Colori",esc(o.colori)):"",
+  ...(o.campi||[]).map(([l,v])=>row(esc(l.replace(/^Campo di gioco e (di )?allenamento$/,"Campo")),esc(v.join(", ")))),
+  o.sponsor?row("Sponsor",esc(o.sponsor)):"",url?row("Sito",`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\/(www\.)?/,""))}</a>`):""].join("");
+ return `<div class="sf" style="--tc:${tcx(tn)}">
+ ${tec.length?`<div class="sf-h">Staff tecnico</div>${tec.map(rr).join("")}`:""}
+ ${soc.length?`<div class="sf-h">Società</div>${soc.map(rr).join("")}`:""}
+ ${club?`<div class="sf-h">Il club</div>${club}`:""}
+ <div class="msg" style="margin-top:8px;font-size:12px">Dall'annuario Rugby 2027, pag. ${o.pag}.</div></div>`}
 // Migliori giocatori di una squadra (pagina squadra nelle Rose)
 function teamBest(tn){const ms=teamMatches(tn);
  if(!ms.length)return `<div class="card"><h2>Migliori giocatori</h2><div class="msg">Non ci sono ancora tabellini per questa squadra.</div></div>`;
