@@ -186,6 +186,21 @@ body.pgdeco .card{background:color-mix(in srgb,var(--card) 80%,transparent);back
 body.pgdeco .views{background:color-mix(in srgb,var(--card) 60%,transparent)}
 body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 .io-in{color:var(--up)}.io-out{color:var(--dn)}
+.fx summary,.fx-li summary,.fx-p summary{list-style:none;cursor:pointer;font-weight:400}
+.fx summary::-webkit-details-marker,.fx-li summary::-webkit-details-marker,.fx-p summary::-webkit-details-marker{display:none}
+.fx-li{display:block!important}.fx-li summary{display:flex;align-items:center;gap:8px}
+.chev{color:var(--mu);font-size:12px;transition:transform .15s}details[open]>summary .chev{transform:rotate(180deg)}
+.fx-more{color:var(--ac);font-size:13.5px;font-weight:600;margin-top:6px}
+.fx-tn{font-weight:600;display:flex;align-items:center;margin:10px 0 2px}
+.fx-pl{margin:8px 0 2px;border-top:1px solid var(--bd)}
+.fx-p{border-bottom:1px solid var(--bd)}.fx-p:last-child{border-bottom:0}
+.fx-p summary{display:flex;align-items:center;gap:8px;padding:7px 0 7px 6px}
+.fx-p .pn{flex:1;display:flex;flex-direction:column;min-width:0}.fx-p .pn small{color:var(--mu);font-size:12px}
+.fx-p .pv{font-weight:700;font-size:15px;white-space:nowrap}
+.fx-ms{margin:0 0 8px 6px;padding-left:10px;border-left:3px solid var(--acbg)}
+.fx-m{display:flex;flex-direction:column;padding:5px 0;color:var(--tx);text-decoration:none;cursor:pointer;font-size:14px}
+.fx-m small{color:var(--mu);font-size:12.5px}.fx-m:hover b{color:var(--ac)}
+.fx-sk{display:inline-block;font-size:13px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -1764,22 +1779,36 @@ function teamBest(tn){const ms=teamMatches(tn);
  <div class="lds" style="--tc:${c}">${lead("Punti",o=>o.pts,"pt",det)}${lead("Mete",o=>o.m,n=>n>1?" mete":" meta")}${lead("Al piede",o=>o.k2,"pt",kd)}${cards}</div>
  </div>`}
 /* Squadra più fallosa: somma di cartellini gialli e rossi dei giocatori di ogni squadra,
-   dai tabellini della giornata scelta (o di tutte le giornate giocate, per il Totale). */
+   dai tabellini della giornata scelta (o di tutte le giornate giocate, per il Totale).
+   Toccando una squadra si aprono i giocatori con cartellini; toccando un giocatore le partite
+   in cui li ha presi (ogni partita apre la sua scheda). */
 function falli(ms,gs,one,tile){const A={};
  ms.forEach(m=>[m.h,m.a].filter(tn=>gs.includes(gOf(tn))&&m.T[tn]).forEach(tn=>{
-  const a=A[tn]||(A[tn]={n:tn,y:0,r:0,g:0,o:[]});a.g++;a.o.push(tn===m.h?m.a:m.h);
-  m.T[tn].pl.forEach(p=>{a.y+=p.y||0;a.r+=p.r||0})}));
+  const a=A[tn]||(A[tn]={n:tn,y:0,r:0,g:0,o:[],P:{}});a.g++;const op=tn===m.h?m.a:m.h;a.o.push(op);
+  m.T[tn].pl.forEach(p=>{const y=p.y||0,r=p.r||0;a.y+=y;a.r+=r;if(!y&&!r)return;
+   const k=pkey(tn,p),q=a.P[k]||(a.P[k]={k,disp:pdisp(tn,p),nm:p.name,y:0,r:0,M:[]});q.y+=y;q.r+=r;
+   q.M.push({ri:m.ri,h:m.h,a:m.a,op,y,r,cs:m.cards.filter(c=>c.p===p)})})}));
  const L=Object.values(A).map(a=>(a.c=a.y+a.r,a)).filter(a=>a.c>0).sort((x,y)=>y.c-x.c||y.r-x.r||x.n.localeCompare(y.n));
- const h2=`<h2>Squadre più fallose</h2><div class="msg" style="margin:-4px 0 6px">Cartellini gialli + rossi${one?" nella giornata":" in totale"}</div>`;
+ const cv=(y,r)=>`${y?`<span class="cd y"></span>${y}`:""}${r?` <span class="cd r"></span>${r}`:""}`;
+ const amp=x=>x.replace(/&/g,"&amp;");
+ // dettaglio di una partita: giornata, avversaria, cartellini con il minuto
+ const mrow=x=>{const cs=x.cs.length?x.cs.map(c=>`<span class="cd ${c.k}"></span>${c.k==="r"?(c.dg?"rosso (doppio giallo)":"rosso"):"giallo"}${c.t!=null?" al "+c.t+"’":""}`).join(" · "):cv(x.y,x.r);
+  return `<a class="fx-m" data-mt="${x.ri}|${amp(x.h)}|${amp(x.a)}"><span><b>${x.ri+1}ª giornata</b> · contro ${nm(x.op)}</span><small>${cs}</small></a>`};
+ // giocatori di una squadra, ognuno apribile sulle sue partite
+ const plist=a=>{const P=Object.values(a.P).sort((x,y)=>(y.y+y.r)-(x.y+x.r)||y.r-x.r||x.nm.localeCompare(y.nm));
+  return `<div class="fx-pl">${P.map(q=>`<details class="fx-p"><summary><span class="pn"><b>${q.disp}</b><small>${q.M.length} ${q.M.length===1?"partita":"partite"} · tocca per vedere quali</small></span><span class="pv cdv">${cv(q.y,q.r)}</span><span class="chev">▾</span></summary>
+   <div class="fx-ms">${q.M.sort((x,y)=>x.ri-y.ri).map(mrow).join("")}<a class="pl fx-sk" data-pk="${esc(q.k)}">scheda del giocatore ›</a></div></details>`).join("")}</div>`};
+ const h2=`<h2>Squadre più fallose</h2><div class="msg" style="margin:-4px 0 6px">Cartellini gialli + rossi${one?" nella giornata":" in totale"} · tocca una squadra per i giocatori</div>`;
  if(tile){if(!L.length)return `<div class="card sk"><div class="lab">Squadra più fallosa</div><div class="msg">Nessun cartellino.</div></div>`;
   const w=L.filter(a=>a.c===L[0].c&&a.r===L[0].r),a0=w[0];
-  return `<div class="card sk"><div class="lab">Squadra più fallosa</div>${w.map(a=>`<div class="tn">${bdg(a.n)}${nm(a.n)}${SALL?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· Girone ${gOf(a.n)}</span>`:""}${one?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· contro ${nm(a.o[0])}</span>`:""}</div>`).join("")}<div class="big">${a0.c}</div><div class="msg">cartellini: <span class="cd y"></span>${a0.y} ${a0.y===1?"giallo":"gialli"}${a0.r?` · <span class="cd r"></span>${a0.r} ${a0.r===1?"rosso":"rossi"}`:""}${one?"":` in ${a0.g} partite (${(a0.c/a0.g).toFixed(1)} a partita)`}</div></div>`}
+  return `<div class="card sk fx"><details><summary><div class="lab">Squadra più fallosa</div>${w.map(a=>`<div class="tn">${bdg(a.n)}${nm(a.n)}${SALL?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· Girone ${gOf(a.n)}</span>`:""}${one?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· contro ${nm(a.o[0])}</span>`:""}</div>`).join("")}<div class="big">${a0.c}</div><div class="msg">cartellini: <span class="cd y"></span>${a0.y} ${a0.y===1?"giallo":"gialli"}${a0.r?` · <span class="cd r"></span>${a0.r} ${a0.r===1?"rosso":"rossi"}`:""}${one?"":` in ${a0.g} partite (${(a0.c/a0.g).toFixed(1)} a partita)`}</div><div class="fx-more">giocatori <span class="chev">▾</span></div></summary>
+  ${w.map(a=>(w.length>1?`<div class="fx-tn">${bdg(a.n)}${nm(a.n)}</div>`:"")+plist(a)).join("")}</details></div>`}
  if(!L.length)return `<div class="card">${h2}<div class="msg">Nessun cartellino.</div></div>`;
  const cut=L.length>5?L[4].c:0,top=L.filter(a=>a.c>=cut);
  let pv=null,pos=0;
  const li=top.map((a,i)=>{if(a.c!==pv){pos=i+1;pv=a.c}
   const sub=[SALL?`Girone ${gOf(a.n)}`:"",one?`contro ${nm(a.o[0])}`:`${a.g} ${a.g===1?"partita":"partite"} · ${(a.c/a.g).toFixed(1)} a partita`].filter(Boolean).join(" · ");
-  return `<li><span class="ps">${pos}</span>${bdg(a.n)}<span class="pn"><b>${nm(a.n)}</b><small>${sub}</small></span><span class="pv cdv">${a.y?`<span class="cd y"></span>${a.y}`:""}${a.r?` <span class="cd r"></span>${a.r}`:""}</span><span class="pv" style="min-width:42px">${a.c}<small>tot</small></span></li>`}).join("");
+  return `<li class="fx-li"><details><summary><span class="ps">${pos}</span>${bdg(a.n)}<span class="pn"><b>${nm(a.n)}</b><small>${sub}</small></span><span class="pv cdv">${cv(a.y,a.r)}</span><span class="pv" style="min-width:42px">${a.c}<small>tot</small></span><span class="chev">▾</span></summary>${plist(a)}</details></li>`}).join("");
  return `<div class="card">${h2}<ol class="rk">${li}</ol></div>`}
 let SALL=false; // true = riquadro "Tutti i gironi"
 let SR=null;     // null = totale; altrimenti indice della giornata (0 = 1ª)
