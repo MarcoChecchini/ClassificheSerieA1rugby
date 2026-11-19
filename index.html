@@ -189,7 +189,7 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 .fx summary,.fx-li summary,.fx-p summary{list-style:none;cursor:pointer;font-weight:400}
 .fx summary::-webkit-details-marker,.fx-li summary::-webkit-details-marker,.fx-p summary::-webkit-details-marker{display:none}
 .fx-li{display:block!important}.fx-li summary{display:flex;align-items:center;gap:8px}
-.chev{color:var(--mu);font-size:12px;transition:transform .15s}details[open]>summary .chev{transform:rotate(180deg)}
+.chev{display:inline-block;color:var(--mu);font-size:12px;transition:transform .15s}details[open]>summary .chev{transform:rotate(180deg)}
 .fx-more{color:var(--ac);font-size:13.5px;font-weight:600;margin-top:6px}
 .fx-tn{font-weight:600;display:flex;align-items:center;margin:10px 0 2px}
 .fx-pl{margin:8px 0 2px;border-top:1px solid var(--bd)}
@@ -201,6 +201,8 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 .fx-m{display:flex;flex-direction:column;padding:5px 0;color:var(--tx);text-decoration:none;cursor:pointer;font-size:14px}
 .fx-m small{color:var(--mu);font-size:12.5px}.fx-m:hover b{color:var(--ac)}
 .fx-sk{display:inline-block;font-size:13px;margin-top:2px}
+.sf-tg{margin-top:6px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--ac);background:var(--acbg);border-color:transparent;border-radius:999px}
+.sfo .sf-tg .chev{transform:rotate(180deg)}.sf{display:none;margin-top:12px;padding-top:10px;border-top:1px solid var(--bd)}.sfo .sf{display:block}
 .sf-g{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px}
 @media (max-width:620px){.sf-g{grid-template-columns:1fr}}
 .sf h3.rl{margin:6px 0 2px}
@@ -1064,7 +1066,7 @@ function renderRose(){
  const grp=RUOLI.map(([l,re])=>[l,ps.filter(p=>re.test(p[6].toLowerCase()))]);
  const altri=ps.filter(p=>!RUOLI.some(([,re])=>re.test(p[6].toLowerCase())));if(altri.length)grp.push(["Altri",altri]);
  let h=`<button data-back="1" style="margin-bottom:12px">← Tutte le squadre</button>
- <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div></div></div></div>${staffBox(TEAM)}${teamBest(TEAM)}
+ <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div>${STAFF[TEAM]?`<button class="sf-tg" onclick="const c=this.closest('.card');c.classList.toggle('sfo')">Info società <span class="chev">▾</span></button>`:""}</div></div>${staffBox(TEAM)}</div>${teamBest(TEAM)}
  <input class="flt" id="flt" placeholder="Cerca per nome, luogo di nascita, ruolo…" value="${esc(Q)}">`;
  grp.filter(([,a])=>a.length).forEach(([l,a])=>{
   a.sort((x,y)=>x[1].localeCompare(y[1])||x[0].localeCompare(y[0]));
@@ -1769,9 +1771,9 @@ function staffBox(tn){const o=STAFF[tn];if(!o)return "";
  const info=[o.fond?["Fondazione",[o.fond]]:null,o.colori?["Colori sociali",[o.colori]]:null,
   ...(o.campi||[]).map(([l,v])=>[l,[v.join(", ")]]),o.sponsor?["Sponsor",[o.sponsor]]:null].filter(Boolean);
  const url=o.sito?(/^https?:/.test(o.sito)?o.sito:"https://"+o.sito):"";
- return `<div class="card sf"><h2>Staff <span class="c" style="font-weight:400;font-size:12.5px;color:var(--mu)">· 2026-27</span></h2>
+ return `<div class="sf"><h3 class="rl" style="margin-top:0">Staff 2026-27</h3>
  <div class="sf-g">${tec.length?`<div><h3 class="rl">Staff tecnico</h3>${tec.map(row).join("")}</div>`:""}${soc.length?`<div><h3 class="rl">Società</h3>${soc.map(row).join("")}</div>`:""}</div>
- ${info.length?`<details class="sf-i"><summary>Club, campo e sponsor <span class="chev">▾</span></summary>${info.map(row).join("")}${url?`<div class="sf-r"><span class="sf-l">Sito</span><span class="sf-v"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\//,""))}</a></span></div>`:""}</details>`:""}
+ ${info.length?`<div class="sf-i"><h3 class="rl">Club, campo e sponsor</h3>${info.map(row).join("")}${url?`<div class="sf-r"><span class="sf-l">Sito</span><span class="sf-v"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\//,""))}</a></span></div>`:""}</div>`:""}
  <div class="msg" style="margin-top:6px">Dall'annuario Rugby 2027, pag. ${o.pag}.</div></div>`}
 // Migliori giocatori di una squadra (pagina squadra nelle Rose)
 function teamBest(tn){const ms=teamMatches(tn);
