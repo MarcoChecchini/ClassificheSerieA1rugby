@@ -201,25 +201,13 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 .fx-m{display:flex;flex-direction:column;padding:5px 0;color:var(--tx);text-decoration:none;cursor:pointer;font-size:14px}
 .fx-m small{color:var(--mu);font-size:12.5px}.fx-m:hover b{color:var(--ac)}
 .fx-sk{display:inline-block;font-size:13px;margin-top:2px}
-.sf-tg{margin-top:6px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--tf,#fff);background:var(--tc,var(--ac));border-color:transparent;border-radius:999px}
+.sf-tg{margin-top:6px;padding:4px 12px;font-size:13px;font-weight:600;color:var(--tf,#fff);background:var(--tc,var(--ac));border-color:transparent;border-radius:999px}
 .sf-tg .chev{color:inherit;opacity:.85}.sfo .sf-tg .chev{transform:rotate(180deg)}
-.sf{display:none;margin-top:12px}.sfo .sf{display:block;animation:sfin .2s ease}
-@keyframes sfin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.sf-tl{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:600;margin-bottom:2px}
-.sf-nz{font-size:10.5px;font-weight:600;color:var(--mu);border:1px solid var(--bd);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:1px}
-.sf-hero{border-radius:12px;padding:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--tc) 22%,var(--card)),color-mix(in srgb,var(--tc) 6%,var(--card)));border:1px solid color-mix(in srgb,var(--tc) 35%,var(--bd))}
-.sf-c{display:flex;align-items:center;gap:12px;margin-bottom:8px}.sf-c b{font-size:18px}
-.sf-av{flex:0 0 46px;height:46px;border-radius:50%;background:var(--tc);color:var(--tf,#fff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;box-shadow:0 0 0 3px color-mix(in srgb,var(--tc) 25%,transparent)}
-.sf-as{margin-top:4px}.sf-chip{display:inline-block;background:var(--card);border:1px solid color-mix(in srgb,var(--tc) 30%,var(--bd));border-radius:999px;padding:3px 10px;margin:3px 5px 0 0;font-size:13.5px;font-weight:600}
-.sf-h{margin:16px 0 8px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}.sf-h::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--tc)}
-.sf-ts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.sf-t{border:1px solid var(--bd);border-left:3px solid var(--tc);border-radius:10px;padding:8px 10px;background:color-mix(in srgb,var(--tc) 4%,var(--card))}
-.sf-tn{font-weight:600;font-size:14px}
-.sf-fs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.sf-f{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--bd);border-radius:10px;padding:8px 10px;font-size:14px}
-.sf-f small{display:block;color:var(--mu);font-size:12.5px}.sf-ic{font-size:20px;line-height:1.2}
-.sf-dots{display:inline-flex;gap:3px;margin-right:6px;vertical-align:-2px}.sf-dot{width:14px;height:14px;border-radius:50%;border:1px solid var(--bd);display:inline-block}
-.sf a{color:var(--tc);font-weight:600}
+.sf{display:none;margin-top:10px;border-top:1px solid var(--bd)}.sfo .sf{display:block}
+.sf-h{margin:12px 0 2px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tc)}
+.sf-r{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.sf-l{flex:0 0 38%;color:var(--mu);font-size:13px}.sf-v{flex:1}
+.sf-co .sf-v{font-weight:700}.sf a{color:var(--tc)}
 </style>
 </head>
 <body>
@@ -1773,31 +1761,22 @@ const det=o=>[o.m?o.m+(o.m>1?" mete":" meta"):"",o.tr?o.tr+" tr":"",o.cp?o.cp+" 
 const rd=o=>o.sq.map(sqTxt).join("; ");
 const UY=n=>n>1?"gialli":"giallo",UR=n=>n>1?"rossi":"rosso";
 const kd=o=>[o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":""].filter(Boolean).join(" · ");
-// Riquadro Staff nella pagina squadra delle Rose (dati STAFF dall'annuario), nei colori della squadra
-const SFCOL={giallo:"#f2c200","giallo oro":"#d4a017",oro:"#d4a017",rosso:"#d7263d",blu:"#1f3c88",azzurro:"#3a8fd8",celeste:"#7cc4f0",bianco:"#ffffff",nero:"#1c1c1a",verde:"#1a7f37","verde fluo":"#7cff3a",granata:"#7b1e2b",amaranto:"#8b1a3a",viola:"#6a3d9a",arancione:"#f08a24"};
+// Riquadro Staff nella pagina squadra delle Rose (dati STAFF dall'annuario): elenco semplice nei colori della squadra
 const sfInk=c=>{const m=/^#?([0-9a-f]{6})$/i.exec(c||"");if(!m)return "#fff";const n=parseInt(m[1],16),L=(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255;return L>0.6?"#1c1c1a":"#fff"};
 function staffBox(tn){const o=STAFF[tn];if(!o)return "";
  const TEC=/^(allenator|assistent|direttore tecnico|director of rugby|team manager|responsabile seniores|coordinatore sportivo)/i;
- const ini=n=>n.replace(/\(.*?\)/g,"").trim().split(/\s+/).filter(w=>/^[A-ZÀ-Ý]/.test(w)).slice(0,2).map(w=>w[0]).join("");
- const naz=n=>{const m=n.match(/\((.*?)\)/);return m?`<span class="sf-nz">${esc(m[1])}</span>`:""},nn=n=>esc(n.replace(/\s*\(.*?\)/g,""));
- const all=o.ruoli,coach=all.filter(([r])=>/^allenator/i.test(r)),ass=all.filter(([r])=>/^assistent/i.test(r)).flatMap(([,v])=>v);
- const tec=all.filter(([r])=>TEC.test(r)&&!/^(allenator|assistent)/i.test(r)),soc=all.filter(([r])=>!TEC.test(r));
- const tile=([r,v])=>`<div class="sf-t"><div class="sf-tl">${esc(r)}</div>${v.map(n=>`<div class="sf-tn">${nn(n)}${naz(n)}</div>`).join("")}</div>`;
- const hero=coach.length?`<div class="sf-hero">${coach.flatMap(([r,v])=>v).map((n,i,a)=>`<div class="sf-c"><span class="sf-av">${esc(ini(n))}</span><span>${i?"":`<span class="sf-tl">${a.length>1?"Allenatori":"Allenatore"}</span>`}<b>${nn(n)}</b>${naz(n)}</span></div>`).join("")}
-  ${ass.length?`<div class="sf-as"><span class="sf-tl">${ass.length>1?"Assistenti":"Assistente"}</span><div>${ass.map(n=>`<span class="sf-chip">${nn(n)}${naz(n)}</span>`).join("")}</div></div>`:""}</div>`:"";
- const dots=c=>c.split(/,|\se\s/).map(x=>x.trim().toLowerCase()).filter(Boolean).map(x=>SFCOL[x]?`<i class="sf-dot" style="background:${SFCOL[x]}" title="${esc(x)}"></i>`:"").join("");
+ const row=(l,v,cl)=>`<div class="sf-r${cl?" "+cl:""}"><span class="sf-l">${l}</span><span class="sf-v">${v}</span></div>`;
+ const rr=([r,v])=>row(esc(r),v.map(esc).join(", "),/^allenator/i.test(r)?"sf-co":"");
+ const tec=o.ruoli.filter(([r])=>TEC.test(r)),soc=o.ruoli.filter(([r])=>!TEC.test(r));
  const url=o.sito?(/^https?:/.test(o.sito)?o.sito:"https://"+o.sito):"";
- const fact=(ic,l,v)=>`<div class="sf-f"><span class="sf-ic">${ic}</span><span><span class="sf-tl">${l}</span>${v}</span></div>`;
- const facts=[o.fond?fact("📅","Fondazione",`<b>${esc(o.fond)}</b>`):"",
-  o.colori?fact("🎨","Colori sociali",`<span class="sf-dots">${dots(o.colori)}</span>${esc(o.colori)}`):"",
-  ...(o.campi||[]).map(([l,v])=>fact("🏟️",esc(l),`<b>${esc(v[0])}</b>${v.length>1?`<small>${v.slice(1).map(esc).join(", ")}</small>`:""}`)),
-  o.sponsor?fact("🤝","Sponsor",(m=>m?`<b>${esc(m[1])}</b><small>${esc(m[2])}</small>`:`<b>${esc(o.sponsor)}</b>`)(o.sponsor.match(/^(.*?)\s*\((.*)\)$/))):"",
-  url?fact("🌐","Sito",`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\/(www\.)?/,""))}</a>`):""].join("");
- return `<div class="sf" style="--tc:${tcx(tn)};--tf:${sfInk(tcx(tn))}">${hero}
- ${tec.length?`<div class="sf-h">Staff tecnico</div><div class="sf-ts">${tec.map(tile).join("")}</div>`:""}
- ${soc.length?`<div class="sf-h">Società</div><div class="sf-ts">${soc.map(tile).join("")}</div>`:""}
- ${facts?`<div class="sf-h">Il club</div><div class="sf-fs">${facts}</div>`:""}
- <div class="msg" style="margin-top:8px;font-size:12px">Staff 2026-27 dall'annuario Rugby 2027, pag. ${o.pag}.</div></div>`}
+ const club=[o.fond?row("Fondazione",esc(o.fond)):"",o.colori?row("Colori",esc(o.colori)):"",
+  ...(o.campi||[]).map(([l,v])=>row(esc(l.replace(/^Campo di gioco e (di )?allenamento$/,"Campo")),esc(v.join(", ")))),
+  o.sponsor?row("Sponsor",esc(o.sponsor)):"",url?row("Sito",`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\/(www\.)?/,""))}</a>`):""].join("");
+ return `<div class="sf" style="--tc:${tcx(tn)}">
+ ${tec.length?`<div class="sf-h">Staff tecnico</div>${tec.map(rr).join("")}`:""}
+ ${soc.length?`<div class="sf-h">Società</div>${soc.map(rr).join("")}`:""}
+ ${club?`<div class="sf-h">Il club</div>${club}`:""}
+ <div class="msg" style="margin-top:8px;font-size:12px">Dall'annuario Rugby 2027, pag. ${o.pag}.</div></div>`}
 // Migliori giocatori di una squadra (pagina squadra nelle Rose)
 function teamBest(tn){const ms=teamMatches(tn);
  if(!ms.length)return `<div class="card"><h2>Migliori giocatori</h2><div class="msg">Non ci sono ancora tabellini per questa squadra.</div></div>`;
