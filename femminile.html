@@ -600,8 +600,8 @@ function parseTab(txt){
   const get=n=>{const k=norm(n);if(!P[k]){P[k]={name:n,num:null,st:false,segs:[],unk:false,first:999,m:0,tr:0,cp:0,dr:0,y:0,r:0};order.push(k)}return P[k]};
   items.forEach((it,i)=>{const s=parseSlot(it);const num=15-i;
    const st=get(s.first);if(!st.st){st.st=true;st.num=num}
-   s.seg.forEach(([n,a,b])=>{const p=get(n);p.segs.push([a,b]);if(a<p.first)p.first=a});
-   if(s.unknown)s.names.forEach(n=>get(n).unk=true)});
+   s.seg.forEach(([n,a,b])=>{const p=get(n);p.segs.push([a,b]);if(a<p.first)p.first=a;if(p.slot==null)p.slot=num});
+   if(s.unknown)s.names.forEach(n=>{const q=get(n);q.unk=true;if(q.slot==null)q.slot=num})});
   res.T[tn]={pl:order.map(k=>P[k]),mt:0}});
  const all=[...res.T[H.n].pl.map(p=>[H.n,p]),...res.T[A.n].pl.map(p=>[A.n,p])];
  const who=(n,pool)=>{pool=pool||all;const k=norm(n);let c=pool.filter(([,p])=>norm(p.name)===k);
@@ -676,12 +676,18 @@ const sqTxt=s=>s?[s.motivo,s.squalifica].filter(Boolean).join(" · "):"motivo no
   let ids=Object.keys(c);if(ids.length>1&&p.num)ids=ids.filter(i=>c[i].has(p.num));
   if(ids.length===1)p.rid=+ids[0]})))})();
 // Giocatori dei tabellini che non sono nella rosa dell'annuario: entrano comunque in rosa, con il nome
-// scritto nel tabellino e il ruolo della maglia indossata più spesso da titolare (senza dati anagrafici).
+// scritto nel tabellino (senza dati anagrafici) e il ruolo più frequente: da titolare quello della maglia,
+// dalla panchina quello del giocatore sostituito.
 (()=>{const add={};
  MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.rid>=0)return;
   const d=ROSE[tn]||(ROSE[tn]={book:"",p:[]}),k=tn+"|"+norm(p.name);
   if(!add[k]){const x=p.name.match(/^([A-ZÀ-Ý][a-zà-ÿ]{0,3}\.)\s*(.+)$/);d.p.push([x?x[1]:"",(x?x[2]:p.name).toUpperCase(),"","","","","",""]);add[k]={tn,i:d.p.length-1,r:{}}}
-  const a=add[k];p.rid=a.i;if(p.st&&NUMR[p.num])a.r[NUMR[p.num]]=(a.r[NUMR[p.num]]||0)+1})));
+  // ruolo: titolare -> quello della sua maglia; entrato dalla panchina -> quello del giocatore che ha sostituito
+  // (dall'annuario se c'è, altrimenti dal numero di maglia)
+  let ru=null;
+  if(p.st)ru=NUMR[p.num];
+  else if(p.slot){const q=m.T[tn].pl.find(x=>x.st&&x.num===p.slot);ru=q&&q.rid>=0&&q.rid<ROSE[tn].p.length&&ROSE[tn].p[q.rid][2]?ROSE[tn].p[q.rid][6]:NUMR[p.slot]}
+  const a=add[k];p.rid=a.i;if(ru)a.r[ru]=(a.r[ru]||0)+(p.st?2:1)})));
  Object.values(add).forEach(a=>{const r=Object.entries(a.r).sort((x,y)=>y[1]-x[1])[0];if(r)ROSE[a.tn].p[a.i][6]=r[0]})})();
 const pkey=(tn,p)=>p.rid>=0?tn+"#"+p.rid:tn+"@"+norm(p.name);
 const tcase=s=>s.toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
