@@ -145,28 +145,29 @@ const html = fs.readFileSync(FILE, "utf8");
 const bm = html.match(/\/\*SQUALIFICHE-INIZIO\*\/([\s\S]*?)\/\*SQUALIFICHE-FINE\*\//);
 if (!bm && !DUMP) throw new Error("Blocco SQUALIFICHE-INIZIO / SQUALIFICHE-FINE non trovato in " + PAGINA);
 const OLD = bm ? JSON.parse(bm[1]) : [];
-const giaFatti = new Set(OLD.map(s => s.pdf));    // i comunicati già letti non si toccano: restano le correzioni a mano
+const giaFatti = new Set([...OLD.map(s => s.pdf), ...OLD.map(s => "n" + s.com)]);   // per indirizzo del PDF o per numero    // i comunicati già letti non si toccano: restano le correzioni a mano
 const zm = html.match(/\/\*SANZIONI-INIZIO\*\/([\s\S]*?)\/\*SANZIONI-FINE\*\//);
 const OLDZ = zm ? JSON.parse(zm[1]) : [];
-const giaFattiZ = new Set(OLDZ.map(s => s.pdf));
+const giaFattiZ = new Set([...OLDZ.map(s => s.pdf), ...OLDZ.map(s => "n" + s.com)]);
 
 const list = await comunicati();
 console.log(`Comunicati trovati: ${list.map(c => c.num).join(", ") || "nessuno"}`);
 const nuovi = [], nuoviZ = [], problemi = [];
 for (const c of list) {
-  if (!DUMP && giaFatti.has(c.pdf) && (!zm || giaFattiZ.has(c.pdf))) continue;
+  const fatto = x => x.has(c.pdf) || x.has("n" + c.num);
+  if (!DUMP && fatto(giaFatti) && (!zm || fatto(giaFattiZ))) continue;
   const r = await fetch(c.pdf, { headers: UA });
   if (!r.ok) { problemi.push(`${c.pdf}: risposta ${r.status}`); continue; }
   const lines = await pdfText(await r.arrayBuffer());
   if (DUMP) { console.log(`\n===== ${c.num} ${c.pdf}\n` + lines.join("\n")); continue; }
   const data = riunione(lines);
-  if (zm && !giaFattiZ.has(c.pdf)) {
+  if (zm && !fatto(giaFattiZ)) {
     const z = altreSanzioni(lines);
     z.forEach(x => nuoviZ.push({ com: c.num, data, pdf: c.pdf, ...x }));
     if (!z.length) nuoviZ.push({ com: c.num, data, pdf: c.pdf, vuoto: true });
     console.log(`Comunicato ${c.num} (${data}): ${z.length} altre voci (ammende, ammonizioni...)`);
   }
-  if (giaFatti.has(c.pdf)) continue;
+  if (fatto(giaFatti)) continue;
   const sq = squalifiche(lines);
   sq.forEach(s => nuovi.push({ com: c.num, data, pdf: c.pdf, ...s }));
   if (!sq.length) nuovi.push({ com: c.num, data, pdf: c.pdf, vuoto: true });   // segna il comunicato come letto

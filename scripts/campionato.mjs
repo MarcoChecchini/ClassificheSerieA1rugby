@@ -112,6 +112,16 @@ for (const p of giocate.sort((x, y) => x.g - y.g || x.gi - y.gi)) {
 }
 const dataSrc = "{\n" + Object.keys(DATA).sort((a, b) => a - b).map(g => `"${g}":{\n` + Object.keys(DATA[g]).sort((a, b) => a - b).map(gi => ` "${gi}":[\n` + DATA[g][gi].map(r => "  " + JSON.stringify(r)).join(",\n") + "]").join(",\n") + "}").join(",\n") + "\n}";
 put("DATI", dataSrc);
+// controllo: punti calcolati dai risultati (e penalità) contro la classifica del Match Centre
+const pt = {};
+for (const o of Object.values(DATA)) for (const rows of Object.values(o)) for (const l of rows) {
+  const m = l.match(/^(.*?)\s+(\d+)\s*-\s*(\d+)\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)/), [h, a] = m[1].split(/\s+-\s+/).map(plain);
+  [[h, +m[2], +m[3], +m[4]], [a, +m[3], +m[2], +m[5]]].forEach(([k, f, s2, tr]) => { pt[k] = (pt[k] || 0) + (f > s2 ? 4 : f === s2 ? 2 : s2 - f <= 7 ? 1 : 0) + (tr >= 4 ? 1 : 0); });
+}
+PEN.forEach(p => { const k = T.find(([, t]) => t.n === p.t)[0]; pt[k] = (pt[k] || 0) + p.p; });
+const diff = T.filter(([k]) => classifica[k] && classifica[k].punteggio != null && +classifica[k].punteggio !== (pt[k] || 0)).map(([k, t]) => `${t.n}: ${pt[k] || 0} punti calcolati, ${classifica[k].punteggio} nel Match Centre`);
+if (diff.length) problems.push(...diff.map(d => "Classifica diversa dal Match Centre — " + d));
+else console.log("Classifica: punti uguali a quelli del Match Centre per tutte le squadre.");
 fs.writeFileSync(FILE, html);
 
 const report = [`### ${C.nome} ${C.sub} (${C.pagina})`, `Gironi: ${gir.length}, squadre: ${teams.size}, partite giocate: ${giocate.length}.`,
