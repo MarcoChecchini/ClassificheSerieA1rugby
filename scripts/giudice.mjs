@@ -5,7 +5,16 @@
 // Serve pdfjs-dist:  npm i --no-save pdfjs-dist@4
 import fs from "node:fs";
 
-const FILE = new URL("../index.html", import.meta.url);
+// CAMPIONATO=<chiave di scripts/campionati.mjs> (femminile, serie-b, serie-a-femminile, under-18): comunicati di
+// quel campionato, salvati nella sua pagina. Senza CAMPIONATO: Serie A maschile in index.html.
+import { CAMPIONATI } from "./campionati.mjs";
+const CFG = CAMPIONATI[process.env.CAMPIONATO || "maschile"];
+if (!CFG) throw new Error("CAMPIONATO sconosciuto: " + process.env.CAMPIONATO);
+const PAGINA = CFG.pagina;
+const FILE = new URL("../" + PAGINA, import.meta.url);
+const QUERY = CFG.query;
+const URL_OK = CFG.url;
+const SIGLA = CFG.sigla;
 const SITE = "https://www.federugby.it";
 const STAGIONE = process.env.STAGIONE_GS || "2026.2027";        // come nel nome dei PDF: COMAMASCH04GS2026.2027.pdf
 const UA = { "User-Agent": "ClassificheSerieA1rugby (+https://github.com/MarcoChecchini/ClassificheSerieA1rugby)" };
@@ -37,14 +46,14 @@ async function pdfText(buf) {
 // elenco dei comunicati: pagine "documenti" del sito con il PDF COMAMASCHxxGS<stagione>.pdf
 async function comunicati() {
   const seen = new Map();
-  for (const q of ["Comunicato Serie A Maschile GS", "Giudice Sportivo Comunicato Serie A Maschile"]) {
+  for (const q of QUERY) {
     for (let page = 1; page <= 3; page++) {
       const r = await fetch(`${SITE}/wp-json/wp/v2/search?search=${encodeURIComponent(q)}&per_page=50&page=${page}`, { headers: UA });
       if (!r.ok) break;
       const list = await r.json();
       if (!list.length) break;
       for (const it of list) {
-        if (!/serie-a-maschile/i.test(it.url) || /elite|femminile/i.test(it.url) || seen.has(it.url)) continue;
+        if (!URL_OK(it.url) || seen.has(it.url)) continue;
         seen.set(it.url, it.title);
       }
     }
@@ -52,10 +61,10 @@ async function comunicati() {
   const out = [];
   for (const [url, title] of seen) {
     const h = await (await fetch(url, { headers: UA })).text();
-    const pdf = [...new Set(h.match(/https?:\/\/[^"' ]+COMAMASCH\d+GS[^"' ]+\.pdf/gi) || [])]
+    const pdf = [...new Set(h.match(new RegExp(`https?:\\/\\/[^"' ]+${SIGLA}\\d+G?S[^"' ]+\\.pdf`, "gi")) || [])]
       .find(u => u.includes(STAGIONE));
     if (!pdf) continue;
-    const num = +(pdf.match(/COMAMASCH(\d+)GS/i) || [])[1];
+    const num = +(pdf.match(new RegExp(`${SIGLA}(\\d+)G?S`, "i")) || [])[1];
     out.push({ url, title: title.replace(/&#\d+;/g, "–"), pdf, num });
   }
   // i PDF compaiono anche tra gli "ultimi documenti" di ogni pagina: uno per numero
@@ -84,7 +93,7 @@ function squalifiche(lines) {
   for (const l of lines) {
     if (INIZIO.test(l)) { dentro = true; continue; }
     if (FINE.test(l)) { dentro = false; continue; }
-    if (!dentro || /^Segue$|^Com\.?\s*A\s*Masch/i.test(l)) continue;
+    if (!dentro || /^Segue$|^Com\.?\s*A\s*(Masch|Elite)/i.test(l)) continue;
     if (/^[-–•]\s+/.test(l)) voci.push(l.replace(/^[-–•]\s+/, ""));
     else if (voci.length) voci[voci.length - 1] += " " + l;
   }
@@ -118,7 +127,7 @@ function altreSanzioni(lines) {
   for (const l of lines) {
     if (STOP.test(l)) { sez = null; continue; }
     if (!/^[-–•]/.test(l) && SEZ.test(l) && l === l.toUpperCase()) { sez = INIZIO.test(l) ? null : l.replace(/\s+/g, " ").trim(); continue; }
-    if (!sez || /^Segue$|^Com\.?\s*A\s*Masch/i.test(l)) continue;
+    if (!sez || /^Segue$|^Com\.?\s*A\s*(Masch|Elite)/i.test(l)) continue;
     if (/^[-–•]\s+/.test(l)) voci.push({ sezione: sez, testo: l.replace(/^[-–•]\s+/, "") });
     else if (voci.length && voci[voci.length - 1].sezione === sez) voci[voci.length - 1].testo += " " + l;
   }
@@ -134,30 +143,31 @@ if (process.argv.includes("--file")) {
 
 const html = fs.readFileSync(FILE, "utf8");
 const bm = html.match(/\/\*SQUALIFICHE-INIZIO\*\/([\s\S]*?)\/\*SQUALIFICHE-FINE\*\//);
-if (!bm && !DUMP) throw new Error("Blocco SQUALIFICHE-INIZIO / SQUALIFICHE-FINE non trovato in index.html");
+if (!bm && !DUMP) throw new Error("Blocco SQUALIFICHE-INIZIO / SQUALIFICHE-FINE non trovato in " + PAGINA);
 const OLD = bm ? JSON.parse(bm[1]) : [];
-const giaFatti = new Set(OLD.map(s => s.pdf));    // i comunicati già letti non si toccano: restano le correzioni a mano
+const giaFatti = new Set([...OLD.map(s => s.pdf), ...OLD.map(s => "n" + s.com)]);   // per indirizzo del PDF o per numero    // i comunicati già letti non si toccano: restano le correzioni a mano
 const zm = html.match(/\/\*SANZIONI-INIZIO\*\/([\s\S]*?)\/\*SANZIONI-FINE\*\//);
 const OLDZ = zm ? JSON.parse(zm[1]) : [];
-const giaFattiZ = new Set(OLDZ.map(s => s.pdf));
+const giaFattiZ = new Set([...OLDZ.map(s => s.pdf), ...OLDZ.map(s => "n" + s.com)]);
 
 const list = await comunicati();
 console.log(`Comunicati trovati: ${list.map(c => c.num).join(", ") || "nessuno"}`);
 const nuovi = [], nuoviZ = [], problemi = [];
 for (const c of list) {
-  if (!DUMP && giaFatti.has(c.pdf) && (!zm || giaFattiZ.has(c.pdf))) continue;
+  const fatto = x => x.has(c.pdf) || x.has("n" + c.num);
+  if (!DUMP && fatto(giaFatti) && (!zm || fatto(giaFattiZ))) continue;
   const r = await fetch(c.pdf, { headers: UA });
   if (!r.ok) { problemi.push(`${c.pdf}: risposta ${r.status}`); continue; }
   const lines = await pdfText(await r.arrayBuffer());
   if (DUMP) { console.log(`\n===== ${c.num} ${c.pdf}\n` + lines.join("\n")); continue; }
   const data = riunione(lines);
-  if (zm && !giaFattiZ.has(c.pdf)) {
+  if (zm && !fatto(giaFattiZ)) {
     const z = altreSanzioni(lines);
     z.forEach(x => nuoviZ.push({ com: c.num, data, pdf: c.pdf, ...x }));
     if (!z.length) nuoviZ.push({ com: c.num, data, pdf: c.pdf, vuoto: true });
     console.log(`Comunicato ${c.num} (${data}): ${z.length} altre voci (ammende, ammonizioni...)`);
   }
-  if (giaFatti.has(c.pdf)) continue;
+  if (fatto(giaFatti)) continue;
   const sq = squalifiche(lines);
   sq.forEach(s => nuovi.push({ com: c.num, data, pdf: c.pdf, ...s }));
   if (!sq.length) nuovi.push({ com: c.num, data, pdf: c.pdf, vuoto: true });   // segna il comunicato come letto
@@ -181,8 +191,8 @@ if (nuovi.length) {
 if (out !== html) fs.writeFileSync(FILE, out);
 
 if (process.env.GITHUB_STEP_SUMMARY) {
-  let md = `### Giudice Sportivo\n\nComunicati letti: ${list.map(c => c.num).join(", ") || "nessuno"}. Squalifiche nuove: ${nuovi.filter(s => !s.vuoto).length}.\n`;
-  if (problemi.length) md += "\n**Da controllare a mano** (blocco `SQUALIFICHE` di `index.html`):\n\n" + problemi.map(p => "- " + p).join("\n") + "\n";
+  let md = `### Giudice Sportivo (${PAGINA})\n\nComunicati letti: ${list.map(c => c.num).join(", ") || "nessuno"}. Squalifiche nuove: ${nuovi.filter(s => !s.vuoto).length}.\n`;
+  if (problemi.length) md += "\n**Da controllare a mano** (blocco `SQUALIFICHE` di `${PAGINA}`):\n\n" + problemi.map(p => "- " + p).join("\n") + "\n";
   fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
 }
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problemi_gs=${problemi.length}\n`);

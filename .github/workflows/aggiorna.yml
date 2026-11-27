@@ -46,6 +46,39 @@ jobs:
         continue-on-error: true       # se il sito dei PDF non risponde, i risultati si salvano lo stesso
         run: node scripts/giudice.mjs
 
+      # ---- Serie A Elite femminile (femminile.html) ----
+      - name: "Femminile: risultati dal Match Centre e tabellini dagli articoli FIR"
+        id: fem
+        continue-on-error: true
+        run: node scripts/aggiorna-femminile.mjs
+
+      - name: "Femminile: arbitri, orari e campi dal Match Centre FIR"
+        id: farb
+        continue-on-error: true
+        env:
+          PAGINA: femminile.html
+          CATEGORIA_MC: "163820262027"
+        run: node scripts/arbitri.mjs
+
+      - name: "Femminile: comunicati del Giudice Sportivo"
+        id: fgs
+        continue-on-error: true
+        env:
+          CAMPIONATO: femminile
+        run: node scripts/giudice.mjs
+
+      # ---- Serie B, Serie A femminile, Under 18 Titolo (senza tabellini) ----
+      - name: "Serie B, Serie A femminile, U18: Match Centre e comunicati del Giudice Sportivo"
+        id: altri
+        continue-on-error: true
+        run: |
+          esito=0
+          for c in serie-b serie-a-femminile under-18; do
+            node scripts/campionato.mjs "$c" || esito=1
+            CAMPIONATO="$c" node scripts/giudice.mjs || esito=1
+          done
+          exit $esito
+
       - name: Salva le modifiche
         run: |
           if git diff --quiet; then echo "Niente da salvare"; exit 0; fi
@@ -63,6 +96,16 @@ jobs:
         if: steps.arb.outcome == 'failure' || (steps.arb.outputs.problemi_arb != '' && steps.arb.outputs.problemi_arb != '0')
         run: |
           echo "::warning::Arbitri dal Match Centre FIR: lettura non riuscita o squadre non riconosciute. Vedi il riepilogo dell'esecuzione."
+
+      - name: Segnala i dati femminili da controllare
+        if: steps.fem.outcome == 'failure' || steps.farb.outcome == 'failure' || steps.fgs.outcome == 'failure' || (steps.fem.outputs.problemi_f != '' && steps.fem.outputs.problemi_f != '0')
+        run: |
+          echo "::warning::Serie A Elite femminile: qualcosa da controllare (risultati, tabellini, arbitri o Giudice Sportivo). Vedi il riepilogo dell'esecuzione."
+
+      - name: Segnala i problemi di Serie B, Serie A femminile e U18
+        if: steps.altri.outcome == 'failure'
+        run: |
+          echo "::warning::Serie B, Serie A femminile o Under 18: lettura non riuscita. Vedi il riepilogo dell'esecuzione."
 
       - name: Segnala le squalifiche da controllare
         if: steps.gs.outcome == 'failure' || (steps.gs.outputs.problemi_gs != '' && steps.gs.outputs.problemi_gs != '0')

@@ -7,6 +7,31 @@ La pagina ha tre sezioni:
 - **Statistiche**: per ogni girone, all'ultima giornata giocata, miglior attacco e miglior difesa, i 5 giocatori con più punti, i 5 con più mete e i 5 migliori al piede (punti da trasformazioni e punizioni) e le classifiche dei cartellini gialli e rossi, più la **squadra più fallosa** (somma di gialli e rossi della squadra). Con pari merito sull'ultimo posto utile compaiono tutti. L'ultimo riquadro, **Tutti i gironi**, mette insieme i quattro gironi. Sotto i gironi si sceglie **Totale** oppure una singola giornata. Si aggiornano da sole con risultati e tabellini.
 - **Rose giocatori**: le rose 2026-27 dall'annuario *Rugby 2027* (Pacitti – Volpe), divise per girone e per ruolo. Nella pagina di ogni squadra, in cima, il pulsante **Info società** sotto il nome, che apre staff tecnico e società, più fondazione, colori, campo e sponsor, dall'annuario; blocco `STAFF` di `index.html`), poi i 5 migliori per punti, mete e punti al piede, più gialli e rossi. Toccando un giocatore si vede la sua scheda partita per partita.
 
+## Serie A Elite femminile
+
+Sotto la barra in alto, in tutte e due le pagine, c'è il banner per scegliere il campionato: **Serie A maschile** (`index.html`) oppure **Serie A Elite femminile** (`femminile.html`).
+
+`femminile.html` usa lo stesso codice della pagina maschile, con le stesse tre sezioni (Classifiche con schede partita e formazioni, Statistiche, Rose giocatrici) e gli stessi blocchi di dati: `DATA`, `ARBITRI`, `TABELLINI`, `SQUALIFICHE`, `SANZIONI`. Girone unico da 8 squadre, 14 giornate: le prime 4 in semifinale, l'ultima retrocede. Penalità in `PEN` (CUS Torino −4).
+
+- **Rose e società**: dall'annuario *Rugby 2027* (pagine "I club di Elite femminile", pag. 192-199), come per il maschile: blocchi `ROSE` e `STAFF` di `femminile.html`. Le giocatrici dei tabellini che non sono nell'annuario entrano comunque in rosa, solo con il nome (come per il maschile).
+- **Aggiornamento automatico** (stessa Action):
+  - `scripts/aggiorna-femminile.mjs`: risultati dal Match Centre FIR (categoria `163820262027`); le mete di ogni partita si ricavano dal totale mete della classifica del Match Centre, altrimenti dai marcatori del tabellino. Poi i tabellini dagli articoli "Serie A Elite Femminile" di federugby.it.
+  - `scripts/femtab.mjs` converte i tabellini femminili (scritti a mano dalle società, in forme diverse) nel formato della pagina. Le grafie diverse dello stesso nome si sistemano nella tabella `NOMI` in cima al file.
+  - `scripts/arbitri.mjs` con `PAGINA=femminile.html CATEGORIA_MC=163820262027` e `scripts/giudice.mjs` con `CAMPIONATO=femminile` (PDF `COMAELITEFEMMxxGS`).
+- Quello che non torna (mete non ricavabili, tabellini incompleti) compare nel riepilogo dell'esecuzione con un avviso giallo. I tabellini già presenti non vengono toccati, così le correzioni a mano restano.
+- Prova senza rete: `node scripts/aggiorna-femminile.mjs mc.json articoli.json`.
+
+I giocatori (e le giocatrici) dei tabellini che non sono nell'annuario entrano comunque nella pagina Rose: nome come scritto nel tabellino e ruolo più frequente (da titolare quello della maglia, dalla panchina quello del giocatore sostituito), senza dati anagrafici. Solo chi segna senza essere in formazione nel tabellino resta nel gruppo "Entrati solo dalla panchina".
+
+## Serie B, Serie A femminile e Under 18 Titolo
+
+Pagine `serie-b.html`, `serie-a-femminile.html`, `under-18.html`, raggiungibili dal banner dei campionati (5 voci, in tutte le pagine). Hanno classifiche per girone e per giornata, risultati con mete e bonus, calendario, andamento delle posizioni, arbitri, orari e campi, miglior attacco e difesa, squalifiche e multe dai comunicati.
+
+- La FIR non pubblica tabellini per questi campionati: niente formazioni, rose e statistiche dei giocatori. Se un giorno i tabellini ci saranno, il codice delle pagine è lo stesso di `index.html`.
+- **Dati automatici** (stessa Action): `scripts/campionato.mjs <chiave>` legge dal Match Centre squadre, gironi, calendario, risultati, arbitri e penalità, e le mete di ogni partita dall'omologazione dei comunicati del Giudice Sportivo (PDF); se il comunicato non è ancora uscito, dal totale mete della classifica del Match Centre. A ogni esecuzione controlla che i punti calcolati siano uguali a quelli della classifica del Match Centre. Squalifiche e multe: `CAMPIONATO=<chiave> node scripts/giudice.mjs`.
+- Le chiavi, le categorie del Match Centre e le sigle dei comunicati di tutti i campionati sono in `scripts/campionati.mjs`.
+- **Dopo una modifica al codice di `index.html`**: `node scripts/genera-pagine.mjs` rigenera le tre pagine (tenendo i loro dati) e il banner.
+
 Le statistiche dei giocatori sono calcolate nella pagina dal testo dei tabellini FIR, salvato nel blocco `TABELLINI` di `index.html`.
 
 ## Aggiornamento automatico
