@@ -5,13 +5,16 @@
 // Serve pdfjs-dist:  npm i --no-save pdfjs-dist@4
 import fs from "node:fs";
 
-// CAMPIONATO=femminile: comunicati della Serie A Elite femminile (COMAELITEFEMMxxGS...) in femminile.html
-const FEM = process.env.CAMPIONATO === "femminile";
-const PAGINA = FEM ? "femminile.html" : "index.html";
+// CAMPIONATO=<chiave di scripts/campionati.mjs> (femminile, serie-b, serie-a-femminile, under-18): comunicati di
+// quel campionato, salvati nella sua pagina. Senza CAMPIONATO: Serie A maschile in index.html.
+import { CAMPIONATI } from "./campionati.mjs";
+const CFG = CAMPIONATI[process.env.CAMPIONATO || "maschile"];
+if (!CFG) throw new Error("CAMPIONATO sconosciuto: " + process.env.CAMPIONATO);
+const PAGINA = CFG.pagina;
 const FILE = new URL("../" + PAGINA, import.meta.url);
-const QUERY = FEM ? ["Comunicato Serie A Elite Femminile GS", "Giudice Sportivo Comunicato Serie A Elite Femminile"] : ["Comunicato Serie A Maschile GS", "Giudice Sportivo Comunicato Serie A Maschile"];
-const URL_OK = u => FEM ? /serie-a-elite-femminile/i.test(u) : /serie-a-maschile/i.test(u) && !/elite|femminile/i.test(u);
-const SIGLA = FEM ? "COMAELITEFEMM" : "COMAMASCH";
+const QUERY = CFG.query;
+const URL_OK = CFG.url;
+const SIGLA = CFG.sigla;
 const SITE = "https://www.federugby.it";
 const STAGIONE = process.env.STAGIONE_GS || "2026.2027";        // come nel nome dei PDF: COMAMASCH04GS2026.2027.pdf
 const UA = { "User-Agent": "ClassificheSerieA1rugby (+https://github.com/MarcoChecchini/ClassificheSerieA1rugby)" };

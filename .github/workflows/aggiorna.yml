@@ -67,6 +67,18 @@ jobs:
           CAMPIONATO: femminile
         run: node scripts/giudice.mjs
 
+      # ---- Serie B, Serie A femminile, Under 18 Titolo (senza tabellini) ----
+      - name: "Serie B, Serie A femminile, U18: Match Centre e comunicati del Giudice Sportivo"
+        id: altri
+        continue-on-error: true
+        run: |
+          esito=0
+          for c in serie-b serie-a-femminile under-18; do
+            node scripts/campionato.mjs "$c" || esito=1
+            CAMPIONATO="$c" node scripts/giudice.mjs || esito=1
+          done
+          exit $esito
+
       - name: Salva le modifiche
         run: |
           if git diff --quiet; then echo "Niente da salvare"; exit 0; fi
@@ -89,6 +101,11 @@ jobs:
         if: steps.fem.outcome == 'failure' || steps.farb.outcome == 'failure' || steps.fgs.outcome == 'failure' || (steps.fem.outputs.problemi_f != '' && steps.fem.outputs.problemi_f != '0')
         run: |
           echo "::warning::Serie A Elite femminile: qualcosa da controllare (risultati, tabellini, arbitri o Giudice Sportivo). Vedi il riepilogo dell'esecuzione."
+
+      - name: Segnala i problemi di Serie B, Serie A femminile e U18
+        if: steps.altri.outcome == 'failure'
+        run: |
+          echo "::warning::Serie B, Serie A femminile o Under 18: lettura non riuscita. Vedi il riepilogo dell'esecuzione."
 
       - name: Segnala le squalifiche da controllare
         if: steps.gs.outcome == 'failure' || (steps.gs.outputs.problemi_gs != '' && steps.gs.outputs.problemi_gs != '0')

@@ -211,11 +211,12 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 .sf-l{flex:0 0 38%;color:var(--mu);font-size:13px}.sf-v{flex:1}
 .sf-co .sf-v{font-weight:700}.sf a{color:var(--tc)}
 /* scelta del campionato */
-.camp{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--sh)}
-.camp a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:9px 8px;text-align:center;text-decoration:none;color:var(--tx);font-weight:600;font-size:14px;line-height:1.2}
+.camp{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--bd);border-radius:12px;overflow-x:auto;scrollbar-width:none;background:var(--card);box-shadow:var(--sh)}.camp::-webkit-scrollbar{display:none}
+.camp a{flex:1 0 auto;min-width:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:9px 8px;text-align:center;text-decoration:none;color:var(--tx);font-weight:600;font-size:14px;line-height:1.2;white-space:nowrap}
 .camp a+a{border-left:1px solid var(--bd)}
 .camp a small{font-weight:400;font-size:11.5px;color:var(--mu)}
 .camp a:hover{background:var(--acbg)}
+@media(max-width:560px){.camp a{flex:1 1 0;min-width:68px;padding:8px 4px;font-size:12.5px;white-space:normal}.camp a small{font-size:10.5px}}
 .camp a.on{background:var(--ac);color:#fff}.camp a.on small{color:inherit;opacity:.85}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .camp a.on{color:#06231b}}:root[data-theme="dark"] .camp a.on{color:#06231b}
 </style>
@@ -223,7 +224,7 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 <body>
 <main>
 <div class="views" id="views"><button data-v="c" class="on">Classifiche</button><button data-v="s">Statistiche</button><button data-v="r">Rose giocatori</button></div>
-<nav class="camp" aria-label="Campionato"><a href="./" class="on" aria-current="page">Serie A<small>maschile</small></a><a href="femminile.html">Serie A Elite<small>femminile</small></a></nav>
+<nav class="camp" aria-label="Campionato"><a href="./" class="on" aria-current="page">Serie A<small>maschile</small></a><a href="femminile.html">Serie A Elite<small>femminile</small></a><a href="serie-b.html">Serie B<small>maschile</small></a><a href="serie-a-femminile.html">Serie A<small>femminile</small></a><a href="under-18.html">Under 18<small>titolo</small></a></nav>
 <section id="vC">
 <h1>Serie A maschile – classifiche per giornata</h1>
 <details class="rules"><summary>ⓘ Come si calcola la classifica</summary>Punti federali: 4 vittoria, 2 pareggio, +1 con 4 mete o più, +1 con sconfitta di 7 punti o meno. Ordine: punti, differenza punti, punti fatti. Tocca una squadra per vedere i giocatori scesi in campo.</details>

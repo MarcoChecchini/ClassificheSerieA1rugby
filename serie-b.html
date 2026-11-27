@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Serie B maschile Rugby – Classifiche</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8944600467411560"
+     crossorigin="anonymous"></script>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--tx:#1c1c1a;--mu:#6b6b66;--bd:#e0dfd8;--ac:#0f6e56;--acbg:#e1f5ee;--up:#1a7f37;--dn:#c0392b;--hl:#fff6d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--card:#201f1d;--tx:#eeede8;--mu:#a1a09a;--bd:#33322f;--ac:#5dcaa5;--acbg:#10372d;--up:#56d364;--dn:#ff7b72;--hl:#3a3418}}
+:root[data-theme="dark"]{--bg:#161615;--card:#201f1d;--tx:#eeede8;--mu:#a1a09a;--bd:#33322f;--ac:#5dcaa5;--acbg:#10372d;--up:#56d364;--dn:#ff7b72;--hl:#3a3418}
+html{color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0 0 2px}.sub{color:var(--mu);font-size:13px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+button:disabled{opacity:.4;cursor:default}
+.nav{display:flex;align-items:center;gap:10px}
+.nav input[type=range]{flex:1;accent-color:var(--ac)}
+.gl{font-weight:600;min-width:110px;text-align:center}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:5px 6px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:var(--mu);font-weight:500;font-size:12px}
+td.t,th.t{text-align:left;white-space:normal}
+td.pt{font-weight:700;color:var(--ac)}
+tr.sel td{background:var(--hl)}tr.hov td{background:var(--acbg)}tbody tr{cursor:pointer}
+.up{color:var(--up)}.dn{color:var(--dn)}.eq{color:var(--mu)}
+.res{display:grid;grid-template-columns:1fr auto 1fr;gap:4px 10px;font-size:13.5px}
+.res .s{font-weight:700;text-align:center}.res .a{text-align:right}
+h2{font-size:15px;margin:0 0 8px}
+textarea{width:100%;min-height:110px;font:12.5px/1.4 ui-monospace,Menlo,monospace;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px}
+.msg{font-size:13px;margin-top:6px;color:var(--mu)}.err{color:var(--dn)}
+details summary{cursor:pointer;font-weight:600}
+.bd{vertical-align:middle;margin-right:6px;width:20px;height:23px;object-fit:contain}
+img.bd{background:#fff;border-radius:4px;padding:1px}
+svg text{fill:var(--mu);font-size:11px}
+
+.views{display:flex;gap:8px;margin:0 0 14px}
+.views button{flex:1;padding:10px 12px;font-weight:600;font-size:15px}
+.hide{display:none!important}
+.gh{font-size:15px;margin:18px 0 8px;display:flex;align-items:baseline;gap:8px}.gh small{color:var(--mu);font-weight:400;font-size:12.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.tm{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;text-align:center;border-radius:12px;font-size:13px;line-height:1.25}
+.tm:hover{border-color:var(--ac);background:var(--acbg)}
+.lg{width:64px;height:64px;object-fit:contain}
+img.lg{background:#fff;border-radius:10px;padding:4px}
+.tm .c{color:var(--mu);font-size:11.5px}
+.th{display:flex;align-items:center;gap:14px;margin-bottom:6px}.th .lg{width:76px;height:76px}
+.th h2{font-size:19px;margin:0}.th .c{color:var(--mu);font-size:13px}
+.rl{font-size:14px;margin:0 0 6px;display:flex;justify-content:space-between}.rl span{color:var(--mu);font-weight:400;font-size:12.5px}
+.rt{min-width:760px;table-layout:fixed}.rt td,.rt th{text-align:left;white-space:normal}.rt td.n,.rt th.n{text-align:right}
+.rt td.nt{color:var(--mu);font-size:12px;white-space:normal}
+.flt{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);margin-bottom:12px}
+.res .x{color:var(--mu);font-weight:500}
+.dt{color:var(--mu);font-size:13px;margin-top:8px;text-align:center}
+.tag{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:999px;background:var(--acbg);color:var(--ac);margin-left:6px;vertical-align:middle}
+.tag.f{background:var(--bd);color:var(--mu)}
+.tph{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}.tph h2{margin:0}.tph button{padding:4px 10px}
+a.pl{color:inherit;text-decoration:underline;text-decoration-color:var(--bd);text-underline-offset:3px;cursor:pointer}a.pl:hover{color:var(--ac);text-decoration-color:var(--ac)}
+table.st{min-width:680px}table.st td,table.st th{padding:5px 6px}
+table.st tr.sep td{text-align:left;font-weight:600;color:var(--mu);background:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+table.st tr.tot td{font-weight:700;border-top:2px solid var(--bd)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:40px 12px;overflow:auto}
+.mdl{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;max-width:980px;width:100%}
+.mdl .th .lg{width:56px;height:56px}
+.rt tbody tr{cursor:pointer}.rt tbody tr:hover td{background:var(--acbg)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.g2 .card{margin:0}
+.sk .lab{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}.sk .tn{font-weight:600;display:flex;align-items:center;margin-bottom:2px}.sk .big{font-size:30px;font-weight:700;color:var(--ac);line-height:1.1;margin-top:6px}
+ol.rk{list-style:none;margin:0;padding:0}ol.rk li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}ol.rk li:last-child{border-bottom:0}.rk .ps{width:20px;color:var(--mu);text-align:right;font-size:13px}.rk .pn{flex:1;display:flex;flex-direction:column;min-width:0}.rk .pn small{color:var(--mu);font-size:12px}.rk .pv{font-weight:700;font-size:17px;color:var(--ac);text-align:right;white-space:nowrap}.rk .pv small{font-size:11px;color:var(--mu);font-weight:500;margin-left:3px}
+ol.rk li.more{display:block}ol.rk li.more summary{color:var(--ac);font-size:13.5px;font-weight:600;padding:2px 0}ol.rk li.more ol.rk{margin-top:4px}
+.lnav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin:2px 0 8px}.lnav button{font-size:20px;padding:8px 14px}
+.lt{display:flex;align-items:center;justify-content:center;gap:12px}.lt .lg{width:52px;height:52px}.lt .ln{font-size:18px;font-weight:700}.lt .c{color:var(--mu);font-size:13px}
+table.lt2{min-width:0}table.lt2 td.t{white-space:nowrap}
+@media(max-width:560px){table.lt2 .cr{display:none}table.lt2{font-size:12.5px}table.lt2 td,table.lt2 th{padding:5px 3px}table.lt2 td.t{white-space:normal}.lt .lg{width:40px;height:40px}.lt .ln{font-size:16px}.lnav button{padding:6px 10px}}
+ul.el .ul{display:inline-block;min-width:130px;color:var(--mu);font-size:12.5px}
+h2.sh{font-size:16px;margin:18px 0 8px}
+.mcs{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.mc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;display:grid;grid-template-columns:1fr auto 1fr 20px;align-items:center;gap:12px}
+.mc[data-mt]{cursor:pointer;transition:border-color .15s,box-shadow .15s}.mc[data-mt]:hover{border-color:var(--ac);box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.mc .t{display:flex;align-items:center;gap:8px;min-width:0;font-size:14.5px}.mc .t.h{justify-content:flex-end;text-align:right}.mc .t .bd{width:28px;height:32px;margin:0;flex:none}
+.mc .t .n{min-width:0;display:flex;flex-direction:column}.mc .t .bp{font-size:11px;color:var(--mu);font-weight:600}
+.mc .t.l .n>span:first-child{opacity:.6}
+.mc .sc{text-align:center;min-width:96px}.mc .sc b{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.mc .sc b .w{color:var(--ac)}.mc .sc small{display:block;font-size:11.5px;color:var(--mu)}
+.mc .go{color:var(--ac);font-size:20px;font-weight:600;text-align:right}
+.mc.tbd .sc b{color:var(--mu);font-weight:500;font-size:16px}
+@media(max-width:560px){.mc{padding:8px 8px;gap:6px;grid-template-columns:1fr auto 1fr 12px}.mc .t{font-size:13px;gap:5px}.mc .t .bd{width:22px;height:25px}.mc .sc{min-width:70px}.mc .sc b{font-size:18px}.mc .go{font-size:16px}}
+.mh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;text-align:center;margin:4px 0 6px}.mh .tn{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:600}.mh .lg{width:56px;height:56px}
+.mh .sc{font-size:34px;font-weight:800;white-space:nowrap}.mh .sc small{display:block;font-size:12px;font-weight:400;color:var(--mu)}
+.mi{color:var(--mu);font-size:13px;text-align:center;margin-bottom:12px}
+.mdl h3{font-size:14px;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
+table.lu{min-width:0;font-size:13.5px}table.lu td{white-space:normal;padding:5px 6px}table.lu td.h{text-align:right;width:44%}table.lu td.a{text-align:left;width:44%}table.lu td.nn{text-align:center;color:var(--mu);font-weight:700;width:12%}table.lu td.nn small{display:block;font-weight:400;font-size:10.5px}
+table.lu th{text-align:center}table.lu th.h{text-align:right}table.lu th.a{text-align:left}tbody tr.nc{cursor:default}
+.ic{display:inline-block;font-size:11px;font-weight:700;padding:0 4px;border-radius:3px;margin:0 2px;vertical-align:1px;white-space:nowrap}.ic.m{background:var(--acbg);color:var(--ac)}
+.cd{display:inline-block;width:9px;height:12px;border-radius:2px;margin:0 2px;vertical-align:-1px}.cd.y{background:#f2c200}.cd.r{background:#d7263d}
+.ev2{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}.ev2>div{min-width:0}.ev2 .a{text-align:left}
+ul.el{list-style:none;margin:0;padding:0;font-size:13.5px}ul.el li{padding:4px 0;border-bottom:1px solid var(--bd)}ul.el li:last-child{border-bottom:0}ul.el .mn{display:inline-block;min-width:34px;font-weight:700;color:var(--ac)}ul.el small{color:var(--mu)}
+table.lu tr.sep td{text-align:center;font-weight:600;color:var(--mu);background:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+table.lu .mm{font-size:12px;color:var(--mu);margin-top:1px}table.lu .mm b{color:var(--tx);font-weight:600}
+.nt{font-size:13px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:8px 10px}
+@media (max-width:560px){.mh .sc{font-size:26px}.ev2{grid-template-columns:1fr}table.lu{font-size:12.5px}}
+.srs{gap:4px}.srs button{padding:4px 10px;font-size:13.5px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.g3 .rk .bd{display:none}
+@media(max-width:720px){.g3{grid-template-columns:1fr}}
+@media(max-width:520px){.g2{grid-template-columns:1fr}}
+
+/* ===== Restyling grafico ===== */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.on{color:#06231b}}:root[data-theme="dark"] button.on{color:#06231b}
+:root{--sh:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04)}
+body{font-feature-settings:"tnum";-webkit-font-smoothing:antialiased}
+main{padding:0 14px 28px}
+.card,.mc{box-shadow:var(--sh)}
+h1{font-size:22px;letter-spacing:-.01em;margin-top:6px}
+h2.sh{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:700;margin:20px 2px 8px}
+/* barra viste fissa e compatta */
+.views{position:sticky;top:0;z-index:20;margin:0 -14px 12px;padding:10px 14px;gap:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+.views button{flex:1;padding:8px 6px;font-size:14px;border-radius:0;border-right-width:0;white-space:nowrap}
+.views button:first-child{border-radius:10px 0 0 10px}.views button:last-child{border-radius:0 10px 10px 0;border-right-width:1px}
+/* chip a riga unica scorrevole */
+.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -14px 12px;padding:2px 14px}.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;border-radius:999px;padding:6px 14px;white-space:nowrap}
+/* regole a scomparsa */
+details.rules{color:var(--mu);font-size:13px;margin:0 0 12px}details.rules summary{font-weight:500;color:var(--ac);list-style:none}details.rules summary::-webkit-details-marker{display:none}details.rules[open] summary{margin-bottom:4px}
+/* navigazione giornate */
+.nav{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"l l l" "p r n";gap:8px 10px}
+.nav .gl{grid-area:l;text-align:left;font-size:17px;min-width:0}#prev{grid-area:p}#rng{grid-area:r}#next{grid-area:n}
+.nav button{width:40px;height:36px;padding:0;border-radius:10px}
+.dt{text-align:left;margin-top:6px}
+/* nomi squadra: testo neutro + barretta colore */
+.tn2{font-weight:600}
+.mc .t.l .n>span:first-child{opacity:1}.mc .t.l .tn2{font-weight:500}
+.mc .t:not(.l) .tn2{font-weight:800}
+.mc{position:relative;overflow:hidden}
+.mc .sc b{letter-spacing:-.02em}
+/* classifica */
+#tb tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 60%,var(--card))}
+#tb tbody tr.sel td{background:var(--hl)}#tb tbody tr.hov td{background:var(--acbg)}
+#tb td.pt{font-size:15px}
+#tb tr.zpo td:first-child{box-shadow:inset 4px 0 0 var(--up)}#tb tr.zrel td:first-child{box-shadow:inset 4px 0 0 var(--dn)}
+#tb tr.zcut td{border-bottom:2px dashed var(--mu)}
+.zleg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mu);margin:8px 2px 0}.zleg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+@media(max-width:560px){
+ #tb{min-width:640px}
+ #tb td,#tb th{padding:8px 4px}#tb td.t{white-space:normal;line-height:1.2}
+ #tb .bd{width:18px;height:20px}
+ .card{padding:10px}
+ .grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px}.tm{padding:10px 6px;gap:6px;font-size:12px}.lg{width:48px;height:48px}
+}
+#bump svg{display:block;width:100%;height:auto}#bump svg text{font-size:11px}
+/* link meno pesanti */
+a.pl{text-decoration-color:transparent}a.pl:hover{text-decoration-color:var(--ac)}
+.ov{transition:background .25s}
+.mdl.deco{position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mdl.deco>*:not(.wm){position:relative;z-index:1}
+.mdl .wm{position:absolute;z-index:0;pointer-events:none;opacity:.10;filter:blur(1.5px) saturate(1.2);height:auto}
+.mdl .wm.s{width:320px;right:-60px;top:20px;transform:rotate(-8deg)}
+.mdl .wm.l{width:260px;left:-70px;top:30px;transform:rotate(-8deg)}.mdl .wm.r{width:260px;right:-70px;top:30px;transform:rotate(8deg)}
+@media (prefers-color-scheme:dark){.mdl .wm{opacity:.08}}
+.swp{display:none;margin-left:auto}@media(max-width:640px){.swp{display:inline}}
+.ptb{min-width:0;font-size:13.5px}.ptb th,.ptb td{padding:7px 5px}.ptb td.ps{color:var(--mu);width:22px}
+.ptb td.t{min-width:130px}.ptb td.t b{font-weight:600}.ptb .bar{display:block;height:4px;border-radius:2px;background:var(--bd);margin-top:4px;overflow:hidden}.ptb .bar i{display:block;height:100%;border-radius:2px}
+.ptb tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 60%,transparent)}.ptb tbody tr{cursor:pointer}.ptb tbody tr:hover td{background:var(--acbg)}
+.ptbb{width:100%;margin-top:8px;color:var(--ac);font-weight:600}
+.lds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 14px}
+.ld{border-radius:12px;padding:10px;background:color-mix(in srgb,var(--tc) 12%,var(--card));border:1px solid color-mix(in srgb,var(--tc) 30%,var(--bd));min-width:0}
+.ld.tie{cursor:pointer;transition:box-shadow .15s}.ld.tie:active{transform:scale(.98)}
+.ld.tie .tl{display:none}.ld.tie.open .tl{display:block}.ld.tie.open .tl0{display:none}.ld .tl .rk li{padding:6px 0}.ld .tl .rk .pv{color:var(--tx)}.ld .tl .rk .pn small{font-size:11.5px}
+.ld.tie.open{grid-column:1/-1}
+.ld.tie .tl .nmx{padding:5px 0 0}.ld.tie .tl .nmx+.dt2{margin-bottom:2px}
+.ld .dt2.more{color:var(--ac);font-weight:600}.lds{grid-auto-flow:row dense}.lds:has(.ld:not(.crd).open){grid-template-columns:1fr 1fr}
+.ld.crd{grid-column:1/-1}.lds:has(.open) .ld.crd{grid-column:1/-1}
+.ld .cv{display:flex;gap:22px;align-items:center;font-size:14px;color:var(--mu);margin:6px 0 2px}.ld .cv b{font-size:26px;color:var(--tx);margin-right:3px}
+.cd.big{width:14px;height:19px;margin-right:6px;vertical-align:-2px}
+.ld .rk .cdv{font-size:15px;color:var(--tx)}
+.ld .lab{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mu);font-weight:700}
+.ld .v{font-size:30px;font-weight:800;line-height:1.1;margin:4px 0 2px;color:var(--tx)}.ld .v small{font-size:12px;font-weight:600;color:var(--mu);margin-left:2px}
+.ld .nmx{font-weight:700;font-size:13.5px;display:block;line-height:1.2}.ld .dt2{font-size:11.5px;color:var(--mu);margin-top:2px}
+@media(max-width:400px){.ld{padding:8px}.ld .v{font-size:24px}.ld .nmx{font-size:12.5px}}
+#pgbg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;transition:background .3s}
+#pgbg img{position:absolute;right:-12vw;top:90px;width:min(90vw,560px);opacity:.10;filter:blur(2px) saturate(1.2);transform:rotate(-10deg)}
+body.pgdeco{background:transparent}
+body.pgdeco .card{background:color-mix(in srgb,var(--card) 80%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+body.pgdeco .views{background:color-mix(in srgb,var(--card) 60%,transparent)}
+body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
+.io-in{color:var(--up)}.io-out{color:var(--dn)}
+.fx summary,.fx-li summary,.fx-p summary{list-style:none;cursor:pointer;font-weight:400}
+.fx summary::-webkit-details-marker,.fx-li summary::-webkit-details-marker,.fx-p summary::-webkit-details-marker{display:none}
+.fx-li{display:block!important}.fx-li summary{display:flex;align-items:center;gap:8px}
+.chev{display:inline-block;color:var(--mu);font-size:12px;transition:transform .15s}details[open]>summary .chev{transform:rotate(180deg)}
+.fx-more{color:var(--ac);font-size:13.5px;font-weight:600;margin-top:6px}
+.fx-tn{font-weight:600;display:flex;align-items:center;margin:10px 0 2px}
+.fx-pl{margin:8px 0 2px;border-top:1px solid var(--bd)}
+.fx-p{border-bottom:1px solid var(--bd)}.fx-p:last-child{border-bottom:0}
+.fx-p summary{display:flex;align-items:center;gap:8px;padding:7px 0 7px 6px}
+.fx-p .pn{flex:1;display:flex;flex-direction:column;min-width:0}.fx-p .pn small{color:var(--mu);font-size:12px}
+.fx-p .pv{font-weight:700;font-size:15px;white-space:nowrap}
+.fx-ms{margin:0 0 8px 6px;padding-left:10px;border-left:3px solid var(--acbg)}
+.fx-m{display:flex;flex-direction:column;padding:5px 0;color:var(--tx);text-decoration:none;cursor:pointer;font-size:14px}
+.fx-m small{color:var(--mu);font-size:12.5px}.fx-m:hover b{color:var(--ac)}
+.fx-sk{display:inline-block;font-size:13px;margin-top:2px}
+.sf-tg{margin-top:6px;padding:4px 12px;font-size:13px;font-weight:600;color:var(--tf,#fff);background:var(--tc,var(--ac));border-color:transparent;border-radius:999px}
+.sf-tg .chev{color:inherit;opacity:.85}.sfo .sf-tg .chev{transform:rotate(180deg)}
+.sf{display:none;margin-top:10px;border-top:1px solid var(--bd)}.sfo .sf{display:block}
+.sf-h{margin:12px 0 2px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tc)}
+.sf-r{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.sf-l{flex:0 0 38%;color:var(--mu);font-size:13px}.sf-v{flex:1}
+.sf-co .sf-v{font-weight:700}.sf a{color:var(--tc)}
+/* scelta del campionato */
+.camp{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--bd);border-radius:12px;overflow-x:auto;scrollbar-width:none;background:var(--card);box-shadow:var(--sh)}.camp::-webkit-scrollbar{display:none}
+.camp a{flex:1 0 auto;min-width:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:9px 8px;text-align:center;text-decoration:none;color:var(--tx);font-weight:600;font-size:14px;line-height:1.2;white-space:nowrap}
+.camp a+a{border-left:1px solid var(--bd)}
+.camp a small{font-weight:400;font-size:11.5px;color:var(--mu)}
+.camp a:hover{background:var(--acbg)}
+@media(max-width:560px){.camp a{flex:1 1 0;min-width:68px;padding:8px 4px;font-size:12.5px;white-space:normal}.camp a small{font-size:10.5px}}
+.camp a.on{background:var(--ac);color:#fff}.camp a.on small{color:inherit;opacity:.85}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .camp a.on{color:#06231b}}:root[data-theme="dark"] .camp a.on{color:#06231b}
+</style>
+</head>
+<body>
+<main>
+<div class="views" id="views"><button data-v="c" class="on">Classifiche</button><button data-v="s">Statistiche</button></div>
+<nav class="camp" aria-label="Campionato"><a href="./">Serie A<small>maschile</small></a><a href="femminile.html">Serie A Elite<small>femminile</small></a><a href="serie-b.html" class="on" aria-current="page">Serie B<small>maschile</small></a><a href="serie-a-femminile.html">Serie A<small>femminile</small></a><a href="under-18.html">Under 18<small>titolo</small></a></nav>
+<section id="vC">
+<h1>Serie B maschile – classifiche per giornata</h1>
+<details class="rules"><summary>ⓘ Come si calcola la classifica</summary>Punti federali: 4 vittoria, 2 pareggio, +1 con 4 mete o più, +1 con sconfitta di 7 punti o meno. Ordine: punti, differenza punti, punti fatti. Risultati e mete dai comunicati ufficiali; calendario, orari e arbitri dal Match Centre FIR.</details>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="card">
+  <div class="nav"><button id="prev">←</button><input type="range" id="rng" min="0" value="0"><button id="next">→</button><span class="gl" id="gl"></span></div>
+  <div class="dt" id="dt"></div>
+</div>
+
+<h2 id="resh" class="sh">Risultati della giornata</h2><div class="mcs" id="res"></div>
+
+<h2 class="sh">Classifica</h2>
+<div class="card scroll"><table id="tb"></table></div><div class="zleg" id="zleg"></div>
+<div class="card hide" id="tp"></div>
+
+<div class="card"><h2>Andamento delle posizioni <small style="color:var(--mu);font-weight:400;font-size:12px">· tocca una linea</small></h2><div id="bump"></div></div>
+</section>
+<section id="vS" class="hide">
+<h1>Serie B maschile – statistiche</h1>
+<div class="sub">Miglior attacco e miglior difesa dai risultati; squalifiche e multe dai comunicati del Giudice Sportivo.</div>
+<div class="tabs" id="stabs"></div>
+<div class="tabs srs" id="srs"></div>
+<div id="stat"></div>
+</section>
+<section id="vR" class="hide">
+<h1>Serie A maschile – rose 2026-27</h1>
+<div class="sub">Rose delle prime squadre dall'annuario Rugby 2027 (Pacitti – Volpe). Tocca una squadra per vedere i giocatori divisi per ruolo, poi un giocatore per le sue partite.</div>
+<div id="rose"></div>
+</section>
+
+<div id="ov" class="ov hide"></div>
+<footer class="msg" style="text-align:center;margin:24px 0 8px">Sito non ufficiale, dati dalle pubblicazioni FIR · <a href="privacy.html" style="color:inherit">Privacy e cookie</a></footer>
+</main>
+
+<script>
+const T=[
+].map(([n,g,re])=>({n,g,re}));
+const GIRNOMI={};
+const GIRONI=[...new Set(T.map(t=>t.g))].sort((a,b)=>a-b);if(!GIRONI.length)GIRONI.push(1);
+const PEN=[];
+/* ===== ARBITRI =====
+   Ufficiali di gara dal Match Centre FIR (arbitro, giudici di linea, TMO) con data, ora e campo.
+   Li aggiorna in automatico scripts/arbitri.mjs (le designazioni escono di solito il giovedì). */
+const ARBITRI=/*ARBITRI-INIZIO*/[]/*ARBITRI-FINE*/;
+const arbOf=(ri,h,a)=>ARBITRI.find(x=>x.gi===ri+1&&x.h===h&&x.a===a)||ARBITRI.find(x=>x.gi===ri+1&&x.h===a&&x.a===h);
+const tcap=s=>String(s).toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
+const fmtP=p=>{if(!p)return"";const[c,n]=p[0].split(",");return tcap((n?n.trim()+" ":"")+c.trim())+(p[1]?` <span class="eq">(${p[1]})</span>`:"")};
+const surP=p=>p?tcap(p[0].split(",")[0].trim()):"";
+// Risultati per girone e giornata. Aggiornati in automatico da scripts/aggiorna.mjs (GitHub Action);
+// si possono anche correggere a mano: una riga per partita, mete tra parentesi.
+const DATA=/*DATI-INIZIO*/{}/*DATI-FINE*/;
+
+const find=s=>{s=s.toUpperCase();return T.find(t=>t.re.test(s))};
+function parse(txt){const out=[],bad=[];
+ txt.split("\n").forEach(l=>{l=l.trim();if(!/\d+\s*-\s*\d+\s*\(/.test(l))return;
+  const m=l.match(/^(.*?)\s+(\d+)\s*-\s*(\d+)\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)/);
+  if(!m){bad.push(l);return}
+  const p=m[1].split(/\s+-\s*/);if(p.length!==2){bad.push(l);return}
+  const h=find(p[0]),a=find(p[1]);if(!h||!a||h.g!==a.g){bad.push(l);return}
+  out.push({h:h.n,a:a.n,hs:+m[2],as:+m[3],ht:+m[4],at:+m[5]})});
+ return{out,bad}}
+
+const NG=Math.max(1,...Object.values(DATA).flatMap(o=>Object.keys(o).map(Number)));
+let rounds=Array.from({length:NG},(_,i)=>GIRONI.flatMap(g=>parse(((DATA[g]||{})[i+1]||[]).join("\n")).out)),G=1,R=NG-1,SEL=null;
+const lastR=g=>{let l=0;rounds.forEach((r,i)=>{if(r.some(x=>gOf(x.h)===g))l=i});return l};
+const gOf=n=>T.find(t=>t.n===n).g;
+
+const NGT=1,CAL={"1":[{"d":"","m":[]}]};
+const NGTG=g=>(CAL[g]||[]).length||NGT;
+const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],GG=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+const fdt=s=>{const d=new Date(s+"T12:00:00");return `${GG[d.getDay()]} ${d.getDate()} ${MESI[d.getMonth()]} ${d.getFullYear()}`};
+const played=(g,i)=>(rounds[i]||[]).some(x=>gOf(x.h)===g);
+function fixtures(g,i){
+ const rs=(rounds[i]||[]).filter(x=>gOf(x.h)===g),used=new Set();
+ const out=(CAL[g][i]?CAL[g][i].m:[]).map(([h,a])=>{
+  const k=rs.findIndex((x,j)=>!used.has(j)&&((x.h===h&&x.a===a)||(x.h===a&&x.a===h)));
+  if(k>=0){used.add(k);return rs[k]}return{h,a}});
+ rs.forEach((x,j)=>{if(!used.has(j))out.push(x)});return out}
+const CRESTS={};
+const SW=/^(RUGBY|UNIONE|CLUB|ASD|DI|RFC|UNION)$/i;
+function bdg(n){
+ if(CRESTS[n])return `<img class="bd" src="${CRESTS[n]}" alt="">`;
+ const w=n.replace(/[’']/g,"").split(/[\s&.]+/).filter(x=>x&&!SW.test(x));
+ const ini=(w.length>1?w[0][0]+w[1][0]:(w[0]||n).slice(0,2)).toUpperCase();
+ let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;
+ return `<svg class="bd" viewBox="0 0 24 28"><path d="M2 2h20v13c0 6-5 10-10 12C7 25 2 21 2 15z" style="fill:hsl(${h} 45% 38%)"/><text x="12" y="16" text-anchor="middle" style="fill:#fff;font-size:9px;font-weight:700">${ini}</text></svg>`}
+const COL={};
+const dk=()=>{const t=document.documentElement.dataset.theme;return t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches)};
+const tc=n=>COL[n]?COL[n][dk()?1:0]:null;
+const nm=n=>{const c=tc(n);return c?`<span class="tn2" style="color:${c}">${n}</span>`:`<span class="tn2">${n}</span>`};
+function stand(g,r){
+ const m={};T.filter(t=>t.g===g).forEach(t=>m[t.n]={n:t.n,pt:0,g:0,v:0,pa:0,p:0,me:0,pf:0,ps:0,pen:0});
+ for(let i=0;i<=r;i++)(rounds[i]||[]).filter(x=>gOf(x.h)===g).forEach(x=>{
+  [[x.h,x.hs,x.as,x.ht],[x.a,x.as,x.hs,x.at]].forEach(([n,f,s,tr])=>{
+   const o=m[n];o.g++;o.pf+=f;o.ps+=s;o.me+=tr;
+   if(f>s){o.v++;o.pt+=4}else if(f===s){o.pa++;o.pt+=2}else{o.p++;if(s-f<=7)o.pt++}
+   if(tr>=4)o.pt++})});
+ PEN.forEach(p=>{if(m[p.t]&&p.r<=r){m[p.t].pt+=p.p;m[p.t].pen+=p.p}});
+ const a=Object.values(m).sort((x,y)=>y.pt-x.pt||(y.pf-y.ps)-(x.pf-x.ps)||y.pf-x.pf||x.n.localeCompare(y.n));
+ a.forEach((o,i)=>o.pos=i+1);return a}
+
+function render(){
+ const L=NGTG(G)-1,LP=lastR(G);if(R>L)R=L;const rng=document.getElementById("rng");rng.max=L;rng.value=R;
+ const pl=played(G,R),c=CAL[G][R];
+ document.getElementById("gl").textContent="Giornata "+(R+1)+" di "+NGTG(G);
+ document.getElementById("dt").innerHTML=(c?(R<NGTG(G)/2?"Andata":"Ritorno")+" · "+fdt(c.d):"")+(pl?'<span class="tag">giocata</span>':'<span class="tag f">da giocare</span>')+(R>LP?`<br>Classifica aggiornata alla ${LP+1}ª giornata`:"");
+ document.getElementById("resh").textContent=pl?"Risultati della giornata":"Partite della giornata";
+ document.getElementById("prev").disabled=R===0;document.getElementById("next").disabled=R>=L;
+ document.getElementById("tabs").innerHTML=GIRONI.map(g=>`<button class="${g===G?"on":""}" data-g="${g}">${GIRNOMI[g]||"Girone "+g}</button>`).join("");
+ const RS=Math.min(R,LP),cur=stand(G,RS),prev=RS>0&&R<=LP?stand(G,RS-1):null;
+ const pm=prev?Object.fromEntries(prev.map(o=>[o.n,o.pos])):{};
+ let h=`<thead><tr><th>#</th><th></th><th class="t">Squadra</th><th>Pt</th><th>G</th><th>V</th><th>N</th><th>P</th><th>Mete</th><th>PF</th><th>PS</th><th>Diff</th><th>Pen</th></tr></thead><tbody>`;
+ const NPO=0,NT=cur.length;
+ cur.forEach(o=>{
+  const zc=(o.pos<=NPO?"zpo":false?"zrel":"")+(o.pos===NPO||false?" zcut":"");
+  let d="";if(prev){const k=pm[o.n]-o.pos;d=k>0?`<span class="up">▲${k}</span>`:k<0?`<span class="dn">▼${-k}</span>`:`<span class="eq">–</span>`}
+  const df=o.pf-o.ps;
+  h+=`<tr data-n="${o.n}" class="${zc} ${o.n===SEL?"sel":""}${o.n===HOV?" hov":""}"><td>${o.pos}</td><td>${d}</td><td class="t">${bdg(o.n)}${nm(o.n)}</td><td class="pt">${o.pt}</td><td>${o.g}</td><td>${o.v}</td><td>${o.pa}</td><td>${o.p}</td><td>${o.me}</td><td>${o.pf}</td><td>${o.ps}</td><td>${df>0?"+":""}${df}</td><td>${o.pen||""}</td></tr>`});
+ document.getElementById("tb").innerHTML=h+"</tbody>";
+ document.getElementById("zleg").innerHTML=`<span class="swp">scorri la tabella → per tutte le colonne</span>`;
+ const rs=fixtures(G,R);
+ document.getElementById("res").innerHTML=rs.map(x=>{
+  const bp=(f,s2,tr)=>{let b=[];if(tr>=4)b.push("bonus mete");if(f<s2&&s2-f<=7)b.push("bonus difensivo");return b.length?`<span class="bp">${b.join(" · ")}</span>`:""};
+  const tm=(n,side,cls,b)=>side==="h"?`<div class="t h ${cls}"><span class="n"><span>${nm(n)}</span>${b}</span>${bdg(n)}</div>`:`<div class="t ${cls}">${bdg(n)}<span class="n"><span>${nm(n)}</span>${b}</span></div>`;
+  if(x.hs==null){const ar=arbOf(R,x.h,x.a),inf=[ar&&ar.ora?ar.ora:"da giocare",ar&&ar.arb?"arb. "+surP(ar.arb):""].filter(Boolean).join(" · ");
+   return `<div class="mc tbd" data-mt="${R}|${x.h.replace(/&/g,"&amp;")}|${x.a.replace(/&/g,"&amp;")}" title="Data, campo e arbitri">${tm(x.h,"h","","")}<div class="sc"><b>– : –</b><small>${inf}</small></div>${tm(x.a,"a","","")}<span class="go">›</span></div>`}
+  const hw=x.hs>x.as,aw=x.as>x.hs;
+  const sb=`<i style="position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(${tc(x.h)||"var(--bd)"} 50%,${tc(x.a)||"var(--bd)"} 50%)"></i>`;
+  return `<div class="mc" data-mt="${R}|${x.h.replace(/&/g,"&amp;")}|${x.a.replace(/&/g,"&amp;")}" title="Formazioni e dettagli">${tm(x.h,"h",aw?"l":"",bp(x.hs,x.as,x.ht))}<div class="sc"><b><span class="${hw?"w":""}">${x.hs}</span> – <span class="${aw?"w":""}">${x.as}</span></b><small>mete ${x.ht}–${x.at}</small></div>${tm(x.a,"a",hw?"l":"",bp(x.as,x.hs,x.at))}<span class="go">›</span>${sb}</div>`}).join("")||'<div class="msg">Nessuna partita.</div>';
+ bump();renderTeamPanel();
+}
+function bump(){
+ const el=document.getElementById("bump");
+ const NR=lastR(G)+1;if(NR<2){el.innerHTML='<div class="msg">Il grafico apparirà dalla seconda giornata, quando ci saranno posizioni da confrontare.</div>';return}
+ const N=12,LW=Math.min(170,Math.max(130,(el.clientWidth||600)*.38)),W=Math.max(320,Math.min(el.clientWidth||600,NR*70+LW+40)),H=N*24+30,x=i=>18+i*((W-LW-30)/Math.max(1,NR-1)),y=p=>20+(p-1)*24;
+ const all=rounds.slice(0,NR).map((_,i)=>stand(G,i)),names=all[0].map(o=>o.n);
+ let s=`<svg viewBox="0 0 ${W} ${H}" style="max-width:${W}px">`;
+ all.forEach((_,i)=>{s+=`<text x="${x(i)}" y="12" text-anchor="middle">G${i+1}</text>`});
+ const act=HOV||SEL;[...names].sort((a,b)=>(a===act)-(b===act)).forEach(n=>{
+  const pts=all.map((a,i)=>[x(i),y(a.find(o=>o.n===n).pos)]);
+  const on=n===act,tcol=tc(n),c=tcol||(on?"var(--ac)":"var(--bd)"),op=act&&!on?(tcol?.3:.5):1;s+=`<g data-t="${n}" opacity="${op}" style="cursor:pointer">`;
+  const pp=pts.map(p=>p.join(",")).join(" ");s+=`<polyline fill="none" stroke="transparent" stroke-width="12" points="${pp}"/><polyline fill="none" stroke="${c}" stroke-width="${on?3.5:(tcol?2:1.5)}" points="${pts.map(p=>p.join(",")).join(" ")}"/>`;
+  pts.forEach(p=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${on?4:2.5}" fill="${c}"/>`});
+  const last=pts[pts.length-1];
+  s+=`<text x="${last[0]+8}" y="${last[1]+4}" style="${tcol?"fill:"+tcol+";font-weight:"+(on?800:600):on?"fill:var(--ac);font-weight:700":""}">${n}</text></g>`});
+ el.innerHTML=s+"</svg>"}
+
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-g]");if(b){G=+b.dataset.g;R=lastR(G);render();return}
+ const r=e.target.closest("tr[data-n]");if(r&&MATCHES.length){teamLineup(r.dataset.n)}});
+document.getElementById("prev").onclick=()=>{R=Math.max(0,R-1);render()};
+document.getElementById("next").onclick=()=>{R=Math.min(NGTG(G)-1,R+1);render()};
+document.getElementById("rng").oninput=e=>{R=+e.target.value;render()};
+let HOV=null;
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>render());
+const setHov=n=>{if(HOV===n)return;HOV=n;bump();document.querySelectorAll("#tb tr[data-n]").forEach(r=>r.classList.toggle("hov",r.dataset.n===n))};
+document.addEventListener("click",e=>{const t=e.target.closest("#bump [data-t]");if(t)setHov(t.dataset.t)});
+window.addEventListener("resize",()=>bump());
+document.addEventListener("mouseover",e=>{const t=e.target.closest("#bump [data-t],#tb tr[data-n]");setHov(t?(t.dataset.t||t.dataset.n):null)});
+R=lastR(G);render();
+
+const ROSE={};
+/* ===== STAFF =====
+   Società e staff tecnico 2026-27 dall'annuario Rugby 2027 (pagine "I club"), senza i numeri di telefono. */
+const STAFF={};
+const RUOLI=[["Piloni",/^pilone/],["Tallonatori",/^tallonatore/],["Seconde linee",/^(2a|seconda)/],["Terze linee",/^(3a|terza)/],["Mediani di mischia",/^m\.\s?mischia/],["Mediani di apertura",/^(apertura|m\.apertura)/],["Centri",/^centro/],["Ali",/^ala/],["Estremi",/^estremo/],["Jolly dei trequarti",/^jolly/]];
+const SER={1:"Serie A1",2:"Serie A2 · girone A",3:"Serie A2 · girone B",4:"Serie A2 · girone C"};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+function logo(n){
+ if(CRESTS[n])return `<img class="lg" src="${CRESTS[n]}" alt="">`;
+ return bdg(n).replace('class="bd"','class="lg"')}
+function age(d){if(!d)return"";const[g,m,a]=d.split("/").map(Number),t=new Date();let e=t.getFullYear()-a;if(t.getMonth()+1<m||(t.getMonth()+1===m&&t.getDate()<g))e--;return e}
+let TEAM=null,Q="";
+function renderRose(){
+ const el=document.getElementById("rose");
+ if(!TEAM){
+  pageDeco(null);el.innerHTML=GIRONI.map(g=>`<div class="gh">${"Girone "+g}<small>${SER[g]}</small></div><div class="grid">`+
+   T.filter(t=>t.g===g).sort((a,b)=>a.n.localeCompare(b.n)).map(t=>`<button class="tm card" data-team="${esc(t.n)}">${logo(t.n)}<span>${nm(t.n)}</span><span class="c">${ROSE[t.n]?ROSE[t.n].p.length+" giocatori":"rosa non disponibile"}</span></button>`).join("")+`</div>`).join("");
+  return}
+ const t=T.find(x=>x.n===TEAM),d=ROSE[TEAM],q=Q.trim().toLowerCase();
+ const ps=d.p.filter(p=>!q||p.join(" ").toLowerCase().includes(q));
+ const grp=RUOLI.map(([l,re])=>[l,ps.filter(p=>re.test(p[6].toLowerCase()))]);
+ const altri=ps.filter(p=>!RUOLI.some(([,re])=>re.test(p[6].toLowerCase())));if(altri.length)grp.push(["Entrati solo dalla panchina",altri]);
+ let h=`<button data-back="1" style="margin-bottom:12px">← Tutte le squadre</button>
+ <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div>${STAFF[TEAM]?`<button class="sf-tg" style="--tc:${tcx(TEAM)};--tf:${sfInk(tcx(TEAM))}" onclick="const c=this.closest('.card');c.classList.toggle('sfo')">Info società <span class="chev">▾</span></button>`:""}</div></div>${staffBox(TEAM)}</div>${teamBest(TEAM)}
+ <input class="flt" id="flt" placeholder="Cerca per nome, luogo di nascita, ruolo…" value="${esc(Q)}">`;
+ grp.filter(([,a])=>a.length).forEach(([l,a])=>{
+  a.sort((x,y)=>x[1].localeCompare(y[1])||x[0].localeCompare(y[0]));
+  h+=`<div class="card scroll"><h3 class="rl">${l}<span>${a.length}</span></h3><table class="rt"><colgroup><col style="width:15%"><col style="width:12%"><col style="width:17%"><col style="width:11%"><col style="width:5%"><col style="width:8%"><col style="width:9%"><col style="width:12%"><col style="width:11%"></colgroup><thead><tr><th>Cognome</th><th>Nome</th><th>Luogo di nascita</th><th>Data di nascita</th><th class="n">Età</th><th class="n">Peso (kg)</th><th class="n">Altezza (cm)</th><th>Ruolo</th><th>Note</th></tr></thead><tbody>`+
+  a.map(p=>`<tr data-pk="${esc(TEAM+"#"+d.p.indexOf(p))}"><td><b>${esc(p[1])}</b></td><td>${esc(p[0])}</td><td>${esc(p[2])}</td><td>${esc(p[3])}</td><td class="n">${age(p[3])}</td><td class="n">${esc(p[4])}</td><td class="n">${esc(p[5])}</td><td>${esc(p[6])}</td><td class="nt">${esc(p[7])}</td></tr>`).join("")+`</tbody></table></div>`});
+ if(!ps.length)h+=`<div class="msg">Nessun giocatore corrisponde alla ricerca.</div>`;
+ el.innerHTML=h;pageDeco(TEAM);
+ const f=document.getElementById("flt");if(Q){f.focus();f.setSelectionRange(Q.length,Q.length)}
+ f.oninput=e=>{Q=e.target.value;renderRose()}}
+function pageDeco(tn){
+ let bg=document.getElementById("pgbg");if(!bg){bg=document.createElement("div");bg.id="pgbg";document.body.prepend(bg)}
+ document.body.classList.toggle("pgdeco",!!tn);
+ if(!tn){bg.innerHTML="";bg.style.background="";return}
+ const c=tcx(tn);bg.style.background=`linear-gradient(180deg,color-mix(in srgb,${c} 30%,var(--bg)) 0,color-mix(in srgb,${c} 10%,var(--bg)) 55%,var(--bg) 100%)`;
+ bg.innerHTML=CRESTS[tn]?`<img src="${CRESTS[tn]}" alt="">`:""}
+function setView(v){if(v!=="r")pageDeco(null);
+ document.querySelectorAll("#views button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+ document.getElementById("vC").classList.toggle("hide",v!=="c");document.getElementById("vS").classList.toggle("hide",v!=="s");document.getElementById("vR").classList.toggle("hide",v!=="r");
+ if(v==="r")renderRose();if(v==="s")renderStats()}
+document.addEventListener("click",e=>{
+ const v=e.target.closest("#views [data-v]");if(v){setView(v.dataset.v);return}
+ const sr=e.target.closest("[data-sr]");if(sr){SR=sr.dataset.sr==="t"?null:+sr.dataset.sr;renderStats();return}
+ const sg=e.target.closest("[data-sg]");if(sg){const g=+sg.dataset.sg;SALL=g===0;if(g){G=g;R=lastR(G);render()}renderStats();return}
+ const tm=e.target.closest("[data-team]");if(tm){TEAM=tm.dataset.team;Q="";renderRose();scrollTo(0,0);return}
+ if(e.target.closest("[data-back]")){TEAM=null;Q="";renderRose()}});
+
+/* ===== TABELLINI =====
+   Un elemento per partita: il testo del tabellino come pubblicato dalla FIR.
+   Li aggiunge in automatico scripts/aggiorna.mjs; si possono anche correggere a mano.
+   Giornata, squadre, minuti e punti dei giocatori vengono calcolati nella pagina. */
+const TABELLINI=/*TABELLINI-INIZIO*/[]/*TABELLINI-FINE*/;
+
+/* ===== SQUALIFICHE =====
+   Dai comunicati del Giudice Sportivo (PDF su federugby.it): una voce per giocatore squalificato.
+   Le aggiunge in automatico scripts/giudice.mjs; si possono correggere a mano (i comunicati già letti non vengono riscritti). */
+const SQUALIFICHE=/*SQUALIFICHE-INIZIO*/[]/*SQUALIFICHE-FINE*/;
+
+/* ===== SANZIONI =====
+   Le altre voci dei comunicati del Giudice Sportivo (ammende alle società, ammonizioni, sanzioni a dirigenti e tecnici...).
+   Le aggiunge in automatico scripts/giudice.mjs; si possono correggere a mano. La pagina mostra nella scheda della partita
+   solo le multe alle squadre, prese dal primo comunicato uscito dopo la partita. */
+const SANZIONI=/*SANZIONI-INIZIO*/[]/*SANZIONI-FINE*/;
+
+
+const NUMR={15:"estremo",14:"ala",13:"centro",12:"centro",11:"ala",10:"apertura",9:"m. mischia",8:"terza linea",7:"terza linea",6:"terza linea",5:"seconda linea",4:"seconda linea",3:"pilone",2:"tallonatore",1:"pilone"};
+const norm=s=>String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’'`´]/g,"").replace(/\.\s*/g,". ").replace(/\s+/g," ").trim().toUpperCase();
+const TALIAS={};
+const findT=s=>{const k=norm(s);if(TALIAS[k])return T.find(t=>t.n===TALIAS[k]);return find(s)};
+const AP="[’'′]";
+function tconv(m,h){m=+m;if(h==="pt")return m;if(h==="st")return 40+m;return m>40?m:40+m}
+function splitTop(s,seps){const o=[];let d=0,cur="";for(const c of s){if(c==="(")d++;if(c===")")d--;if(d===0&&seps.includes(c)){o.push(cur);cur=""}else cur+=c}o.push(cur);return o.map(x=>x.trim()).filter(Boolean)}
+const SPEC=new RegExp(`^\\s*(\\d+)\\s*${AP}\\s*(pt|st)?(?:\\s*-\\s*(\\d+)\\s*${AP}\\s*(pt|st)?)?\\s*(?:e\\s+)?`);
+function parseEntry(e){
+ // "27’-35’ pt e 13’ st Schirru" -> [{a:..,b:..}|{a:..}], name
+ const specs=[];let rest=e.replace(/^;/,"").trim(),m;
+ while((m=rest.match(SPEC))&&m[0].length){
+  const h2=m[4]||m[2];
+  if(m[3])specs.push({a:tconv(m[1],m[2]||h2),b:tconv(m[3],h2)});else specs.push({a:tconv(m[1],m[2])});
+  rest=rest.slice(m[0].length).replace(/^[;,]\s*/,"")}
+ return{specs,name:rest.replace(/\(.*$/,"").trim()}}
+function parseSlot(item){
+ const k=item.indexOf("(");const first=(k<0?item:item.slice(0,k)).trim().replace(/([a-zà-ÿ]{2,})\.$/,"$1");
+ const ev=[];let unknown=false;
+ if(k>=0){
+  let inner=item.slice(k+1,item.lastIndexOf(")"));
+  inner=inner.replace(new RegExp(`(\\d+\\s*${AP})\\s*;\\s*`,"g"),"$1 ");
+  splitTop(inner,",;").forEach(x=>{const p=parseEntry(x);if(!p.name)return;
+   if(!p.specs.length){unknown=true;ev.push({t:999,name:p.name});return}
+   p.specs.forEach(s=>ev.push(s.b!=null?{t:s.a,end:s.b,name:p.name}:{t:s.a,name:p.name}))})}
+ ev.sort((a,b)=>a.t-b.t);
+ const seg=[];let occ=first,start=0;
+ ev.forEach(e=>{const t=Math.min(e.t,80);
+  if(e.end!=null){seg.push([occ,start,t]);seg.push([e.name,t,e.end]);start=e.end}
+  else{seg.push([occ,start,t]);occ=e.name;start=t}});
+ seg.push([occ,start,80]);
+ const VAC=/senza\s+sostit/i;
+ return{first,seg:seg.filter(s=>!VAC.test(s[0])&&(s[2]>s[1]||s[0]===first)),unknown,names:[first,...ev.map(e=>e.name)].filter(n=>!VAC.test(n))}}
+function matchRoster(team,name){
+ const d=ROSE[team];if(!d)return -1;
+ const ids=d.p.map((p,i)=>i);
+ let ini="",sur=name;const m=name.match(/^([A-ZÀ-Ý][a-zà-ÿ]{0,3})\.\s*(.+)$/);if(m){ini=m[1];sur=m[2]}
+ let c=ids.filter(i=>norm(d.p[i][1])===norm(sur));
+ if(c.length>1&&ini)c=c.filter(i=>norm(d.p[i][0]).startsWith(norm(ini)));
+ if(!c.length&&!ini){const w=name.split(/\s+/);for(let j=1;j<w.length&&!c.length;j++){const fn=w.slice(0,j).join(" "),sn=w.slice(j).join(" ");c=ids.filter(i=>norm(d.p[i][1])===norm(sn)&&norm(d.p[i][0]).startsWith(norm(fn)))}}
+ if(!c.length&&norm(sur).length>=5){c=ids.filter(i=>lev(norm(d.p[i][1]),norm(sur))<=1);if(c.length>1&&ini)c=c.filter(i=>norm(d.p[i][0]).startsWith(norm(ini)))}
+ return c.length===1?c[0]:-1}
+function lev(a,b){if(Math.abs(a.length-b.length)>1)return 9;const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;
+ for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++){d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1)}
+ return d[a.length][b.length]}
+function parseTab(txt){
+ const t=txt.replace(/\r/g,"").replace(/^\s*SERIE\s+A\S*.*\n/i,"").replace(/\n+/g," ").replace(/Marcatori:\s*Marcatori:/g,"Marcatori:").trim();
+ const hm=t.match(/^(.+?)\s+[–—-]\s+(.+?)\s+(\d+)\s*[-–—]+\s*(\d+)\s*\((\d+)\s*[-–—]\s*(\d+)\)/);if(!hm)return{err:"intestazione non riconosciuta: "+t.slice(0,60)};
+ const H=findT(hm[1]),A=findT(hm[2]);if(!H||!A)return{err:"squadre non riconosciute: "+hm[1]+" / "+hm[2]};
+ const body=t.slice(hm[0].length);
+ const side={};
+ const re=/([A-ZÀ-Ý0-9][A-ZÀ-Ý0-9 .&'’\-]{1,40}):\s*(.+?)\s*All\.\s*[^.]+\./g;let m;
+ while((m=re.exec(body))){const tm=findT(m[1].trim());if(tm&&(tm.n===H.n||tm.n===A.n)&&!side[tm.n])side[tm.n]=m[2]}
+ if(!side[H.n]||!side[A.n])return{err:"formazioni non trovate: "+hm[1]+" – "+hm[2]};
+ const res={h:H.n,a:A.n,hs:+hm[3],as:+hm[4],hth:+hm[5],hta:+hm[6],T:{},warn:[],ev:[],cards:[]};
+ res.arb=((body.match(/Arbitro:\s*(.*?)\s*(?:Marcatori:|Note:|$)/)||[,""])[1]).replace(/\.\s*$/,"").trim();
+ [H.n,A.n].forEach(tn=>{
+  const items=splitTop(side[tn],",;");if(items.length!==15)res.warn.push(tn+": "+items.length+" titolari invece di 15");
+  const P={},order=[];
+  const get=n=>{const k=norm(n);if(!P[k]){P[k]={name:n,num:null,st:false,segs:[],unk:false,first:999,m:0,tr:0,cp:0,dr:0,y:0,r:0};order.push(k)}return P[k]};
+  items.forEach((it,i)=>{const s=parseSlot(it);const num=15-i;
+   const st=get(s.first);if(!st.st){st.st=true;st.num=num}
+   s.seg.forEach(([n,a,b])=>{const p=get(n);p.segs.push([a,b]);if(a<p.first)p.first=a;if(p.slot==null)p.slot=num});
+   if(s.unknown)s.names.forEach(n=>{const q=get(n);q.unk=true;if(q.slot==null)q.slot=num})});
+  res.T[tn]={pl:order.map(k=>P[k]),mt:0}});
+ const all=[...res.T[H.n].pl.map(p=>[H.n,p]),...res.T[A.n].pl.map(p=>[A.n,p])];
+ const who=(n,pool)=>{pool=pool||all;const k=norm(n);let c=pool.filter(([,p])=>norm(p.name)===k);
+  if(!c.length)c=pool.filter(([,p])=>{const q=norm(p.name);return q.endsWith(" "+k)||norm(p.name.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""))===k||k.endsWith(" "+q)});
+  return c.length===1?c[0][1]:null};
+ // note: espulsioni e gialli
+ const nt=(body.match(/Note:\s*(.*)$/)||[,""])[1];
+ for(const x of nt.matchAll(new RegExp(`espuls[oi]\\s+(.+?)\\s+all?[\\s’']+(\\d+)\\s*${AP}\\s*(pt|st)?(\\s*\\(doppio giallo\\))?`,"g"))){
+  const tt=tconv(x[2],x[3]);x[1].split(/\s+e\s+|,\s*/).forEach(n=>{const p=who(n);if(!p){res.warn.push("espulso non trovato: "+n);return}
+   p.r++;if(x[4])p.y++;res.cards.push({k:"r",t:tt,name:n.trim(),p,dg:!!x[4]});p.segs=p.segs.map(([a,b])=>[a,Math.min(b,tt)]).filter(([a,b])=>b>a)})}
+ const yseg=nt.match(/esp\.?\s*temp\.?\s*(?:di\s+)?(.*)$/i);
+ if(yseg)splitTop(yseg[1].replace(/\.\s*$/,""),",;").flatMap(x=>x.split(/\s+ed?\s+(?![^(]*\))/)).forEach(x=>{const n=x.replace(/\([^)]*\)/g,"").replace(/\.\s*$/,"").trim();if(!n)return;const p=who(n);if(p)p.y++;else res.warn.push("giallo non assegnato: "+n);
+  const pm=x.match(/\(([^)]*)\)/),sp=pm?parseEntry(pm[1]+" x").specs[0]:null;res.cards.push({k:"y",t:sp?sp.a:null,end:sp&&sp.b!=null?sp.b:null,name:n,p})});
+ res.note=nt.trim();
+ // marcatori
+ const mk=(body.match(/Marcatori:\s*(.*?)(?:\s*Note:|$)/)||[,""])[1].replace(/\(\d+\s*-\s*\d+\)/g,"").replace(new RegExp(`(\\d+\\s*${AP})\\s*,\\s*(?=\\d+\\s*${AP})`,"g"),"$1 e ");
+ const unk=[];
+ mk.split(/;\s*st:?\s*/).forEach((half,hi)=>splitTop(half,",").forEach(tok=>{tok=tok.replace(/\.\s*$/,"").trim();if(!tok)return;
+  const mins=[...tok.matchAll(new RegExp(`(\\d+)\\s*${AP}`,"g"))].map(x=>tconv(x[1],hi?"st":"pt")),n=Math.max(1,mins.length);
+  const evs=k=>(mins.length?mins:[null]).map(t=>{const e={t,k};res.ev.push(e);return e});
+  const b2=tok.replace(new RegExp(`^(?:\\s*\\d+\\s*${AP}\\s*(?:e|,)?\\s*)+`),"").trim();
+  const add=(name,k,c)=>{const p=who(name);if(p)p[k]+=c;else unk.push({name,k,c})};
+  let mm;
+  if((mm=b2.match(/^m\.?\s*tecnica\s+(.+)$/i))){const tm=findT(mm[1]);if(tm&&res.T[tm.n]){res.T[tm.n].mt+=n;evs("mt").forEach(e=>e.tn=tm.n)}else res.warn.push("meta tecnica non assegnata: "+tok);return}
+  if((mm=b2.match(/^m\.?\s+(.+?)(?:\s+tr\.\s*(.+))?$/))||(mm=b2.match(/^m\.(.+?)(?:\s+tr\.\s*(.+))?$/))){add(mm[1],"m",n);if(mm[2])add(mm[2],"tr",n);evs("m").forEach(e=>{e.name=mm[1].trim();if(mm[2])e.conv=mm[2].trim()});return}
+  if((mm=b2.match(/^(?:c\.\s*p\.|cp\.?)\s*(.+)$/i))){add(mm[1],"cp",n);evs("cp").forEach(e=>e.name=mm[1].trim());return}
+  if((mm=b2.match(/^(?:drop|d\.)\s*(.+)$/i))){add(mm[1],"dr",n);evs("dr").forEach(e=>e.name=mm[1].trim());return}
+  if((mm=b2.match(/^tr\.\s*(.+)$/))){add(mm[1],"tr",1);evs("tr").forEach(e=>e.name=mm[1].trim());return}
+  res.warn.push("voce non riconosciuta: "+tok)}));
+ const PT={m:5,tr:2,cp:3,dr:3};
+ const tot=tn=>{const o=res.T[tn];return o.pl.reduce((s,p)=>s+p.m*5+p.tr*2+p.cp*3+p.dr*3,0)+o.mt*7};
+ // marcatori non presenti in formazione: li assegno alla squadra a cui mancano quei punti
+ const byName={};unk.forEach(u=>(byName[norm(u.name)]=byName[norm(u.name)]||[]).push(u));
+ Object.values(byName).forEach(us=>{const pts=us.reduce((s,u)=>s+PT[u.k]*u.c,0);
+  const cand=[H.n,A.n].filter(tn=>(tn===H.n?res.hs:res.as)-tot(tn)>=pts);
+  if(cand.length===1){const o=res.T[cand[0]];const p={name:us[0].name,num:null,st:false,segs:[],unk:true,ghost:true,first:999,m:0,tr:0,cp:0,dr:0,y:0,r:0};us.forEach(u=>p[u.k]+=u.c);o.pl.push(p);res.warn.push(`${us[0].name} (marcatore non presente in formazione) assegnato a ${cand[0]}`)}
+  else res.warn.push("marcatore non trovato: "+us[0].name)});
+ [H.n,A.n].forEach(tn=>{const o=res.T[tn];
+  o.pl.forEach(p=>{p.pts=p.m*5+p.tr*2+p.cp*3+p.dr*3;p.min=p.unk?null:p.segs.reduce((s,[a,b])=>s+Math.max(0,b-a),0);p.tin=p.first;p.rid=matchRoster(tn,p.name);if(p.rid<0&&!p.ghost)res.warn.push(`${tn}: ${p.name} non trovato in rosa`)});
+  o.pl=o.pl.filter(p=>p.st||p.ghost||p.min===null||p.min>0||p.pts||p.y||p.r);
+  o.pts=tot(tn);const exp=tn===H.n?res.hs:res.as;
+  if(o.pts!==exp){o.diff=exp-o.pts;res.warn.push(`${tn}: i marcatori del tabellino danno ${o.pts} punti, il risultato dice ${exp}`)}});
+ // squadra e giocatore di ogni evento (mete, calci, cartellini), anche dei marcatori non in formazione
+ const all2=[H.n,A.n].flatMap(tn=>res.T[tn].pl.map(p=>[tn,p]));
+ const whoT=n=>{const k=norm(n);let c=all2.filter(([,p])=>norm(p.name)===k);
+  if(!c.length)c=all2.filter(([,p])=>{const q=norm(p.name);return q.endsWith(" "+k)||norm(p.name.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""))===k||k.endsWith(" "+q)});return c.length===1?c[0]:null};
+ res.ev.forEach(e=>{if(e.k==="mt")return;const w=whoT(e.name);if(w){e.tn=w[0];e.p=w[1]}
+  if(e.conv){const c=whoT(e.conv);if(c)e.cp_=c[1]}});
+ res.cards.forEach(c=>{const w=c.p?all2.find(([,p])=>p===c.p):whoT(c.name);if(w){c.tn=w[0];c.p=w[1]}});
+ res.ev.sort((a,b)=>(a.t==null?999:a.t)-(b.t==null?999:b.t));res.cards.sort((a,b)=>(a.t==null?999:a.t)-(b.t==null?999:b.t));
+ // giornata
+ const g=H.g;res.g=g;res.ri=-1;
+ for(let i=0;i<NGT;i++){if((rounds[i]||[]).some(x=>x.h===H.n&&x.a===A.n)){res.ri=i;break}}
+ if(res.ri<0)for(let i=0;i<NGT;i++){if(CAL[g][i]&&CAL[g][i].m.some(([h,a])=>h===H.n&&a===A.n)){res.ri=i;break}}
+ return res}
+const MATCHES=TABELLINI.map(parseTab).filter(m=>{if(m.err){console.warn("Tabellino:",m.err);return false}m.warn.forEach(w=>console.warn("Tabellino:",w));return true});
+setTimeout(()=>{if(typeof render==="function")render()});
+// Ogni cartellino rosso viene collegato alla squalifica del Giudice Sportivo: stessa squadra, stesso cognome,
+// comunicato uscito dopo la partita (il primo utile).
+(()=>{const used=new Set();
+ const items=[];MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.r)items.push({m,tn,p,d:CAL[m.g]&&CAL[m.g][m.ri]?CAL[m.g][m.ri].d:""})})));
+ items.sort((a,b)=>a.d.localeCompare(b.d)).forEach(({m,tn,p,d})=>{
+  const sur=norm(p.rid>=0?ROSE[tn].p[p.rid][1]:p.name.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""));
+  const c=SQUALIFICHE.map((s,i)=>[s,i]).filter(([s,i])=>s.nome&&!used.has(i)&&(findT(s.squadra)||{}).n===tn&&(norm(s.nome)+" ").startsWith(sur+" ")&&(!d||!s.data||s.data>=d)).sort((a,b)=>(a[0].data||"").localeCompare(b[0].data||""));
+  if(c.length){used.add(c[0][1]);p.sq=c[0][0]}})})();
+const sqTxt=s=>s?[s.motivo,s.squalifica].filter(Boolean).join(" · "):"motivo non ancora pubblicato dal Giudice Sportivo";
+// Giocatori scritti senza iniziale ("Marcaggi") quando in rosa ci sono omonimi: li collego al giocatore
+// con lo stesso cognome già riconosciuto in altre partite della squadra (a parità, quello con lo stesso numero di maglia).
+(()=>{const sur=n=>norm(n.replace(/^[A-ZÀ-Ý][a-zà-ÿ]{0,3}\.\s*/,""));
+ MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.rid>=0||p.ghost||/\./.test(p.name))return;
+  const c={};MATCHES.forEach(x=>x.T[tn]&&x.T[tn].pl.forEach(q=>{if(q.rid>=0&&sur(q.name)===sur(p.name))(c[q.rid]=c[q.rid]||new Set()).add(q.num)}));
+  let ids=Object.keys(c);if(ids.length>1&&p.num)ids=ids.filter(i=>c[i].has(p.num));
+  if(ids.length===1)p.rid=+ids[0]})))})();
+// Giocatori dei tabellini che non sono nella rosa dell'annuario: entrano comunque in rosa, con il nome
+// scritto nel tabellino (senza dati anagrafici) e il ruolo più frequente: da titolare quello della maglia,
+// dalla panchina quello del giocatore sostituito.
+(()=>{const add={};
+ MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.rid>=0)return;
+  const d=ROSE[tn]||(ROSE[tn]={book:"",p:[]}),k=tn+"|"+norm(p.name);
+  if(!add[k]){const x=p.name.match(/^([A-ZÀ-Ý][a-zà-ÿ]{0,3}\.)\s*(.+)$/);d.p.push([x?x[1]:"",(x?x[2]:p.name).toUpperCase(),"","","","","",""]);add[k]={tn,i:d.p.length-1,r:{}}}
+  // ruolo: titolare -> quello della sua maglia; entrato dalla panchina -> quello del giocatore che ha sostituito
+  // (dall'annuario se c'è, altrimenti dal numero di maglia)
+  let ru=null;
+  if(p.st)ru=NUMR[p.num];
+  else if(p.slot){const q=m.T[tn].pl.find(x=>x.st&&x.num===p.slot);ru=q&&q.rid>=0&&q.rid<ROSE[tn].p.length&&ROSE[tn].p[q.rid][2]?ROSE[tn].p[q.rid][6]:NUMR[p.slot]}
+  const a=add[k];p.rid=a.i;if(ru)a.r[ru]=(a.r[ru]||0)+(p.st?2:1)})));
+ Object.values(add).forEach(a=>{const r=Object.entries(a.r).sort((x,y)=>y[1]-x[1])[0];if(r)ROSE[a.tn].p[a.i][6]=r[0]})})();
+const pkey=(tn,p)=>p.rid>=0?tn+"#"+p.rid:tn+"@"+norm(p.name);
+const tcase=s=>s.toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
+function pdisp(tn,p){if(p.rid>=0){const r=ROSE[tn].p[p.rid];return `${r[0]?esc(r[0])+" ":""}${esc(tcase(r[1]))}`}return esc(p.name)}
+const teamMatches=tn=>MATCHES.filter(m=>m.T[tn]).sort((a,b)=>a.ri-b.ri);
+const opp=(m,tn)=>m.h===tn?m.a:m.h;
+const cell=v=>v?v:"";
+const fmin=v=>v==null?'<span class="eq" title="minuti non indicati nel tabellino">n.d.</span>':v;
+
+let TPV=null,TPR=null;
+const STHEAD=`<th class="n">Min.</th><th class="n">Mete</th><th class="n">Tras.</th><th class="n">C.p.</th><th class="n">Drop</th><th class="n">Punti</th><th class="n">Gialli</th><th class="n">Rossi</th>`;
+const strow=p=>`<td class="n">${fmin(p.min)}</td><td class="n">${cell(p.m)}</td><td class="n">${cell(p.tr)}</td><td class="n">${cell(p.cp)}</td><td class="n">${cell(p.dr)}</td><td class="n"><b>${cell(p.pts)}</b></td><td class="n">${cell(p.y)}</td><td class="n">${cell(p.r)}</td>`;
+function matchTable(m,tn){
+ const o=m.T[tn],st=o.pl.filter(p=>p.st).sort((a,b)=>b.num-a.num),bn=o.pl.filter(p=>!p.st).sort((a,b)=>a.tin-b.tin);
+ const row=p=>`<tr><td>${p.num||""}</td><td class="t"><a class="pl" data-pk="${esc(pkey(tn,p))}">${pdisp(tn,p)}</a>${p.ghost?' <span class="eq">(non in formazione)</span>':""}</td><td class="t">${p.st?NUMR[p.num]:(p.rid>=0?esc(ROSE[tn].p[p.rid][6]):"")}</td>${strow(p)}</tr>`;
+ const sum=k=>o.pl.reduce((s,p)=>s+(p[k]||0),0);
+ let h=`<table class="st"><thead><tr><th>N°</th><th class="t">Giocatore</th><th class="t">Ruolo</th>${STHEAD}</tr></thead><tbody>`+st.map(row).join("")+
+  `<tr class="sep"><td colspan="11">Panchina</td></tr>`+bn.map(row).join("");
+ if(o.mt)h+=`<tr><td></td><td class="t"><i>Meta tecnica</i></td><td></td><td></td><td class="n">${o.mt}</td><td></td><td></td><td></td><td class="n"><b>${o.mt*7}</b></td><td></td><td></td></tr>`;
+ h+=`<tr class="tot"><td></td><td class="t">Totale</td><td></td><td></td><td class="n">${sum("m")+o.mt}</td><td class="n">${sum("tr")}</td><td class="n">${sum("cp")}</td><td class="n">${sum("dr")}</td><td class="n">${o.pts}</td><td class="n">${sum("y")}</td><td class="n">${sum("r")}</td></tr></tbody></table>`;
+ if(o.diff)h+=`<div class="msg err">Attenzione: nel tabellino ufficiale i marcatori danno ${o.pts} punti, ma il risultato è ${o.pts+o.diff}. Mancano ${o.diff>0?o.diff:"("+o.diff+")"} punti non attribuiti.</div>`;
+ return h}
+function totTable(tn){
+ const A={};teamMatches(tn).forEach(m=>m.T[tn].pl.forEach(p=>{const k=pkey(tn,p);
+  const a=A[k]||(A[k]={p,k,pr:0,tit:0,min:0,nd:0,m:0,tr:0,cp:0,dr:0,pts:0,y:0,r:0});a.pr++;if(p.st)a.tit++;if(p.min==null)a.nd++;else a.min+=p.min;["m","tr","cp","dr","pts","y","r"].forEach(x=>a[x]+=p[x])}));
+ const L=Object.values(A).sort((a,b)=>b.min-a.min||b.pts-a.pts);
+ return `<table class="st"><thead><tr><th class="t">Giocatore</th><th class="t">Ruolo</th><th class="n">Pres.</th><th class="n">Tit.</th>${STHEAD}</tr></thead><tbody>`+
+  L.map(a=>`<tr><td class="t"><a class="pl" data-pk="${esc(a.k)}">${pdisp(tn,a.p)}</a></td><td class="t">${a.p.rid>=0?esc(ROSE[tn].p[a.p.rid][6]):""}</td><td class="n">${a.pr}</td><td class="n">${a.tit}</td>${strow(Object.assign({},a,{min:a.nd===a.pr?null:a.min}))}</tr>`).join("")+`</tbody></table>`}
+function renderTeamPanel(){
+ const el=document.getElementById("tp");if(!el)return;
+ if(!SEL||gOf(SEL)!==G){el.classList.add("hide");return}
+ el.classList.remove("hide");const ms=teamMatches(SEL);
+ let h=`<div class="tph"><h2>${bdg(SEL)}${nm(SEL)} – giocatori</h2><button data-close="1" aria-label="Chiudi">✕</button></div>`;
+ if(!ms.length){el.innerHTML=h+`<div class="msg">Non ci sono ancora tabellini inseriti per questa squadra.</div>`;return}
+ if(TPR!==R){TPR=R;if(TPV!=="tot"&&ms.some(m=>m.ri===R))TPV=R}
+ if(TPV===null||(TPV!=="tot"&&!ms.some(m=>m.ri===TPV)))TPV=ms.some(m=>m.ri===R)?R:ms[ms.length-1].ri;
+ h+=`<div class="tabs">`+ms.map(m=>`<button data-tpv="${m.ri}" class="${TPV===m.ri?"on":""}">${m.ri+1}ª g. vs ${esc(opp(m,SEL))}</button>`).join("")+`<button data-tpv="tot" class="${TPV==="tot"?"on":""}">Totale stagione</button></div>`;
+ if(TPV==="tot")h+=`<div class="scroll">${totTable(SEL)}</div>`;
+ else{const m=ms.find(x=>x.ri===TPV),mine=m.h===SEL?m.hs:m.as,their=m.h===SEL?m.as:m.hs;
+  h+=`<div class="msg" style="margin:0 0 8px">${m.ri+1}ª giornata · ${CAL[m.g][m.ri]?fdt(CAL[m.g][m.ri].d):""} · ${nm(m.h)} ${m.hs} – ${m.as} ${nm(m.a)} (primo tempo ${m.hth}-${m.hta}) · ${mine>their?"vittoria":mine<their?"sconfitta":"pareggio"}</div><div class="scroll">${matchTable(m,SEL)}</div>`}
+ el.innerHTML=h}
+function playerModal(pk){
+ const isR=pk.includes("#"),[tn,rest]=isR?pk.split("#"):pk.split("@");const rid=isR?+rest:-1;
+ const rows=[];teamMatches(tn).forEach(m=>{const p=m.T[tn].pl.find(q=>pkey(tn,q)===pk);if(p)rows.push([m,p])});
+ const r=rid>=0?ROSE[tn].p[rid]:null;
+ const DK=mdlDeco([tn]);let h=`<div class="mdl deco" ${DK.a}>${DK.wm}<div class="tph"><div class="th">${logo(tn)}<div><h2>${r?pdisp(tn,{rid}):esc(rows.length?rows[0][1].name:rest)}</h2><div class="c">${nm(tn)}${r?`${r[6]?` · ${esc(r[6])}`:""}${r[2]?` · nato a ${esc(r[2])} il ${esc(r[3])}`:""}${r[4]?` · ${r[4]} kg`:""}${r[5]?` · ${r[5]} cm`:""}`:""}</div></div></div><button data-close="m" aria-label="Chiudi">✕</button></div>`;
+ if(!rows.length)h+=`<div class="msg">Nessuna presenza nei tabellini inseriti finora.</div>`;
+ else{const tot={min:0,m:0,tr:0,cp:0,dr:0,pts:0,y:0,r:0};let nd=0;rows.forEach(([,p])=>Object.keys(tot).forEach(k=>{if(k==="min"&&p.min==null){nd++;return}tot[k]+=p[k]}));if(nd===rows.length)tot.min=null;
+  h+=`<div class="scroll"><table class="st"><thead><tr><th class="t">Giornata</th><th class="t">Avversario</th><th>Ris.</th><th class="t">N° / ruolo</th>${STHEAD}</tr></thead><tbody>`+
+  rows.map(([m,p])=>{const home=m.h===tn,mine=home?m.hs:m.as,their=home?m.as:m.hs;
+   return `<tr><td class="t">${m.ri+1}ª · ${CAL[m.g][m.ri]?CAL[m.g][m.ri].d.split("-").reverse().join("/"):""}</td><td class="t">${home?"":"@ "}${bdg(opp(m,tn))}${nm(opp(m,tn))}</td><td class="${mine>their?"up":mine<their?"dn":"eq"}">${mine}-${their}</td><td class="t">${p.st?p.num+" · "+NUMR[p.num]:"panchina"}</td>${strow(p)}</tr>`}).join("")+
+  `<tr class="tot"><td class="t">Totale</td><td class="t">${rows.length} ${rows.length===1?"presenza":"presenze"}, ${rows.filter(([,p])=>p.st).length} da titolare</td><td></td><td></td>${strow(tot)}</tr></tbody></table></div>`}
+ const reds=rows.filter(([,p])=>p.r);
+ if(reds.length)h+=`<div class="card" style="margin:12px 0 0"><h3 class="rl">Cartellini rossi</h3>`+reds.map(([m,p])=>{const q=p.sq;
+  return `<div class="msg" style="color:var(--tx)"><b>${m.ri+1}ª giornata</b> contro ${nm(opp(m,tn))}${q&&q.minuto?` · ${q.minuto}'`:""} · ${esc(sqTxt(q))}${q&&q.periodo?` <span class="eq">(${esc(q.periodo)})</span>`:""}${q?` · <a href="${esc(q.pdf)}" target="_blank" rel="noopener">comunicato n. ${q.com}</a>`:""}</div>`}).join("")+`</div>`;
+ const ov=document.getElementById("ov");ov.innerHTML=h;ov.classList.remove("hide");document.body.style.overflow="hidden"}
+/* ===== SCHEDA PARTITA =====
+   Si apre toccando un risultato: i due XV titolari a confronto, mete e calci con il minuto,
+   cartellini (con il motivo dei rossi dal Giudice Sportivo), note del referto e altre decisioni del Giudice Sportivo. */
+const fmn=t=>t==null?"":t+"’";
+const evName=(m,e,p)=>p&&e.tn?`<a class="pl" data-pk="${esc(pkey(e.tn,p))}">${pdisp(e.tn,p)}</a>`:esc(e.name||"");
+// Multe alle squadre: voci del Giudice Sportivo con "multa"/"ammenda" a carico di una delle due squadre,
+// nel primo comunicato uscito dopo la partita.
+function multeMatch(m){
+ const d=CAL[m.g]&&CAL[m.g][m.ri]?CAL[m.g][m.ri].d:"";if(!d)return[];
+ const cs=[...SQUALIFICHE,...SANZIONI].filter(s=>s.data&&s.data>=d).sort((a,b)=>a.data.localeCompare(b.data));if(!cs.length)return[];
+ const com=cs[0].com;
+ return SANZIONI.filter(s=>s.com===com&&s.testo&&/\b(MULTA|AMMENDA)\b/i.test(s.testo)).map(s=>{
+  const soc=s.testo.split(",")[0],t=T.find(t=>[m.h,m.a].includes(t.n)&&new RegExp(t.re.source.replace(/^\^/,"\\b")).test(norm(soc)));if(!t)return null;
+  const mo=(s.testo.match(/infraz\.?\s*Art\.?\s*[\d/.]+\s*lett\.?\s*\w+\)\s*\(([^)]+)\)/i)||[])[1]||"";
+  const im=[...s.testo.matchAll(/(?:MULTA|AMMENDA)\s+DI\s+EURO\s*([\d.,]+)/gi)].map(x=>x[1].replace(/,00$/,"").replace(/[.,]$/,""));
+  const ex=(s.testo.match(/MULTA\s+DI\s+EURO\s*[\d.,]+(?:=?\s*\([^)]*\))?\s*(E\s+[^.]+)/i)||[])[1]||"";
+  return{tn:t.n,s,mo,eur:im[im.length-1]||"",ex:ex.replace(/[=.\s]+$/,"")}}).filter(Boolean)}
+/* ===== FORMAZIONE DI UNA SQUADRA =====
+   Toccando una squadra in classifica: la sua formazione nella giornata scelta; con le frecce
+   si passa alle formazioni delle altre squadre del girone, in ordine di classifica. */
+let LU=null; // {tn, ri, order}
+
+const tcx=n=>tc(n)||"var(--ac)";
+function mdlDeco(ts){
+ const c=ts.map(tcx),wm=ts.map((n,i)=>CRESTS[n]?`<img class="wm ${ts.length>1?(i?"r":"l"):"s"}" src="${CRESTS[n]}" alt="">`:"").join("");
+ const bg=ts.length>1?`background:linear-gradient(180deg,transparent 0,var(--card) 560px),linear-gradient(90deg,color-mix(in srgb,${c[0]} 22%,var(--card)) 0,var(--card) 50%,color-mix(in srgb,${c[1]} 22%,var(--card)) 100%)`
+   :`background:linear-gradient(180deg,color-mix(in srgb,${c[0]} 24%,var(--card)) 0,var(--card) 520px)`;
+ const ov=ts.length>1?`linear-gradient(90deg,color-mix(in srgb,${c[0]} 45%,rgba(0,0,0,.55)),color-mix(in srgb,${c[1]} 45%,rgba(0,0,0,.55)))`:`color-mix(in srgb,${c[0]} 45%,rgba(0,0,0,.55))`;
+ return {a:`style="${bg}" data-ovbg="${ov.replace(/"/g,"&quot;")}"`,wm}}
+new MutationObserver(()=>{const ov=document.getElementById("ov"),m=ov.querySelector(".mdl[data-ovbg]");ov.style.background=m?m.dataset.ovbg:""}).observe(document.getElementById("ov"),{childList:true});
+function teamLineup(tn,keep){
+ const g=gOf(tn),ri=R,LP=lastR(g),order=keep&&LU?LU.order:stand(g,Math.min(ri,LP)).map(o=>o.n);
+ LU={tn,ri,order};const pos=order.indexOf(tn),n=order.length;
+ const st=stand(g,Math.min(ri,LP)).find(o=>o.n===tn);
+ const m=MATCHES.find(x=>x.ri===ri&&(x.h===tn||x.a===tn));
+ const fx=fixtures(g,ri).find(x=>x.h===tn||x.a===tn);
+ const DK=mdlDeco([tn]);let o=`<div class="mdl deco" ${DK.a}>${DK.wm}<div class="tph"><h2 style="font-size:15px;color:var(--mu);font-weight:500">Formazione · ${ri+1}ª giornata · ${GIRNOMI[g]||"Girone "+g}</h2><button data-close="m" aria-label="Chiudi">✕</button></div>`;
+ o+=`<div class="lnav"><button data-lu="-1" aria-label="Squadra precedente">←</button><div class="lt">${logo(tn)}<div><div class="ln">${nm(tn)}</div><div class="c">${pos+1}° in classifica${st?` · ${st.pt} punti`:""}</div></div></div><button data-lu="1" aria-label="Squadra successiva">→</button></div>`;
+ if(fx){const home=fx.h===tn,ot=home?fx.a:fx.h;
+  o+=`<div class="mi">${home?"In casa contro":"In trasferta contro"} ${bdg(ot)}${nm(ot)}${fx.hs!=null?` · <b class="${(home?fx.hs>fx.as:fx.as>fx.hs)?"up":(fx.hs===fx.as?"eq":"dn")}">${fx.hs} – ${fx.as}</b> · <a class="pl" data-mt="${ri}|${fx.h.replace(/&/g,"&amp;")}|${fx.a.replace(/&/g,"&amp;")}">vedi la partita</a>`:" · da giocare"}</div>`}
+ else o+=`<div class="mi">Turno di riposo in questa giornata.</div>`;
+ if(!m)o+=`<div class="msg" style="text-align:center">${fx&&fx.hs==null?"La partita non è ancora stata giocata.":"Il tabellino di questa partita non è ancora disponibile."}</div>`;
+ else{
+  const pl=m.T[tn].pl,ST=pl.filter(p=>p.st).sort((a,b)=>b.num-a.num),BN=pl.filter(p=>!p.st&&!p.ghost).sort((a,b)=>a.tin-b.tin);
+  const cnt=p=>m.ev.filter(e=>e.k==="m"&&e.p===p).length;
+  const badges=p=>{const t=cnt(p);let b=t?`<span class="ic m" title="${t} ${t>1?"mete":"meta"}">${t>1?t+"×":""}M</span>`:"";
+   m.cards.filter(c=>c.p===p).forEach(c=>b+=`<span class="cd ${c.k}" title="${c.k==="y"?"cartellino giallo":"cartellino rosso"}${c.t!=null?" al "+c.t+"’":""}"></span>`);return b};
+  const io=p=>{if(p.unk||p.min==null)return '<span class="eq">n.d.</span>';const o2=[];[...p.segs].sort((x,y)=>x[0]-y[0]).forEach(([x,y])=>{if(x>0)o2.push(`<span class="io-in">↑${x}’</span>`);if(y<80)o2.push(`<span class="io-out">↓${y}’</span>`)});return o2.join(" ")};
+  const row=p=>`<tr class="nc"><td class="n">${p.st?p.num:""}</td><td class="t"><a class="pl" data-pk="${esc(pkey(tn,p))}">${pdisp(tn,p)}</a> ${badges(p)}</td><td class="t eq cr">${p.st?NUMR[p.num]:(p.rid>=0?esc(ROSE[tn].p[p.rid][6]):"")}</td><td class="n"><b>${p.min==null?"":p.min+"’"}</b></td><td class="t">${io(p)}</td><td class="n">${p.pts||""}</td></tr>`;
+  o+=`<div class="scroll"><table class="st lt2"><thead><tr><th class="n">N°</th><th class="t">Giocatore</th><th class="t cr">Ruolo</th><th class="n">Min.</th><th class="t">Entrato / uscito</th><th class="n">Punti</th></tr></thead><tbody>`+
+   ST.map(row).join("")+(BN.length?`<tr class="sep nc"><td colspan="6">Panchina</td></tr>`+BN.map(row).join(""):"")+`</tbody></table></div>`;
+  o+=`<div class="msg"><span class="ic m">M</span> meta · <span class="cd y"></span> giallo · <span class="cd r"></span> rosso · <span class="io-in">↑</span> entrato al minuto · <span class="io-out">↓</span> uscito al minuto</div>`}
+ o+=`<div class="msg" style="margin-top:10px">${pos+1} di ${n} · usa le frecce per vedere le altre squadre · <a class="pl" data-tsel="${tn.replace(/&/g,"&amp;")}">tutte le partite e il totale della stagione</a></div></div>`;
+ const ov=document.getElementById("ov");ov.innerHTML=o;ov.classList.remove("hide");document.body.style.overflow="hidden"}
+function luStep(d){if(!LU)return;const k=LU.order.indexOf(LU.tn),n=LU.order.length;R=LU.ri;teamLineup(LU.order[(k+d+n)%n],true)}
+function matchModal(ri,h,a){
+ const m=MATCHES.find(x=>x.ri===ri&&x.h===h&&x.a===a)||MATCHES.find(x=>x.ri===ri&&x.h===a&&x.a===h);
+ const r=fixtures(gOf(h),ri).find(x=>x.h===h&&x.a===a)||{h,a};
+ const g=gOf(h),cd=CAL[g]&&CAL[g][ri]?CAL[g][ri]:null;
+ const H=m?m.h:r.h,A=m?m.a:r.a,hs=m?m.hs:r.hs,as=m?m.as:r.as;
+ let o=`<div class="mdl"><div class="tph"><h2 style="font-size:15px;color:var(--mu);font-weight:500">${ri+1}ª giornata · ${GIRNOMI[g]||"Girone "+g}${(arbOf(ri,h,a)||{}).data?" · "+fdt(arbOf(ri,h,a).data):cd?" · "+fdt(cd.d):""}</h2><button data-close="m" aria-label="Chiudi">✕</button></div>`;
+ o+=`<div class="mh"><div class="tn">${logo(H)}${nm(H)}</div><div class="sc">${hs==null?"– : –":hs+" – "+as}${m?`<small>primo tempo ${m.hth}-${m.hta}</small>`:r.ht!=null?`<small>mete ${r.ht}-${r.at}</small>`:""}</div><div class="tn">${logo(A)}${nm(A)}</div></div>`;
+ const ar=arbOf(ri,h,a);
+ const uff=()=>{let u=`<h3>Ufficiali di gara</h3>`;
+  if(ar&&(ar.arb||ar.gl)){u+=`<ul class="el">`+(ar.arb?`<li><span class="ul">Arbitro</span>${fmtP(ar.arb)}</li>`:"")+(ar.gl||[]).map((g,i)=>`<li><span class="ul">Giudice di linea ${i+1}</span>${fmtP(g)}</li>`).join("")+(ar.tmo?`<li><span class="ul">TMO</span>${fmtP(ar.tmo)}</li>`:"")+`</ul>`}
+  else if(m&&m.arb)u+=`<div>Arbitro: ${esc(m.arb)}</div>`;
+  else u+='<div class="msg">Non ancora designati: la FIR pubblica le designazioni di solito il giovedì prima della partita.</div>';
+  if(ar&&(ar.campo||ar.ora))u+=`<div class="msg" style="margin-top:6px">${[ar.data?fdt(ar.data):"",ar.ora?"ore "+ar.ora:"",ar.campo?esc(tcap(ar.campo)):""].filter(Boolean).join(" · ")}</div>`;
+  return u};
+ if(!m&&hs==null){o+=uff()+`</div>`;return show(o)}
+ if(!m){o+=`<div class="msg" style="text-align:center">La FIR non pubblica i tabellini di questo campionato: formazioni e marcatori non sono disponibili.</div>`+uff()+`</div>`;return show(o)}
+ // formazioni complete: titolari numero per numero, poi la panchina in ordine di ingresso, con i minuti giocati
+ const st=tn=>{const x={};m.T[tn].pl.filter(p=>p.st).forEach(p=>x[p.num]=p);return x},SH=st(H),SA=st(A);
+ const bench=tn=>m.T[tn].pl.filter(p=>!p.st&&!p.ghost).sort((x,y)=>x.tin-y.tin),BH=bench(H),BA=bench(A);
+ const cnt=(p,k)=>m.ev.filter(e=>e.k===k&&e.p===p).length;
+ const badges=p=>{const t=cnt(p,"m");let b=t?`<span class="ic m" title="${t} ${t>1?"mete":"meta"}">${t>1?t+"×":""}M</span>`:"";
+  m.cards.filter(c=>c.p===p).forEach(c=>b+=`<span class="cd ${c.k}" title="${c.k==="y"?"cartellino giallo":"cartellino rosso"}${c.t!=null?" al "+c.t+"’":""}"></span>`);return b};
+ // ingressi/uscite dai segmenti in campo: [[da,a],...]
+ const io=p=>{if(p.unk||p.min==null)return '<span class="eq">minuti n.d.</span>';const sg=[...p.segs].sort((x,y)=>x[0]-y[0]),o=[];
+  sg.forEach(([x,y],i)=>{if(x>0)o.push(`<span class="io-in">↑${x}’</span>`);if(y<80)o.push(`<span class="io-out">↓${y}’</span>`)});
+  if(!sg.length&&!p.st)return '<span class="eq">non entrato</span>';
+  return `<b>${p.min}’</b>`+(o.length?" "+o.join(" "):"")};
+ const pc=(tn,p,side)=>{if(!p)return '<span class="eq">–</span>';const n=`<a class="pl" data-pk="${esc(pkey(tn,p))}">${pdisp(tn,p)}</a>`,b=badges(p);
+  return `<div>${side==="h"?b+" "+n:n+" "+b}</div><div class="mm">${io(p)}</div>`};
+ o+=`<h3>Formazioni</h3><div class="scroll"><table class="lu"><thead><tr><th class="h">${nm(H)}</th><th>N°</th><th class="a">${nm(A)}</th></tr></thead><tbody>`;
+ for(let i=15;i>=1;i--)o+=`<tr class="nc"><td class="h">${pc(H,SH[i],"h")}</td><td class="nn">${i}<small>${NUMR[i]}</small></td><td class="a">${pc(A,SA[i],"a")}</td></tr>`;
+ const nb=Math.max(BH.length,BA.length);
+ if(nb){o+=`<tr class="sep nc"><td colspan="3">Panchina</td></tr>`;
+  for(let i=0;i<nb;i++){const ph=BH[i],pa=BA[i];o+=`<tr class="nc"><td class="h">${pc(H,ph,"h")}</td><td class="nn"></td><td class="a">${pc(A,pa,"a")}</td></tr>`}}
+ o+=`</tbody></table></div><div class="msg"><b>40’</b> = minuti giocati · <span class="io-in">↑</span> entrato al minuto · <span class="io-out">↓</span> uscito al minuto (sostituzione, giallo o rosso)</div>`;
+ // mete
+ const tries=tn=>m.ev.filter(e=>(e.k==="m"||e.k==="mt")&&e.tn===tn);
+ const tli=e=>`<li><span class="mn">${fmn(e.t)}</span>${e.k==="mt"?"<i>meta tecnica</i>":evName(m,e,e.p)}${e.conv?` <small>· tr. ${e.cp_?evName(m,{tn:e.tn},e.cp_):esc(e.conv)}</small>`:e.k==="m"?' <small>· non trasformata</small>':""}</li>`;
+ const tcol=tn=>{const l=tries(tn);return `<div><div style="font-weight:600;margin-bottom:4px">${bdg(tn)}${nm(tn)} <span class="eq" style="font-weight:400">· ${l.length} ${l.length===1?"meta":"mete"}</span></div>${l.length?`<ul class="el">${l.map(tli).join("")}</ul>`:'<div class="msg">Nessuna meta.</div>'}</div>`};
+ o+=`<h3>Mete</h3><div class="ev2">${tcol(H)}${tcol(A)}</div>`;
+ const kicks=m.ev.filter(e=>e.k==="cp"||e.k==="dr"||e.k==="tr");
+ if(kicks.length){const kl=tn=>{const l=kicks.filter(e=>e.tn===tn);return `<div><div style="font-weight:600;margin-bottom:4px">${bdg(tn)}${nm(tn)}</div>${l.length?`<ul class="el">${l.map(e=>`<li><span class="mn">${fmn(e.t)}</span>${evName(m,e,e.p)} <small>· ${e.k==="cp"?"calcio piazzato":e.k==="dr"?"drop":"trasformazione"}</small></li>`).join("")}</ul>`:'<div class="msg">Nessuno.</div>'}</div>`};
+  o+=`<h3>Calci piazzati e drop</h3><div class="ev2">${kl(H)}${kl(A)}</div>`}
+ const lost=m.ev.filter(e=>e.k!=="mt"&&!e.tn);if(lost.length)o+=`<div class="msg">Non attribuiti a una squadra: ${lost.map(e=>fmn(e.t)+" "+esc(e.name||"")).join(", ")}</div>`;
+ // cartellini
+ o+=`<h3>Cartellini</h3>`;
+ if(!m.cards.length)o+='<div class="msg">Nessun cartellino segnato nel tabellino.</div>';
+ else o+=`<ul class="el">`+m.cards.map(c=>{let w="";/*cartellino*/
+  if(c.k==="y")w=`giallo${c.end!=null?` <small>· fuori dal ${c.t}’ al ${c.end}’</small>`:""}`;
+  else{const q=c.p&&c.p.sq;w=`<b>rosso</b>${c.dg?" (doppio giallo)":""}`+(q?` · ${esc(sqTxt(q))}${q.periodo?` <small>(${esc(q.periodo)})</small>`:""} · <a href="${esc(q.pdf)}" target="_blank" rel="noopener">comunicato n. ${q.com}</a>`:` · <small>${c.dg?"squalifica automatica di una giornata; ":""}motivo non ancora pubblicato dal Giudice Sportivo</small>`)}
+  return `<li><span class="mn">${fmn(c.t)}</span><span class="cd ${c.k}"></span> ${c.tn?bdg(c.tn):""}${evName(m,c,c.p)} ${c.tn?`<small>(${esc(c.tn)})</small>`:""} · ${w}</li>`}).join("")+`</ul>`;
+ const mu=multeMatch(m);
+ if(mu.length)o+=`<h3>Multe</h3><ul class="el">`+mu.map(x=>`<li>${bdg(x.tn)}<b>${nm(x.tn)}</b> · ${x.eur?`<b>multa di ${esc(x.eur)} €</b>`:"multa"}${x.ex?" "+esc(x.ex.toLowerCase()):""}${x.mo?` <small>· ${esc(x.mo)}</small>`:""} · <a href="${esc(x.s.pdf)}" target="_blank" rel="noopener">comunicato n. ${x.s.com}</a></li>`).join("")+`</ul>`;
+ o+=uff();
+ o+=`</div>`;return show(o)
+ function show(x){const ov=document.getElementById("ov");ov.innerHTML=x;ov.classList.remove("hide");document.body.style.overflow="hidden";ov.scrollTop=0}}
+function closeModal(){const ov=document.getElementById("ov");ov.classList.add("hide");ov.innerHTML="";document.body.style.overflow=""}
+document.addEventListener("click",e=>{
+ const pk=e.target.closest("[data-pk]");if(pk){e.stopPropagation();playerModal(pk.dataset.pk);return}
+ const lu=e.target.closest("[data-lu]");if(lu){e.stopPropagation();luStep(+lu.dataset.lu);return}
+ const ts=e.target.closest("[data-tsel]");if(ts){e.stopPropagation();closeModal();SEL=ts.dataset.tsel;TPV=null;render();document.getElementById("tp").scrollIntoView({behavior:"smooth"});return}
+ const mt=e.target.closest("[data-mt]");if(mt){e.stopPropagation();const[ri,h,a]=mt.dataset.mt.split("|");matchModal(+ri,h,a);return}
+ const tv=e.target.closest("[data-tpv]");if(tv){TPV=tv.dataset.tpv==="tot"?"tot":+tv.dataset.tpv;renderTeamPanel();return}
+ const cl=e.target.closest("[data-close]");if(cl){if(cl.dataset.close==="m")closeModal();else{SEL=null;render()}return}
+ if(e.target.id==="ov")closeModal()},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();
+ if(LU&&!document.getElementById("ov").classList.contains("hide")&&document.querySelector("#ov [data-lu]")){if(e.key==="ArrowLeft")luStep(-1);if(e.key==="ArrowRight")luStep(1)}});
+
+/* ===== STATISTICHE =====
+   Squadre: da stand() all'ultima giornata giocata del girone.
+   Giocatori: sommati da MATCHES (tabellini). Classifiche con i pari merito: se più giocatori
+   sono a pari con l'ultimo posto utile (5° o 3°) vengono mostrati tutti. */
+function topN(a,f,n){const s=a.filter(o=>f(o)>0).sort((x,y)=>f(y)-f(x)||x.nm.localeCompare(y.nm));if(s.length<=n)return s;const c=f(s[n-1]);return s.filter(o=>f(o)>=c)}
+// Se i pari merito sull'ultimo posto sono tanti (lista oltre 8 nomi), quel gruppo va in un elenco apribile.
+function rankList(a,f,unit,det){const U=v=>typeof unit==="function"?unit(v):unit;
+ const li=(o,pos)=>{const v=f(o),d=det?det(o):"";return `<li><span class="ps">${pos}</span>${bdg(o.tn)}<span class="pn"><a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a><small>${nm(o.tn)}${d?" · "+d:""}</small></span><span class="pv">${v}<small>${U(v)}</small></span></li>`};
+ const cut=a.length?f(a[a.length-1]):0,tail=a.filter(o=>f(o)===cut),head=a.filter(o=>f(o)!==cut);
+ let h='<ol class="rk">',pv=null,pos=0;
+ const big=a.length>8&&tail.length>1,list=big?head:a;
+ list.forEach((o,i)=>{const v=f(o);if(v!==pv){pos=i+1;pv=v}h+=li(o,pos)});
+ if(big){const tp=head.length+1;
+  h+=`<li class="more"><details><summary>${head.length?"e altri ":""}${tail.length} giocatori a pari merito con ${cut} ${U(cut)}</summary><ol class="rk">${tail.map(o=>li(o,tp)).join("")}</ol></details></li>`}
+ return h+"</ol>"}
+function pAgg(ms,ok){const A={};
+ ms.forEach(m=>[m.h,m.a].filter(ok).forEach(tn=>m.T[tn].pl.forEach(p=>{const k=pkey(tn,p);
+  const a=A[k]||(A[k]={k,tn,disp:pdisp(tn,p),nm:p.name,m:0,tr:0,cp:0,dr:0,y:0,r:0,sq:[]});a.m+=p.m;a.tr+=p.tr;a.cp+=p.cp;a.dr+=p.dr;a.y+=p.y||0;a.r+=p.r||0;if(p.r)a.sq.push(p.sq||null)})));
+ const P=Object.values(A);P.forEach(a=>{a.pts=a.m*5+a.tr*2+a.cp*3+a.dr*3;a.k2=a.tr*2+a.cp*3});return P}
+const det=o=>[o.m?o.m+(o.m>1?" mete":" meta"):"",o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":"",o.dr?o.dr+" drop":""].filter(Boolean).join(" · ");
+const rd=o=>o.sq.map(sqTxt).join("; ");
+const UY=n=>n>1?"gialli":"giallo",UR=n=>n>1?"rossi":"rosso";
+const kd=o=>[o.tr?o.tr+" tr":"",o.cp?o.cp+" cp":""].filter(Boolean).join(" · ");
+// Riquadro Staff nella pagina squadra delle Rose (dati STAFF dall'annuario): elenco semplice nei colori della squadra
+const sfInk=c=>{const m=/^#?([0-9a-f]{6})$/i.exec(c||"");if(!m)return "#fff";const n=parseInt(m[1],16),L=(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255;return L>0.6?"#1c1c1a":"#fff"};
+function staffBox(tn){const o=STAFF[tn];if(!o)return "";
+ const TEC=/^(allenator|assistent|direttore tecnico|director of rugby|team manager|responsabile seniores|coordinatore sportivo)/i;
+ const row=(l,v,cl)=>`<div class="sf-r${cl?" "+cl:""}"><span class="sf-l">${l}</span><span class="sf-v">${v}</span></div>`;
+ const rr=([r,v])=>row(esc(r),v.map(esc).join(", "),/^allenator/i.test(r)?"sf-co":"");
+ const tec=o.ruoli.filter(([r])=>TEC.test(r)),soc=o.ruoli.filter(([r])=>!TEC.test(r));
+ const url=o.sito?(/^https?:/.test(o.sito)?o.sito:"https://"+o.sito):"";
+ const club=[o.fond?row("Fondazione",esc(o.fond)):"",o.colori?row("Colori",esc(o.colori)):"",
+  ...(o.campi||[]).map(([l,v])=>row(esc(l.replace(/^Campo di gioco e (di )?allenamento$/,"Campo")),esc(v.join(", ")))),
+  o.sponsor?row("Sponsor",esc(o.sponsor)):"",url?row("Sito",`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(o.sito.replace(/^https?:\/\/(www\.)?/,""))}</a>`):""].join("");
+ return `<div class="sf" style="--tc:${tcx(tn)}">
+ ${tec.length?`<div class="sf-h">Staff tecnico</div>${tec.map(rr).join("")}`:""}
+ ${soc.length?`<div class="sf-h">Società</div>${soc.map(rr).join("")}`:""}
+ ${club?`<div class="sf-h">Il club</div>${club}`:""}
+ <div class="msg" style="margin-top:8px;font-size:12px">Dall'annuario Rugby 2027, pag. ${o.pag}.</div></div>`}
+// Migliori giocatori di una squadra (pagina squadra nelle Rose)
+function teamBest(tn){const ms=teamMatches(tn);
+ if(!ms.length)return `<div class="card"><h2>Migliori giocatori</h2><div class="msg">Non ci sono ancora tabellini per questa squadra.</div></div>`;
+ const P=pAgg(ms,x=>x===tn),c=tcx(tn);
+ const lead=(lab,f,u,d)=>{const top=topN(P,f,5),U=v=>typeof u==="function"?u(v):u;
+  if(!top.length)return `<div class="ld"><div class="lab">${lab}</div><div class="msg">—</div></div>`;
+  const v=f(top[0]),tie=top.filter(o=>f(o)===v);
+  const vv=`<div class="lab">${lab}</div><div class="v">${v}<small>${U(v)}</small></div>`;
+  const first=`<div class="first"><span class="nmx">${tie[0].disp}</span><div class="dt2">${tie.length>1?`+${tie.length-1} a pari merito`:(d?d(tie[0]):"")}</div>${top.length>1?`<div class="dt2 more">classifica <span class="chev">▾</span></div>`:""}</div>`;
+  if(top.length===1)return `<div class="ld">${vv}<a class="pl nmx" data-pk="${esc(tie[0].k)}">${tie[0].disp}</a><div class="dt2">${d?d(tie[0]):""}</div></div>`;
+  let pv=null,pos=0;const li=top.map((o,k)=>{const x=f(o);if(x!==pv){pos=k+1;pv=x}return `<li><span class="ps">${pos}</span><span class="pn"><a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a>${d&&d(o)?`<small>${d(o)}</small>`:""}</span><span class="pv">${x}<small>${U(x)}</small></span></li>`}).join("");
+  return `<div class="ld tie" onclick="if(!event.target.closest('[data-pk]'))this.classList.toggle('open')"><div class="lab">${lab}</div><div class="tl0">${vv.replace(`<div class="lab">${lab}</div>`,"")}${first}</div><div class="tl"><ol class="rk">${li}</ol><div class="dt2 more">chiudi <span class="chev">▴</span></div></div></div>`};
+ const cp=P.filter(o=>o.y||o.r).sort((x,y)=>y.r-x.r||y.y-x.y||x.nm.localeCompare(y.nm));
+ const TY=cp.reduce((a,o)=>a+o.y,0),TR=cp.reduce((a,o)=>a+o.r,0);
+ const cards=cp.length?`<div class="ld tie crd" onclick="if(!event.target.closest('[data-pk]'))this.classList.toggle('open')"><div class="lab">Cartellini</div>
+  <div class="tl0"><div class="cv"><span><span class="cd y big"></span><b>${TY}</b> ${TY===1?"giallo":"gialli"}</span><span><span class="cd r big"></span><b>${TR}</b> ${TR===1?"rosso":"rossi"}</span></div><div class="dt2">${cp.length} ${cp.length===1?"giocatore":"giocatori"} sanzionati</div><div class="dt2 more">dettaglio <span class="chev">▾</span></div></div>
+  <div class="tl"><ol class="rk">${cp.map(o=>`<li><span class="pn"><a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a>${o.r&&rd(o)?`<small>${rd(o)}</small>`:""}</span><span class="pv cdv">${o.y?`<span class="cd y"></span>${o.y}`:""}${o.r?` <span class="cd r"></span>${o.r}`:""}</span></li>`).join("")}</ol><div class="dt2 more">chiudi <span class="chev">▴</span></div></div></div>`
+  :`<div class="ld crd"><div class="lab">Cartellini</div><div class="dt2">Nessun cartellino finora.</div></div>`;
+ const rows=P.filter(o=>o.pts||o.y||o.r).sort((x,y)=>y.pts-x.pts||y.m-x.m||x.nm.localeCompare(y.nm));
+ const mx=Math.max(1,...rows.map(o=>o.pts));
+ const tr=(o,i)=>`<tr data-pk="${esc(o.k)}"><td class="ps">${i+1}</td><td class="t"><b>${o.disp}</b><span class="bar"><i style="width:${Math.round(o.pts/mx*100)}%;background:${c}"></i></span></td><td class="pt">${o.pts||"–"}</td><td>${o.m||""}</td><td>${o.tr||""}</td><td>${o.cp||""}</td><td>${o.dr||""}</td><td>${o.y?`<span class="cd y"></span>${o.y>1?o.y:""}`:""}</td><td>${o.r?`<span class="cd r"></span>${o.r>1?o.r:""}`:""}</td></tr>`;
+ const head=`<thead><tr><th></th><th class="t">Giocatore</th><th>Pt</th><th>Mete</th><th>Tr</th><th>Cp</th><th>Drop</th><th title="Gialli"><span class="cd y"></span></th><th title="Rossi"><span class="cd r"></span></th></tr></thead>`;
+ const N=8,more=rows.length>N;
+ const reds=P.filter(o=>o.r).map(o=>`<li><span class="cd r"></span> <a class="pl" data-pk="${esc(o.k)}"><b>${o.disp}</b></a> <small>${rd(o)||""}</small></li>`).join("");
+ return `<div class="card tb2"><h2>Migliori giocatori <span class="c" style="font-weight:400;font-size:12.5px;color:var(--mu)">· ${ms.length} ${ms.length===1?"partita":"partite"} con tabellino</span></h2>
+ <div class="lds" style="--tc:${c}">${lead("Punti",o=>o.pts,"pt",det)}${lead("Mete",o=>o.m,n=>n>1?" mete":" meta")}${lead("Al piede",o=>o.k2,"pt",kd)}${cards}</div>
+ </div>`}
+/* Squadra più fallosa: somma di cartellini gialli e rossi dei giocatori di ogni squadra,
+   dai tabellini della giornata scelta (o di tutte le giornate giocate, per il Totale).
+   Toccando una squadra si aprono i giocatori con cartellini; toccando un giocatore le partite
+   in cui li ha presi (ogni partita apre la sua scheda). */
+function falli(ms,gs,one,tile){const A={};
+ ms.forEach(m=>[m.h,m.a].filter(tn=>gs.includes(gOf(tn))&&m.T[tn]).forEach(tn=>{
+  const a=A[tn]||(A[tn]={n:tn,y:0,r:0,g:0,o:[],P:{}});a.g++;const op=tn===m.h?m.a:m.h;a.o.push(op);
+  m.T[tn].pl.forEach(p=>{const y=p.y||0,r=p.r||0;a.y+=y;a.r+=r;if(!y&&!r)return;
+   const k=pkey(tn,p),q=a.P[k]||(a.P[k]={k,disp:pdisp(tn,p),nm:p.name,y:0,r:0,M:[]});q.y+=y;q.r+=r;
+   q.M.push({ri:m.ri,h:m.h,a:m.a,op,y,r,cs:m.cards.filter(c=>c.p===p)})})}));
+ const L=Object.values(A).map(a=>(a.c=a.y+a.r,a)).filter(a=>a.c>0).sort((x,y)=>y.c-x.c||y.r-x.r||x.n.localeCompare(y.n));
+ const cv=(y,r)=>`${y?`<span class="cd y"></span>${y}`:""}${r?` <span class="cd r"></span>${r}`:""}`;
+ const amp=x=>x.replace(/&/g,"&amp;");
+ // dettaglio di una partita: giornata, avversaria, cartellini con il minuto
+ const mrow=x=>{const cs=x.cs.length?x.cs.map(c=>`<span class="cd ${c.k}"></span>${c.k==="r"?(c.dg?"rosso (doppio giallo)":"rosso"):"giallo"}${c.t!=null?" al "+c.t+"’":""}`).join(" · "):cv(x.y,x.r);
+  return `<a class="fx-m" data-mt="${x.ri}|${amp(x.h)}|${amp(x.a)}"><span><b>${x.ri+1}ª giornata</b> · contro ${nm(x.op)}</span><small>${cs}</small></a>`};
+ // giocatori di una squadra, ognuno apribile sulle sue partite
+ const plist=a=>{const P=Object.values(a.P).sort((x,y)=>(y.y+y.r)-(x.y+x.r)||y.r-x.r||x.nm.localeCompare(y.nm));
+  return `<div class="fx-pl">${P.map(q=>`<details class="fx-p"><summary><span class="pn"><b>${q.disp}</b><small>${q.M.length} ${q.M.length===1?"partita":"partite"} · tocca per vedere quali</small></span><span class="pv cdv">${cv(q.y,q.r)}</span><span class="chev">▾</span></summary>
+   <div class="fx-ms">${q.M.sort((x,y)=>x.ri-y.ri).map(mrow).join("")}<a class="pl fx-sk" data-pk="${esc(q.k)}">scheda del giocatore ›</a></div></details>`).join("")}</div>`};
+ const h2=`<h2>Squadre più fallose</h2><div class="msg" style="margin:-4px 0 6px">Cartellini gialli + rossi${one?" nella giornata":" in totale"} · tocca una squadra per i giocatori</div>`;
+ if(tile){if(!L.length)return `<div class="card sk"><div class="lab">Squadra più fallosa</div><div class="msg">Nessun cartellino.</div></div>`;
+  const w=L.filter(a=>a.c===L[0].c&&a.r===L[0].r),a0=w[0];
+  return `<div class="card sk fx"><details><summary><div class="lab">Squadra più fallosa</div>${w.map(a=>`<div class="tn">${bdg(a.n)}${nm(a.n)}${SALL?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· Girone ${gOf(a.n)}</span>`:""}${one?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· contro ${nm(a.o[0])}</span>`:""}</div>`).join("")}<div class="big">${a0.c}</div><div class="msg">cartellini: <span class="cd y"></span>${a0.y} ${a0.y===1?"giallo":"gialli"}${a0.r?` · <span class="cd r"></span>${a0.r} ${a0.r===1?"rosso":"rossi"}`:""}${one?"":` in ${a0.g} partite (${(a0.c/a0.g).toFixed(1)} a partita)`}</div><div class="fx-more">giocatori <span class="chev">▾</span></div></summary>
+  ${w.map(a=>(w.length>1?`<div class="fx-tn">${bdg(a.n)}${nm(a.n)}</div>`:"")+plist(a)).join("")}</details></div>`}
+ if(!L.length)return `<div class="card">${h2}<div class="msg">Nessun cartellino.</div></div>`;
+ const cut=L.length>5?L[4].c:0,top=L.filter(a=>a.c>=cut);
+ let pv=null,pos=0;
+ const li=top.map((a,i)=>{if(a.c!==pv){pos=i+1;pv=a.c}
+  const sub=[SALL?`Girone ${gOf(a.n)}`:"",one?`contro ${nm(a.o[0])}`:`${a.g} ${a.g===1?"partita":"partite"} · ${(a.c/a.g).toFixed(1)} a partita`].filter(Boolean).join(" · ");
+  return `<li class="fx-li"><details><summary><span class="ps">${pos}</span>${bdg(a.n)}<span class="pn"><b>${nm(a.n)}</b><small>${sub}</small></span><span class="pv cdv">${cv(a.y,a.r)}</span><span class="pv" style="min-width:42px">${a.c}<small>tot</small></span><span class="chev">▾</span></summary>${plist(a)}</details></li>`}).join("");
+ return `<div class="card">${h2}<ol class="rk">${li}</ol></div>`}
+// Giudice Sportivo (senza tabellini): squalifiche e multe delle squadre dei gironi scelti, dai comunicati
+function giudiceBox(gs){
+ const tOf=s=>{const t=findT(String(s||"").replace(/^della\s+/i,""));return t&&gs.includes(t.g)?t:null};
+ const sq=SQUALIFICHE.filter(s=>s.nome&&tOf(s.squadra)).sort((a,b)=>b.com-a.com);
+ const mu=SANZIONI.filter(s=>s.testo&&/\b(MULTA|AMMENDA)\b/i.test(s.testo)&&tOf(s.testo.split(",")[0])).sort((a,b)=>b.com-a.com);
+ const lk=s=>`<a href="${esc(s.pdf)}" target="_blank" rel="noopener">comunicato n. ${s.com}</a>`;
+ let h=`<div class="card"><h2>Squalifiche</h2><div class="msg" style="margin:-4px 0 6px">Dai comunicati del Giudice Sportivo</div>`+(sq.length?`<ul class="el">`+sq.map(s=>{const t=tOf(s.squadra);
+  return `<li>${bdg(t.n)}<b>${esc(tcap(s.nome))}</b> <small>(${nm(t.n)})</small> · ${esc(sqTxt(s))}${s.periodo?` <small>(${esc(s.periodo)})</small>`:""} · ${lk(s)}</li>`}).join("")+`</ul>`:'<div class="msg">Nessuna squalifica nei comunicati usciti finora.</div>')+`</div>`;
+ h+=`<div class="card"><h2>Multe alle società</h2>`+(mu.length?`<ul class="el">`+mu.map(s=>{const t=tOf(s.testo.split(",")[0]),im=[...s.testo.matchAll(/(?:MULTA|AMMENDA)\s+DI\s+EURO\s*([\d.,]+)/gi)].map(x=>x[1].replace(/,00$/,"").replace(/[.,]$/,"")),
+  mo=(s.testo.match(/infraz\.?\s*Art\.?\s*[\d/.]+\s*lett\.?\s*\w+\)\s*\(([^)]+)\)/i)||[])[1]||"";
+  return `<li>${bdg(t.n)}<b>${nm(t.n)}</b> · ${im.length?`<b>${esc(im[im.length-1])} €</b>`:"multa"}${mo?` <small>· ${esc(mo)}</small>`:""} · ${lk(s)}</li>`}).join("")+`</ul>`:'<div class="msg">Nessuna multa nei comunicati usciti finora.</div>')+`</div>`;
+ return h+'<div class="msg">La FIR non pubblica i tabellini di questo campionato: non ci sono statistiche dei singoli giocatori.</div>'}
+let SALL=false; // true = riquadro "Tutti i gironi"
+let SR=null;     // null = totale; altrimenti indice della giornata (0 = 1ª)
+function renderStats(){
+ document.getElementById("stabs").innerHTML=GIRONI.map(g=>`<button class="${!SALL&&g===G?"on":""}" data-sg="${g}">${GIRNOMI[g]||"Girone "+g}</button>`).join("")+`<button class="${SALL?"on":""}" data-sg="0">Tutti i gironi</button>`;
+ const el=document.getElementById("stat"),srs=document.getElementById("srs");
+ const gs=(SALL?GIRONI:[G]).filter(g=>stand(g,lastR(g)).some(o=>o.g));
+ if(!gs.length){srs.innerHTML="";el.innerHTML='<div class="msg">Nessuna giornata giocata in questo girone.</div>';return}
+ const LG={};gs.forEach(g=>LG[g]=lastR(g));
+ const maxR=Math.max(...gs.map(g=>LG[g]));if(SR!==null&&SR>maxR)SR=maxR;
+ srs.innerHTML=`<button class="${SR===null?"on":""}" data-sr="t">Totale</button>`+Array.from({length:maxR+1},(_,i)=>`<button class="${SR===i?"on":""}" data-sr="${i}">${i+1}ª giornata</button>`).join("");
+ const one=SR!==null;
+ // squadre: totale = classifica all'ultima giornata; giornata = le singole partite di quella giornata
+ let s;
+ if(!one)s=gs.flatMap(g=>stand(g,LG[g]).filter(o=>o.g));
+ else s=(rounds[SR]||[]).filter(x=>gs.includes(gOf(x.h))).flatMap(x=>[{n:x.h,pf:x.hs,ps:x.as,me:x.ht,g:1,o:x.a,home:1},{n:x.a,pf:x.as,ps:x.hs,me:x.at,g:1,o:x.h,home:0}]);
+ if(!s.length){el.innerHTML='<div class="msg">Nessuna partita giocata in questa giornata.</div>';return}
+ const best=(f,mx)=>{const v=mx?Math.max(...s.map(f)):Math.min(...s.map(f));return s.filter(o=>f(o)===v)};
+ const att=best(o=>o.pf,1),def=best(o=>o.ps,0),a0=att[0],d0=def[0];
+ const gl=n=>SALL?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· Girone ${gOf(n)}</span>`:"";
+ const vs=o=>one?` <span class="c" style="color:var(--mu);font-weight:400;font-size:12px">· ${o.pf}-${o.ps} ${o.home?"contro":"in casa di"} ${esc(o.o)}</span>`:"";
+ const tc=(lab,arr,v,sub)=>`<div class="card sk"><div class="lab">${lab}</div>${arr.map(o=>`<div class="tn">${bdg(o.n)}${nm(o.n)}${gl(o.n)}${vs(o)}</div>`).join("")}<div class="big">${v}</div><div class="msg">${sub}</div></div>`;
+ // giocatori
+ const ms=MATCHES.filter(m=>gs.includes(m.g)&&(one?m.ri===SR:m.ri>=0&&m.ri<=LG[m.g])),P=pAgg(ms,()=>true);
+ const giocate=one?s.length/2:gs.reduce((n,g)=>n+rounds.slice(0,LG[g]+1).reduce((k,r)=>k+r.filter(x=>gOf(x.h)===g).length,0),0),cop=ms.length;
+ const nota=cop<giocate?` Mancano i tabellini di ${giocate-cop} ${giocate-cop===1?"partita":"partite"} su ${giocate}.`:"";
+ const D=f=>SALL?o=>{const d=f?f(o):"";return `Girone ${gOf(o.tn)}${d?" · "+d:""}`}:f;
+ let sub;
+ if(one){const dd=[...new Set(gs.filter(g=>played(g,SR)&&CAL[g][SR]).map(g=>CAL[g][SR].d))].sort();
+  sub=`${SALL?"Tutti i gironi":"Girone "+G} · ${SR+1}ª giornata${dd.length?" · "+dd.map(fdt).join(" / "):""}`;
+  const nog=gs.filter(g=>!played(g,SR));if(nog.length)sub+=` · ${nog.length>1?"i gironi":"il girone"} ${nog.join(", ")} non ${nog.length>1?"l'hanno":"l'ha"} ancora giocata`}
+ else if(SALL){const by={};gs.forEach(g=>(by[LG[g]+1]=by[LG[g]+1]||[]).push(g));
+  sub="Tutti i gironi · totale, aggiornato a: "+Object.entries(by).map(([gi,a])=>`${a.length>1?"gironi":"girone"} ${a.join(", ")} alla giornata ${gi}`).join("; ")}
+ else sub=`Girone ${G} · totale, aggiornato alla giornata ${LG[G]+1}`;
+ el.innerHTML=`<div class="sub">${sub}</div><div class="g2">`+
+  (one?tc("Miglior attacco",att,a0.pf,`punti fatti · ${a0.me} ${a0.me===1?"meta":"mete"}`)
+      :tc("Miglior attacco",att,a0.pf,`punti fatti in ${a0.g} partite (${(a0.pf/a0.g).toFixed(1)} a partita) · ${a0.me} mete`))+
+  (one?tc("Miglior difesa",def,d0.ps,`punti subiti`)
+      :tc("Miglior difesa",def,d0.ps,`punti subiti in ${d0.g} partite (${(d0.ps/d0.g).toFixed(1)} a partita)`))+`</div>`+(MATCHES.length?falli(ms,gs,one,1)+
+  `<div class="card"><h2>Top realizzatori</h2>${P.some(o=>o.pts)?rankList(topN(P,o=>o.pts,5),o=>o.pts,"pt",D(det)):'<div class="msg">Nessun tabellino per questa giornata.</div>'}</div>`+
+  `<div class="card"><h2>Più mete</h2>${P.some(o=>o.m)?rankList(topN(P,o=>o.m,5),o=>o.m,n=>n>1?"mete":"meta",D(null)):'<div class="msg">Nessuna meta.</div>'}</div>`+
+  `<div class="card"><h2>Punti al piede</h2><div class="msg" style="margin:-4px 0 6px">Punti da trasformazioni e calci di punizione (esclusi i drop)</div>${P.some(o=>o.k2)?rankList(topN(P,o=>o.k2,5),o=>o.k2,"pt",D(kd)):'<div class="msg">Nessuno.</div>'}</div>`+
+  `<div class="g2"><div class="card"><h2>Cartellini gialli</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni temporanee</div>${P.some(o=>o.y)?rankList(topN(P,o=>o.y,5),o=>o.y,UY,D(null)):'<div class="msg">Nessuno.</div>'}</div>`+
+  `<div class="card"><h2>Cartellini rossi</h2><div class="msg" style="margin:-4px 0 6px">Espulsioni definitive</div>${P.some(o=>o.r)?rankList(topN(P,o=>o.r,5),o=>o.r,UR,D(rd)):'<div class="msg">Nessuno.</div>'}</div></div>`+
+  falli(ms,gs,one)+
+  `<div class="msg">Giocatori dai tabellini ufficiali FIR.${nota} Con più giocatori a pari merito vengono mostrati tutti (se sono tanti, in un elenco da aprire).</div>`:giudiceBox(gs))}
+</script>
+<script data-goatcounter="https://rugby-classifiche.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
