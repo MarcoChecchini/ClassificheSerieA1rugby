@@ -1074,7 +1074,7 @@ function renderRose(){
  const t=T.find(x=>x.n===TEAM),d=ROSE[TEAM],q=Q.trim().toLowerCase();
  const ps=d.p.filter(p=>!q||p.join(" ").toLowerCase().includes(q));
  const grp=RUOLI.map(([l,re])=>[l,ps.filter(p=>re.test(p[6].toLowerCase()))]);
- const altri=ps.filter(p=>!RUOLI.some(([,re])=>re.test(p[6].toLowerCase())));if(altri.length)grp.push(["Altri",altri]);
+ const altri=ps.filter(p=>!RUOLI.some(([,re])=>re.test(p[6].toLowerCase())));if(altri.length)grp.push(["Entrati solo dalla panchina",altri]);
  let h=`<button data-back="1" style="margin-bottom:12px">← Tutte le squadre</button>
  <div class="card"><div class="th">${logo(TEAM)}<div><h2>${nm(TEAM)}</h2><div class="c">${SER[t.g]} · nell'annuario: ${esc(d.book)} · ${d.p.length} giocatori</div>${STAFF[TEAM]?`<button class="sf-tg" style="--tc:${tcx(TEAM)};--tf:${sfInk(tcx(TEAM))}" onclick="const c=this.closest('.card');c.classList.toggle('sfo')">Info società <span class="chev">▾</span></button>`:""}</div></div>${staffBox(TEAM)}</div>${teamBest(TEAM)}
  <input class="flt" id="flt" placeholder="Cerca per nome, luogo di nascita, ruolo…" value="${esc(Q)}">`;

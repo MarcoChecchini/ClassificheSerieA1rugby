@@ -21,7 +21,7 @@ Sotto la barra in alto, in tutte e due le pagine, c'è il banner per scegliere i
 - Quello che non torna (mete non ricavabili, tabellini incompleti) compare nel riepilogo dell'esecuzione con un avviso giallo. I tabellini già presenti non vengono toccati, così le correzioni a mano restano.
 - Prova senza rete: `node scripts/aggiorna-femminile.mjs mc.json articoli.json`.
 
-I giocatori (e le giocatrici) dei tabellini che non sono nell'annuario entrano comunque nella pagina Rose: nome come scritto nel tabellino e ruolo della maglia indossata più spesso da titolare, senza dati anagrafici (chi è entrato solo dalla panchina finisce in "Altri").
+I giocatori (e le giocatrici) dei tabellini che non sono nell'annuario entrano comunque nella pagina Rose: nome come scritto nel tabellino e ruolo della maglia indossata più spesso da titolare, senza dati anagrafici (chi è entrato solo dalla panchina finisce nel gruppo "Entrati solo dalla panchina").
 
 Le statistiche dei giocatori sono calcolate nella pagina dal testo dei tabellini FIR, salvato nel blocco `TABELLINI` di `index.html`.
 
