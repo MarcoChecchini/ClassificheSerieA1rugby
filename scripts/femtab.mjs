@@ -12,7 +12,8 @@ const AP = "['’′°`]";
 export const NOMI = {
   "RITA DA LIO": "R. Da Lio", "DA LIO RITA": "R. Da Lio", "EMMA DA LIO": "E. Da Lio", "DA LIO EMMA": "E. Da Lio",
   "TRIOLA": "Triolo", "MAGNON": "Magnoni", "IVASCHENKO": "Ivashchenko", "DONA": "Donà", "ZOPPE'": "Zoppè", "ZOPPE": "Zoppè",
-  "MARSILI": "Marsili Feliciangeli", "ALBANESE": "Albanese Ginammi", "REVERSO PEILA": "Reverso", "FERNANDEZ": "Fernandez Suarez",
+  // come nell'annuario Rugby 2027
+  "MARSILI FELICIANGELI": "Marsili", "ALBANESE": "Albanese Ginammi", "REVERSO PEILA": "Reverso", "FERNANDEZ SUAREZ": "Fernandez", "DEROBERTIS": "De Robertis",
   "SPIRLI": "Spirlì",
 };
 const tcase = s => s.toLowerCase().replace(/(^|[\s'’-])(\S)/g, (a, b, c) => b + c.toUpperCase());

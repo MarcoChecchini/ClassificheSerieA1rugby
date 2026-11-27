@@ -13,7 +13,7 @@ Sotto la barra in alto, in tutte e due le pagine, c'è il banner per scegliere i
 
 `femminile.html` usa lo stesso codice della pagina maschile, con le stesse tre sezioni (Classifiche con schede partita e formazioni, Statistiche, Rose giocatrici) e gli stessi blocchi di dati: `DATA`, `ARBITRI`, `TABELLINI`, `SQUALIFICHE`, `SANZIONI`. Girone unico da 8 squadre, 14 giornate: le prime 4 in semifinale, l'ultima retrocede. Penalità in `PEN` (CUS Torino −4).
 
-- **Rose**: non c'è un annuario per il femminile, quindi la rosa di ogni squadra è fatta dalle giocatrici scese in campo nei tabellini, con il ruolo della maglia indossata più spesso da titolare (dipende dall'ordine in cui la società scrive la formazione). Allenatori dai tabellini, campo dal Match Centre (blocco `STAFF`).
+- **Rose e società**: dall'annuario *Rugby 2027* (pagine "I club di Elite femminile", pag. 192-199), come per il maschile: blocchi `ROSE` e `STAFF` di `femminile.html`. Le giocatrici dei tabellini che non sono nell'annuario compaiono comunque, con la nota "non presente nella rosa dell'annuario".
 - **Aggiornamento automatico** (stessa Action):
   - `scripts/aggiorna-femminile.mjs`: risultati dal Match Centre FIR (categoria `163820262027`); le mete di ogni partita si ricavano dal totale mete della classifica del Match Centre, altrimenti dai marcatori del tabellino. Poi i tabellini dagli articoli "Serie A Elite Femminile" di federugby.it.
   - `scripts/femtab.mjs` converte i tabellini femminili (scritti a mano dalle società, in forme diverse) nel formato della pagina. Le grafie diverse dello stesso nome si sistemano nella tabella `NOMI` in cima al file.
