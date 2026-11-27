@@ -23,6 +23,15 @@ Sotto la barra in alto, in tutte e due le pagine, c'è il banner per scegliere i
 
 I giocatori (e le giocatrici) dei tabellini che non sono nell'annuario entrano comunque nella pagina Rose: nome come scritto nel tabellino e ruolo più frequente (da titolare quello della maglia, dalla panchina quello del giocatore sostituito), senza dati anagrafici. Solo chi segna senza essere in formazione nel tabellino resta nel gruppo "Entrati solo dalla panchina".
 
+## Serie B, Serie A femminile e Under 18 Titolo
+
+Pagine `serie-b.html`, `serie-a-femminile.html`, `under-18.html`, raggiungibili dal banner dei campionati (5 voci, in tutte le pagine). Hanno classifiche per girone e per giornata, risultati con mete e bonus, calendario, andamento delle posizioni, arbitri, orari e campi, miglior attacco e difesa, squalifiche e multe dai comunicati.
+
+- La FIR non pubblica tabellini per questi campionati: niente formazioni, rose e statistiche dei giocatori. Se un giorno i tabellini ci saranno, il codice delle pagine è lo stesso di `index.html`.
+- **Dati automatici** (stessa Action): `scripts/campionato.mjs <chiave>` legge dal Match Centre squadre, gironi, calendario, risultati, arbitri e penalità, e le mete di ogni partita dall'omologazione dei comunicati del Giudice Sportivo (PDF); se il comunicato non è ancora uscito, dal totale mete della classifica del Match Centre. A ogni esecuzione controlla che i punti calcolati siano uguali a quelli della classifica del Match Centre. Squalifiche e multe: `CAMPIONATO=<chiave> node scripts/giudice.mjs`.
+- Le chiavi, le categorie del Match Centre e le sigle dei comunicati di tutti i campionati sono in `scripts/campionati.mjs`.
+- **Dopo una modifica al codice di `index.html`**: `node scripts/genera-pagine.mjs` rigenera le tre pagine (tenendo i loro dati) e il banner.
+
 Le statistiche dei giocatori sono calcolate nella pagina dal testo dei tabellini FIR, salvato nel blocco `TABELLINI` di `index.html`.
 
 ## Aggiornamento automatico
