@@ -11,11 +11,15 @@ La pagina ha tre sezioni:
 
 Sotto la barra in alto, in tutte e due le pagine, c'è il banner per scegliere il campionato: **Serie A maschile** (`index.html`) oppure **Serie A Elite femminile** (`femminile.html`).
 
-La pagina femminile ha **Classifiche** (risultati della giornata, classifica con le prime 4 in semifinale e l'ultima che retrocede, andamento delle posizioni) e **Statistiche** delle squadre (miglior attacco e difesa, mete, bonus), per totale o per singola giornata. Girone unico da 8 squadre, 14 giornate.
+`femminile.html` usa lo stesso codice della pagina maschile, con le stesse tre sezioni (Classifiche con schede partita e formazioni, Statistiche, Rose giocatrici) e gli stessi blocchi di dati: `DATA`, `ARBITRI`, `TABELLINI`, `SQUALIFICHE`, `SANZIONI`. Girone unico da 8 squadre, 14 giornate: le prime 4 in semifinale, l'ultima retrocede. Penalità in `PEN` (CUS Torino −4).
 
-- I risultati stanno nel blocco `DATI` di `femminile.html` (giornata → una riga per partita, stesso formato della pagina maschile con le mete tra parentesi) e per ora **si aggiungono a mano**: l'Action automatica legge solo la Serie A maschile.
-- Le penalità in classifica stanno in `PEN` (CUS Torino −4).
-- Il calendario (`AND` e `RIT`) è quello FIR; il ritorno ha gli stessi accoppiamenti dell'andata a campi invertiti.
+- **Rose**: non c'è un annuario per il femminile, quindi la rosa di ogni squadra è fatta dalle giocatrici scese in campo nei tabellini, con il ruolo della maglia indossata più spesso da titolare (dipende dall'ordine in cui la società scrive la formazione). Allenatori dai tabellini, campo dal Match Centre (blocco `STAFF`).
+- **Aggiornamento automatico** (stessa Action):
+  - `scripts/aggiorna-femminile.mjs`: risultati dal Match Centre FIR (categoria `163820262027`); le mete di ogni partita si ricavano dal totale mete della classifica del Match Centre, altrimenti dai marcatori del tabellino. Poi i tabellini dagli articoli "Serie A Elite Femminile" di federugby.it.
+  - `scripts/femtab.mjs` converte i tabellini femminili (scritti a mano dalle società, in forme diverse) nel formato della pagina. Le grafie diverse dello stesso nome si sistemano nella tabella `NOMI` in cima al file.
+  - `scripts/arbitri.mjs` con `PAGINA=femminile.html CATEGORIA_MC=163820262027` e `scripts/giudice.mjs` con `CAMPIONATO=femminile` (PDF `COMAELITEFEMMxxGS`).
+- Quello che non torna (mete non ricavabili, tabellini incompleti) compare nel riepilogo dell'esecuzione con un avviso giallo. I tabellini già presenti non vengono toccati, così le correzioni a mano restano.
+- Prova senza rete: `node scripts/aggiorna-femminile.mjs mc.json articoli.json`.
 
 Le statistiche dei giocatori sono calcolate nella pagina dal testo dei tabellini FIR, salvato nel blocco `TABELLINI` di `index.html`.
 

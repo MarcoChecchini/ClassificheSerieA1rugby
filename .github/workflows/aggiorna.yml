@@ -46,6 +46,27 @@ jobs:
         continue-on-error: true       # se il sito dei PDF non risponde, i risultati si salvano lo stesso
         run: node scripts/giudice.mjs
 
+      # ---- Serie A Elite femminile (femminile.html) ----
+      - name: "Femminile: risultati dal Match Centre e tabellini dagli articoli FIR"
+        id: fem
+        continue-on-error: true
+        run: node scripts/aggiorna-femminile.mjs
+
+      - name: "Femminile: arbitri, orari e campi dal Match Centre FIR"
+        id: farb
+        continue-on-error: true
+        env:
+          PAGINA: femminile.html
+          CATEGORIA_MC: "163820262027"
+        run: node scripts/arbitri.mjs
+
+      - name: "Femminile: comunicati del Giudice Sportivo"
+        id: fgs
+        continue-on-error: true
+        env:
+          CAMPIONATO: femminile
+        run: node scripts/giudice.mjs
+
       - name: Salva le modifiche
         run: |
           if git diff --quiet; then echo "Niente da salvare"; exit 0; fi
@@ -63,6 +84,11 @@ jobs:
         if: steps.arb.outcome == 'failure' || (steps.arb.outputs.problemi_arb != '' && steps.arb.outputs.problemi_arb != '0')
         run: |
           echo "::warning::Arbitri dal Match Centre FIR: lettura non riuscita o squadre non riconosciute. Vedi il riepilogo dell'esecuzione."
+
+      - name: Segnala i dati femminili da controllare
+        if: steps.fem.outcome == 'failure' || steps.farb.outcome == 'failure' || steps.fgs.outcome == 'failure' || (steps.fem.outputs.problemi_f != '' && steps.fem.outputs.problemi_f != '0')
+        run: |
+          echo "::warning::Serie A Elite femminile: qualcosa da controllare (risultati, tabellini, arbitri o Giudice Sportivo). Vedi il riepilogo dell'esecuzione."
 
       - name: Segnala le squalifiche da controllare
         if: steps.gs.outcome == 'failure' || (steps.gs.outputs.problemi_gs != '' && steps.gs.outputs.problemi_gs != '0')

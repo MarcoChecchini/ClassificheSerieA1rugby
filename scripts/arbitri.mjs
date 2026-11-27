@@ -1,11 +1,13 @@
 // Legge dal Match Centre della FIR (www.federugby.it/campionati/) gli ufficiali di gara della Serie A maschile
+// (o, con PAGINA=femminile.html CATEGORIA_MC=163820262027, della Serie A Elite femminile)
 // (arbitro, giudici di linea, TMO), più data, ora e campo di ogni partita, e li salva nel blocco ARBITRI di index.html.
 // Le designazioni escono di solito il giovedì: la GitHub Action gira anche quel giorno.
 // Uso: node scripts/arbitri.mjs              (scarica i dati dal sito)
 //      node scripts/arbitri.mjs file.json    (usa una risposta già salvata, per le prove)
 import fs from "node:fs";
 
-const FILE = new URL("../index.html", import.meta.url);
+const PAGINA = process.env.PAGINA || "index.html";
+const FILE = new URL("../" + PAGINA, import.meta.url);
 const UA = { "User-Agent": "ClassificheSerieA1rugby (+https://github.com/MarcoChecchini/ClassificheSerieA1rugby)" };
 // Categoria "SERIE A1" del Match Centre (= Serie A maschile) e stagione: la pagina FIR usa session_id = anno di fine stagione.
 const STAG = process.env.STAGIONE_MC || "20262027";
@@ -14,12 +16,12 @@ const URL_API = `https://www.federugby.it/matchcentre/firapi.php?action=dettagli
 
 const html = fs.readFileSync(FILE, "utf8");
 const tSrc = html.match(/const T=(\[[\s\S]*?\]\.map\(\(\[n,g,re\]\)=>\(\{n,g,re\}\)\));/);
-if (!tSrc) throw new Error("Tabella squadre (const T) non trovata in index.html");
+if (!tSrc) throw new Error("Tabella squadre (const T) non trovata in " + PAGINA);
 const T = new Function("return " + tSrc[1])();
 const find = s => { s = s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase(); return T.find(t => t.re.test(s)); };
 
 const bm = html.match(/\/\*ARBITRI-INIZIO\*\/([\s\S]*?)\/\*ARBITRI-FINE\*\//);
-if (!bm) throw new Error("Blocco ARBITRI-INIZIO / ARBITRI-FINE non trovato in index.html");
+if (!bm) throw new Error("Blocco ARBITRI-INIZIO / ARBITRI-FINE non trovato in " + PAGINA);
 
 let body;
 if (process.argv[2]) body = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
@@ -66,8 +68,8 @@ if (out.length && block !== bm[0]) {
 
 problemi.forEach(p => console.log("ATTENZIONE: " + p));
 if (process.env.GITHUB_STEP_SUMMARY) {
-  let md = `### Arbitri e giudici di linea\n\nPartite lette: ${out.length}, con arbitro designato: ${designate}.\n`;
-  if (problemi.length) md += "\n**Da controllare** (aggiungere l'alias della squadra nella tabella `T` di `index.html`):\n\n" + problemi.map(p => "- " + p).join("\n") + "\n";
+  let md = `### Arbitri e giudici di linea (${PAGINA})\n\nPartite lette: ${out.length}, con arbitro designato: ${designate}.\n`;
+  if (problemi.length) md += "\n**Da controllare** (aggiungere l'alias della squadra nella tabella `T` di `${PAGINA}`):\n\n" + problemi.map(p => "- " + p).join("\n") + "\n";
   fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
 }
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `problemi_arb=${problemi.length}\n`);
