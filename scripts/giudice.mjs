@@ -61,10 +61,10 @@ async function comunicati() {
   const out = [];
   for (const [url, title] of seen) {
     const h = await (await fetch(url, { headers: UA })).text();
-    const pdf = [...new Set(h.match(new RegExp(`https?:\\/\\/[^"' ]+${SIGLA}\\d+GS[^"' ]+\\.pdf`, "gi")) || [])]
+    const pdf = [...new Set(h.match(new RegExp(`https?:\\/\\/[^"' ]+${SIGLA}\\d+G?S[^"' ]+\\.pdf`, "gi")) || [])]
       .find(u => u.includes(STAGIONE));
     if (!pdf) continue;
-    const num = +(pdf.match(new RegExp(`${SIGLA}(\\d+)GS`, "i")) || [])[1];
+    const num = +(pdf.match(new RegExp(`${SIGLA}(\\d+)G?S`, "i")) || [])[1];
     out.push({ url, title: title.replace(/&#\d+;/g, "–"), pdf, num });
   }
   // i PDF compaiono anche tra gli "ultimi documenti" di ogni pagina: uno per numero

@@ -24,9 +24,12 @@ const put = (name, val) => { const m = block(name); html = html.replace(m[0], ()
 
 // ---------- nomi ----------
 const plain = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim().toUpperCase();
-const SUFF = /\b(A\.?S\.?D\.?|S\.?S\.?D\.?|A\.?\s?R\.?\s?L\.?|S\.?R\.?L\.?|S\.?P\.?A\.?|SOC\.?\s?COOP\.?(\s?DIL\.?)?|COOP\.?|SCARL|SCRL|DIL\.?|F\.?C\.?|A\.?P\.?S\.?|ONLUS|SSDARL|SSDRL|ASSOCIAZIONE SPORTIVA DILETTANTISTICA|SOCIETA SPORTIVA DILETTANTISTICA)(?=\s|$|[^A-Z])/g;
-const tcap = s => s.toLowerCase().replace(/(^|[\s'’.-])(\S)/g, (a, b, c) => b + c.toUpperCase()).replace(/\bCus\b/g, "CUS").replace(/\bAsr\b/g, "ASR");
-const pretty = n => tcap(plain(n).replace(SUFF, " ").replace(/\s+/g, " ").replace(/[\s.,-]+$/, "").trim()) || n;
+// forme societarie da togliere dal nome mostrato (il nome completo resta per riconoscere la squadra)
+const SUFF = [/SOC\.?\s*COOP\.?\s*(S\.?\s*D\.?|DIL\.?)?\s*(A\.?\s*R\.?\s*L\.?)?/g, /\bS\.?\s?S\.?\s?D\.?\s*(A\s*R\.?\s*L\.?|ARL|RL)?/g, /\bA\.?\s?S\.?\s?D\.?/g, /\bS\.?\s?R\.?\s?L\.?/g,
+  /\bA\.?\s?R\.?\s?L\.?/g, /\bA\s+R\.\s?L\./g, /\bS\.D\.?/g, /\bS\.?P\.?A\.?(?=\s|$)/g, /\b(SCARL|SCRL|SSDARL|SSDRL|ONLUS|APS|A\.P\.S\.)(?=\s|$)/g, /\bDIL\.(?=\s|$)/g, /^POL\.\s*/g, /\bAD$/g, /\bF\.C\.\s*(?=\d)/g];
+const tcap = s => s.toLowerCase().replace(/(^|[\s'’.-])(\S)/g, (a, b, c) => b + c.toUpperCase()).replace(/\bCus\b/g, "CUS").replace(/\bAsr\b/g, "ASR").replace(/\bXv\b/g, "XV").replace(/\b(R|F)\.(C|Fem|F)\b/g, m => m.toUpperCase());
+const pretty = n => { let s = plain(n).replace(/C\.\s?U\.\s?S\./g, "CUS").replace(/\bF\.C\.(?=\d)/g, "F.C. "); for (const re of SUFF) s = s.replace(re, " ");
+  s = s.replace(/\s+/g, " ").replace(/^[\s.,-]+|[\s.,-]+$/g, "").trim(); return s ? tcap(s) : tcap(plain(n)); };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // ---------- Match Centre ----------
@@ -128,19 +131,35 @@ async function meteDaiComunicati() {
   const pdfs = new Set();
   for (const url of seen.keys()) {
     const h = await (await fetch(url, { headers: UA })).text();
-    for (const u of h.match(new RegExp(`https?:\\/\\/[^"' ]+${C.sigla}\\d+GS[^"' ]*\\.pdf`, "gi")) || []) if (u.includes(STAGIONE)) pdfs.add(u);
+    // il PDF del comunicato è il primo della pagina (a volte con il nome sbagliato, es. COMB02S invece di COMB02GS)
+    const u = (h.match(new RegExp(`https?:\\/\\/[^"' ]+${C.sigla}\\d+G?S[^"' ]*\\.pdf`, "i")) || [])[0];
+    if (u && u.includes(STAGIONE)) pdfs.add(u);
   }
-  const out = {}, names = [...teams.keys()].sort((a, b) => b.length - a.length);
-  const team = s => names.find(k => s.startsWith(k)) || names.find(k => s.startsWith(k.slice(0, 22)));
+  // righe dell'omologazione: "CASA -OSPITE 33 - 15 ( 5- 2) Sig. ..." -> si abbina alla partita con lo stesso punteggio
+  // e il maggior numero di parole dei due nomi (i nomi nei PDF a volte sono tagliati o scritti diversamente)
+  const STOP = new Set(["RUGBY", "ASD", "SSD", "A.S.D.", "S.S.D.", "ARL", "SRL", "CLUB", "A", "R.L.", "DI", "DEL", "1"]);
+  const words = s => plain(s).replace(/[^A-Z0-9' ]/g, " ").split(/\s+/).filter(w => w.length > 1 && !STOP.has(w));
+  const righe = [];
   for (const u of pdfs) {
     const r = await fetch(u, { headers: UA }); if (!r.ok) { problems.push(`${u}: risposta ${r.status}`); continue; }
     for (const l of await pdfText(await r.arrayBuffer())) {
-      const m = plain(l).match(/^(.+?)\s+(\d+)\s*-\s*(\d+)\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)/); if (!m) continue;
-      const h = team(m[1]); if (!h) continue;
-      const rest = m[1].slice(h.length).replace(/^\s*-\s*/, ""), a = team(rest); if (!a) continue;
-      const p = partite.find(x => x.H === h && x.A === a);
-      if (p && p.hs === +m[2] && p.as === +m[3]) out[h + "|" + a] = [+m[4], +m[5]];
+      const m = plain(l).match(/^(.+?)\s+(\d+)\s*-\s*(\d+)\s*\(\s*(\d+)\s*-\s*(\d+)\s*\)/); if (m) righe.push({ w: words(m[1]), hs: +m[2], as: +m[3], ht: +m[4], at: +m[5] });
     }
+  }
+  const out = {};
+  for (const p of partite) {
+    if (p.hs == null) continue;
+    const wh = words(p.H), wa = words(p.A);
+    let best = null, bs = 0;
+    for (const r of righe) {
+      if (r.hs !== p.hs || r.as !== p.as) continue;
+      const ih = Math.max(-1, ...wh.map(w => r.w.indexOf(w))), ia = Math.max(-1, ...wa.map(w => r.w.lastIndexOf(w)));
+      const sh = wh.filter(w => r.w.includes(w)).length, sa = wa.filter(w => r.w.includes(w)).length;
+      if (!sh || !sa || ih > ia) continue;
+      const sc = sh / wh.length + sa / wa.length;
+      if (sc > bs) { bs = sc; best = r; } else if (sc === bs && best && (best.ht !== r.ht || best.at !== r.at)) best = null;
+    }
+    if (best && bs >= 1) out[p.H + "|" + p.A] = [best.ht, best.at];
   }
   console.log(`Comunicati letti: ${pdfs.size}, partite con le mete: ${Object.keys(out).length}`);
   return out;
