@@ -297,7 +297,35 @@ const ARBITRI=/*ARBITRI-INIZIO*/[
 {"g":1,"gi":7,"h":"CUS Milano","a":"Unione Rugby Capitolina","data":"2027-01-10","ora":"12:30","campo":"BICOCCA STADIUM"},
 {"g":1,"gi":7,"h":"CUS Torino","a":"Arredissima Villorba","data":"2027-01-10","ora":"14:30","campo":"ALBONICO N.1 (GUGLIELMINO)"},
 {"g":1,"gi":7,"h":"Forum Iulii","a":"Benetton Treviso","data":"2027-01-10","ora":"14:30","campo":"RUGBY STADIUM \"O. GERLI\""},
-{"g":1,"gi":7,"h":"Valsugana Rugby Padova","a":"Volvera Rugby","data":"2027-01-10","ora":"14:30","campo":"VALSUGANA RUGBY PADOVA"}
+{"g":1,"gi":7,"h":"Valsugana Rugby Padova","a":"Volvera Rugby","data":"2027-01-10","ora":"14:30","campo":"VALSUGANA RUGBY PADOVA"},
+{"g":1,"gi":8,"h":"Arredissima Villorba","a":"Unione Rugby Capitolina","data":"2027-01-17","ora":"13:30","campo":"CAMPO COMUNALE 1"},
+{"g":1,"gi":8,"h":"CUS Milano","a":"Benetton Treviso","data":"2027-01-17","ora":"14:30","campo":"BICOCCA STADIUM"},
+{"g":1,"gi":8,"h":"CUS Torino","a":"Volvera Rugby","data":"2027-01-17","ora":"12:30","campo":"ALBONICO N.1 (GUGLIELMINO)"},
+{"g":1,"gi":8,"h":"Valsugana Rugby Padova","a":"Forum Iulii","data":"2027-01-17","ora":"12:30","campo":"VALSUGANA RUGBY PADOVA"},
+{"g":1,"gi":9,"h":"Benetton Treviso","a":"CUS Torino","data":"2027-01-24","ora":"14:30","campo":"LA GHIRADA CAMPO C1"},
+{"g":1,"gi":9,"h":"Forum Iulii","a":"Arredissima Villorba","data":"2027-01-24","ora":"14:30","campo":"CAMPO ERVATTI"},
+{"g":1,"gi":9,"h":"Unione Rugby Capitolina","a":"Valsugana Rugby Padova","data":"2027-01-24","ora":"14:30","campo":"CAMPO DELL'UNIONE N.1"},
+{"g":1,"gi":9,"h":"Volvera Rugby","a":"CUS Milano","data":"2027-01-24","ora":"14:30","campo":"IMPIANTO SPORTIVO DI VOLVERA"},
+{"g":1,"gi":10,"h":"Arredissima Villorba","a":"Benetton Treviso","data":"2027-02-07","ora":"14:30","campo":"CAMPO COMUNALE 1"},
+{"g":1,"gi":10,"h":"CUS Milano","a":"Valsugana Rugby Padova","data":"2027-02-07","ora":"14:30","campo":"BICOCCA STADIUM"},
+{"g":1,"gi":10,"h":"CUS Torino","a":"Forum Iulii","data":"2027-02-07","ora":"14:30","campo":"ALBONICO N.1 (GUGLIELMINO)"},
+{"g":1,"gi":10,"h":"Unione Rugby Capitolina","a":"Volvera Rugby","data":"2027-02-07","ora":"14:30","campo":"CAMPO DELL'UNIONE N.1"},
+{"g":1,"gi":11,"h":"Benetton Treviso","a":"Unione Rugby Capitolina","data":"2027-02-14","ora":"13:30","campo":"LA GHIRADA CAMPO C1"},
+{"g":1,"gi":11,"h":"Forum Iulii","a":"CUS Milano","data":"2027-02-14","ora":"14:30","campo":"RUGBY STADIUM \"O. GERLI\""},
+{"g":1,"gi":11,"h":"Valsugana Rugby Padova","a":"CUS Torino","data":"2027-02-14","ora":"14:30","campo":"VALSUGANA RUGBY PADOVA"},
+{"g":1,"gi":11,"h":"Volvera Rugby","a":"Arredissima Villorba","data":"2027-02-14","ora":"14:30","campo":"IMPIANTO SPORTIVO DI VOLVERA"},
+{"g":1,"gi":12,"h":"Arredissima Villorba","a":"Valsugana Rugby Padova","data":"2027-02-21","ora":"12:30","campo":"CAMPO COMUNALE 1"},
+{"g":1,"gi":12,"h":"Benetton Treviso","a":"Volvera Rugby","data":"2027-02-21","ora":"14:30","campo":"LA GHIRADA CAMPO C1"},
+{"g":1,"gi":12,"h":"CUS Milano","a":"CUS Torino","data":"2027-02-21","ora":"14:30","campo":"BICOCCA STADIUM"},
+{"g":1,"gi":12,"h":"Unione Rugby Capitolina","a":"Forum Iulii","data":"2027-02-21","ora":"14:30","campo":"CAMPO DELL'UNIONE N.1"},
+{"g":1,"gi":13,"h":"CUS Milano","a":"Arredissima Villorba","data":"2027-02-28","ora":"14:30","campo":"BICOCCA STADIUM"},
+{"g":1,"gi":13,"h":"CUS Torino","a":"Unione Rugby Capitolina","data":"2027-02-28","ora":"14:30","campo":"ALBONICO N.1 (GUGLIELMINO)"},
+{"g":1,"gi":13,"h":"Forum Iulii","a":"Volvera Rugby","data":"2027-02-28","ora":"14:30","campo":"CAMPO ERVATTI"},
+{"g":1,"gi":13,"h":"Valsugana Rugby Padova","a":"Benetton Treviso","data":"2027-02-28","ora":"12:30","campo":"VALSUGANA RUGBY PADOVA"},
+{"g":1,"gi":14,"h":"Arredissima Villorba","a":"CUS Torino","data":"2027-03-14","ora":"14:30","campo":"CAMPO COMUNALE 1"},
+{"g":1,"gi":14,"h":"Benetton Treviso","a":"Forum Iulii","data":"2027-03-14","ora":"14:30","campo":"LA GHIRADA CAMPO C1"},
+{"g":1,"gi":14,"h":"Unione Rugby Capitolina","a":"CUS Milano","data":"2027-03-14","ora":"15:30","campo":"CAMPO DELL'UNIONE N.1"},
+{"g":1,"gi":14,"h":"Volvera Rugby","a":"Valsugana Rugby Padova","data":"2027-03-14","ora":"14:30","campo":"IMPIANTO SPORTIVO DI VOLVERA"}
 ]/*ARBITRI-FINE*/;
 const arbOf=(ri,h,a)=>ARBITRI.find(x=>x.gi===ri+1&&x.h===h&&x.a===a)||ARBITRI.find(x=>x.gi===ri+1&&x.h===a&&x.a===h);
 const tcap=s=>String(s).toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
@@ -508,6 +536,7 @@ const TABELLINI=/*TABELLINI-INIZIO*/[
 const SQUALIFICHE=/*SQUALIFICHE-INIZIO*/[
 {"com":1,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM01GS2026.2027.pdf","nome":"TOMBOLATO BARBARA","squadra":"VOLVERA RUGBY ASD","motivo":"doppio cartellino giallo","squalifica":"una settimana di squalifica automatica","periodo":"dal 9/11/2026 al 15 Novembre 2026 compresi","minuto":62,"testo":"espulso temporaneamente al 5° ed al 22° del 2°tempo, infraz. Art. 026/02 lett. b) (doppio cartellino giallo), UNA SETTIMANA DI SQUALIFICA AUTOMATICA (dal 9/11/2026 al 15 Novembre 2026 compresi)"},
 {"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027.pdf","nome":"JELIC MASCIA","squadra":"BENETTON RUGBY TREVISO SRL SSD","motivo":"placcaggio pericoloso","squalifica":"due settimane di squalifica","periodo":"dal 16/11/2026 al 29 Novembre 2026 compresi","minuto":37,"testo":"espulso al 37° del 1°tempo, infraz. Art. 027/01 lett. s) (placcaggio pericoloso), DUE SETTIMANE DI SQUALIFICA (dal 16/11/2026 al 29 Novembre 2026 compresi)"},
+{"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027-1.pdf","nome":"JELIC MASCIA","squadra":"BENETTON RUGBY TREVISO SRL SSD","motivo":"placcaggio pericoloso","squalifica":"due settimane di squalifica","periodo":"dal 16/11/2026 al 29 Novembre 2026 compresi","minuto":37,"testo":"espulso al 37° del 1°tempo, infraz. Art. 027/01 lett. s) (placcaggio pericoloso), DUE SETTIMANE DI SQUALIFICA (dal 16/11/2026 al 29 Novembre 2026 compresi)"},
 {"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM03GS2026.2027.pdf","vuoto":true}
 ]/*SQUALIFICHE-FINE*/;
 
@@ -527,6 +556,10 @@ const SANZIONI=/*SANZIONI-INIZIO*/[
 {"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"COSTANTINI ELETTRA, della VALSUGANA RUGBY PADOVA ASD, espulso temporaneamente al 35° del 2°tempo"},
 {"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"ERRICHIELLO ELENA, della UNIONE RUGBY CAPITOLINA ASD, espulso temporaneamente al 39° del 2°tempo"},
 {"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"ESTE MICHELA, della BENETTON RUGBY TREVISO SRL SSD, espulso temporaneamente al 40° del 1°tempo"},
+{"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027-1.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"CESCHIAT GIULIA, della FORUM IULII RUGBY F.C.ASD, espulso temporaneamente al 39° del 2°tempo"},
+{"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027-1.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"COSTANTINI ELETTRA, della VALSUGANA RUGBY PADOVA ASD, espulso temporaneamente al 35° del 2°tempo"},
+{"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027-1.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"ERRICHIELLO ELENA, della UNIONE RUGBY CAPITOLINA ASD, espulso temporaneamente al 39° del 2°tempo"},
+{"com":2,"data":"2026-11-18","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM02GS2026.2027-1.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"ESTE MICHELA, della BENETTON RUGBY TREVISO SRL SSD, espulso temporaneamente al 40° del 1°tempo"},
 {"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BENUSSI CARLOTTA, della FORUM IULII RUGBY F.C.ASD, espulso temporaneamente al 34° del 2°tempo"},
 {"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"CIRDEI CLAUDIA IOANA, della CUS TORINO ASD, espulso temporaneamente al 13° del 2°tempo"},
 {"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAELITEFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"CRISANTE ALESSANDRA, della UNIONE RUGBY CAPITOLINA ASD, espulso temporaneamente al 40° del 2°tempo"},

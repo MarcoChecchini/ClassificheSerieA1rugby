@@ -263,21 +263,172 @@ body.pgdeco .flt{background:color-mix(in srgb,var(--card) 85%,transparent)}
 
 <script>
 const T=[
+["Neapolis R.Fem.T.Campania Felix",1,/(^|[^A-Z0-9])NEAPOLIS R\.FEM\.T\.CAMPANIA FELIX SSD($|[^A-Z0-9])/],
+["Rugby Parma 1931 .s.D",2,/(^|[^A-Z0-9])RUGBY PARMA F\.C\.1931 SOC\.COOP\.S\.D\.($|[^A-Z0-9])/],
+["Linci Rugby Club Femm. Milano",3,/(^|[^A-Z0-9])LINCI RUGBY CLUB FEMM\. MILANO ASD($|[^A-Z0-9])/],
+["Highlanders Formigine Rugby",2,/(^|[^A-Z0-9])HIGHLANDERS FORMIGINE RUGBY ASD($|[^A-Z0-9])/],
+["U.R. Anconitana Dorica Legnami",4,/(^|[^A-Z0-9])U\.R\. ANCONITANA DORICA LEGNAMI($|[^A-Z0-9])/],
+["Roma Women Rugby",1,/(^|[^A-Z0-9])ROMA WOMEN RUGBY SSD A R\.L\.($|[^A-Z0-9])/],
+["Romagna R",1,/(^|[^A-Z0-9])ROMAGNA R\.F\.C\. SSD A R\.L\.($|[^A-Z0-9])/],
+["Tigri Rugby Bari 1980",4,/(^|[^A-Z0-9])TIGRI RUGBY BARI 1980 ASD($|[^A-Z0-9])/],
+["Rugby I Briganti",4,/(^|[^A-Z0-9])ASD RUGBY I BRIGANTI APS($|[^A-Z0-9])/],
+["Lions Tortona Rugby",2,/(^|[^A-Z0-9])LIONS TORTONA RUGBY ASD($|[^A-Z0-9])/],
+["Rebels Rugby Vi.Est",3,/(^|[^A-Z0-9])REBELS RUGBY VI\.EST ASD($|[^A-Z0-9])/],
+["Rugby Calvisano",3,/(^|[^A-Z0-9])RUGBY CALVISANO SSD ARL($|[^A-Z0-9])/],
+["Rugby Riviera 1975",1,/(^|[^A-Z0-9])RUGBY RIVIERA 1975 ASD($|[^A-Z0-9])/],
+["CUS Milano Rugby",1,/(^|[^A-Z0-9])CUS MILANO RUGBY ASD($|[^A-Z0-9])/],
+["Ivrea Rugby Club",2,/(^|[^A-Z0-9])IVREA RUGBY CLUB ASD($|[^A-Z0-9])/],
+["Scandicci Rugby",1,/(^|[^A-Z0-9])SCANDICCI RUGBY ASD($|[^A-Z0-9])/],
+["Bisceglie Rugby",4,/(^|[^A-Z0-9])ASD BISCEGLIE RUGBY($|[^A-Z0-9])/],
+["C.U.S. Genova",2,/(^|[^A-Z0-9])C\.U\.S\. GENOVA ASD($|[^A-Z0-9])/],
+["CUS L'Aquila",4,/(^|[^A-Z0-9])CUS L'AQUILA ASD($|[^A-Z0-9])/],
+["Rugby Rho",3,/(^|[^A-Z0-9])RUGBY RHO ASD($|[^A-Z0-9])/],
+["",2,/(^|[^A-Z0-9])($|[^A-Z0-9])/]
 ].map(([n,g,re])=>({n,g,re}));
-const GIRNOMI={};
+const GIRNOMI={"1":"Girone 1","2":"Girone 2","3":"Girone 3","4":"Girone 4"};
 const GIRONI=[...new Set(T.map(t=>t.g))].sort((a,b)=>a-b);if(!GIRONI.length)GIRONI.push(1);
 const PEN=[];
 /* ===== ARBITRI =====
    Ufficiali di gara dal Match Centre FIR (arbitro, giudici di linea, TMO) con data, ora e campo.
    Li aggiorna in automatico scripts/arbitri.mjs (le designazioni escono di solito il giovedì). */
-const ARBITRI=/*ARBITRI-INIZIO*/[]/*ARBITRI-FINE*/;
+const ARBITRI=/*ARBITRI-INIZIO*/[
+{"g":1,"gi":1,"h":"Neapolis R.Fem.T.Campania Felix","a":"Rugby Riviera 1975","data":"2026-11-08","ora":"12:30","campo":"VILLAGGIO DEL RUGBY","arb":["SILVESTRO,ARTURO","NA"]},
+{"g":1,"gi":1,"h":"Roma Women Rugby","a":"CUS Milano Rugby","data":"2026-11-08","ora":"15:00","campo":"EX CINODROMO DELLA CAPITALE","arb":["LANCIOTTI,FILIPPO","RM"]},
+{"g":1,"gi":1,"h":"Romagna R","a":"Scandicci Rugby","data":"2026-11-08","ora":"14:30","campo":"CERVESE SUD CAMPO 1","arb":["FAVERO,MATTEO","TV"]},
+{"g":1,"gi":2,"h":"CUS Milano Rugby","a":"Neapolis R.Fem.T.Campania Felix","data":"2026-11-22","ora":"12:00","campo":"RINO VENEGONI N 2-LUCIANO MARAZZINI","arb":["ANNONI,GIORGIO","MI"]},
+{"g":1,"gi":2,"h":"Rugby Riviera 1975","a":"Romagna R","data":"2026-11-22","ora":"14:30","campo":"I.S. VIA OBERDAN CAMPO A","arb":["ZECCHIN,GIOVANNI","PD"]},
+{"g":1,"gi":2,"h":"Scandicci Rugby","a":"Roma Women Rugby","data":"2026-11-22","ora":"14:30","campo":"CENTRO SPORTIVO VINGONE SECONDARIO","arb":["AQUILANO,EDOARDO","PO"]},
+{"g":1,"gi":3,"h":"CUS Milano Rugby","a":"Rugby Riviera 1975","data":"2026-12-06","ora":"14:30","campo":"CAMPO MONTI"},
+{"g":1,"gi":3,"h":"Neapolis R.Fem.T.Campania Felix","a":"Scandicci Rugby","data":"2026-12-06","ora":"14:30","campo":"VILLAGGIO DEL RUGBY"},
+{"g":1,"gi":3,"h":"Romagna R","a":"Roma Women Rugby","data":"2026-12-06","ora":"14:30","campo":"CERVESE SUD CAMPO 1"},
+{"g":1,"gi":4,"h":"Romagna R","a":"Neapolis R.Fem.T.Campania Felix","data":"2026-12-20","ora":"12:00","campo":"CERVESE SUD CAMPO 1"},
+{"g":1,"gi":4,"h":"Rugby Riviera 1975","a":"Roma Women Rugby","data":"2026-12-20","ora":"14:00","campo":"I.S. VIA OBERDAN CAMPO A"},
+{"g":1,"gi":4,"h":"Scandicci Rugby","a":"CUS Milano Rugby","data":"2026-12-20","ora":"14:30","campo":"CAMPO SPORTIVO S. CASSIANO A VICO"},
+{"g":1,"gi":5,"h":"CUS Milano Rugby","a":"Romagna R","data":"2027-01-10","ora":"15:00","campo":"BICOCCA STADIUM"},
+{"g":1,"gi":5,"h":"Neapolis R.Fem.T.Campania Felix","a":"Roma Women Rugby","data":"2027-01-10","ora":"14:30","campo":"VILLAGGIO DEL RUGBY"},
+{"g":1,"gi":5,"h":"Rugby Riviera 1975","a":"Scandicci Rugby","data":"2027-01-10","ora":"14:30","campo":"I.S. VIA OBERDAN CAMPO A"},
+{"g":1,"gi":6,"h":"CUS Milano Rugby","a":"Roma Women Rugby","data":"2027-01-24","ora":"14:30","campo":"RINO VENEGONI N 2-LUCIANO MARAZZINI"},
+{"g":1,"gi":6,"h":"Rugby Riviera 1975","a":"Neapolis R.Fem.T.Campania Felix","data":"2027-01-24","ora":"12:00","campo":"I.S. VIA OBERDAN CAMPO A"},
+{"g":1,"gi":6,"h":"Scandicci Rugby","a":"Romagna R","data":"2027-01-24","ora":"14:30","campo":"CENTRO SPORTIVO VINGONE SECONDARIO"},
+{"g":1,"gi":7,"h":"Neapolis R.Fem.T.Campania Felix","a":"CUS Milano Rugby","data":"2027-02-07","ora":"13:30","campo":"VILLAGGIO DEL RUGBY"},
+{"g":1,"gi":7,"h":"Roma Women Rugby","a":"Scandicci Rugby","data":"2027-02-14","ora":"14:30","campo":"CAMPO SPINORETICO-\"ANDREA GROSSI\""},
+{"g":1,"gi":7,"h":"Romagna R","a":"Rugby Riviera 1975","data":"2027-02-14","ora":"14:30","campo":"CERVESE SUD CAMPO 1"},
+{"g":1,"gi":8,"h":"Roma Women Rugby","a":"Romagna R","data":"2027-02-28","ora":"14:30","campo":"CAMPO SPINORETICO-\"ANDREA GROSSI\""},
+{"g":1,"gi":8,"h":"Rugby Riviera 1975","a":"CUS Milano Rugby","data":"2027-02-28","ora":"14:30","campo":"I.S. VIA OBERDAN CAMPO A"},
+{"g":1,"gi":8,"h":"Scandicci Rugby","a":"Neapolis R.Fem.T.Campania Felix","data":"2027-02-28","ora":"14:30","campo":"CENTRO SPORTIVO VINGONE SECONDARIO"},
+{"g":1,"gi":9,"h":"CUS Milano Rugby","a":"Scandicci Rugby","data":"2027-03-14","ora":"14:30","campo":"RINO VENEGONI N 2-LUCIANO MARAZZINI"},
+{"g":1,"gi":9,"h":"Neapolis R.Fem.T.Campania Felix","a":"Romagna R","data":"2027-03-14","ora":"14:30","campo":"VILLAGGIO DEL RUGBY"},
+{"g":1,"gi":9,"h":"Roma Women Rugby","a":"Rugby Riviera 1975","data":"2027-03-14","ora":"14:30","campo":"CAMPO SPINORETICO-\"ANDREA GROSSI\""},
+{"g":1,"gi":10,"h":"Roma Women Rugby","a":"Neapolis R.Fem.T.Campania Felix","data":"2027-03-21","ora":"15:30","campo":"CAMPO SPINORETICO-\"ANDREA GROSSI\""},
+{"g":1,"gi":10,"h":"Romagna R","a":"CUS Milano Rugby","data":"2027-03-21","ora":"15:30","campo":"CERVESE SUD CAMPO 1"},
+{"g":1,"gi":10,"h":"Scandicci Rugby","a":"Rugby Riviera 1975","data":"2027-03-21","ora":"15:30","campo":"CENTRO SPORTIVO VINGONE SECONDARIO"},
+{"g":2,"gi":1,"h":"","a":"C.U.S. Genova","data":"2026-11-08","ora":"14:30","campo":""},
+{"g":2,"gi":1,"h":"Highlanders Formigine Rugby","a":"Rugby Parma 1931 .s.D","data":"2026-11-08","ora":"14:30","campo":"CAMPO COMUNALE DI RUGBY","arb":["SCANNAVINI,GIACOMO","BO"]},
+{"g":2,"gi":1,"h":"Lions Tortona Rugby","a":"Ivrea Rugby Club","data":"2026-11-08","ora":"14:30","campo":"CENTRO SPORTIVO CUS PO","arb":["CARRUBBA,SANTI","TO"]},
+{"g":2,"gi":2,"h":"C.U.S. Genova","a":"Lions Tortona Rugby","data":"2026-11-22","ora":"14:30","campo":"STADIO CARLINI-BOLLESAN","arb":["ANSELMI,MATTEO","GE"]},
+{"g":2,"gi":2,"h":"Ivrea Rugby Club","a":"Highlanders Formigine Rugby","data":"2026-11-22","ora":"14:30","campo":"CAMPO DIEGO SANTI","arb":["CATAGINI,ANNA","TO"]},
+{"g":2,"gi":2,"h":"Rugby Parma 1931 .s.D","a":"","data":"2026-11-22","ora":"14:30","campo":"CAMPO \"GIUSEPPE BANCHINI\" N 1"},
+{"g":2,"gi":3,"h":"C.U.S. Genova","a":"Ivrea Rugby Club","data":"2026-12-06","ora":"14:30","campo":"STADIO CARLINI-BOLLESAN"},
+{"g":2,"gi":3,"h":"Highlanders Formigine Rugby","a":"","data":"2026-12-06","ora":"14:30","campo":"CAMPO COMUNALE DI RUGBY"},
+{"g":2,"gi":3,"h":"Lions Tortona Rugby","a":"Rugby Parma 1931 .s.D","data":"2026-12-06","ora":"14:30","campo":"CENTRO SPORTIVO CUS PO"},
+{"g":2,"gi":4,"h":"","a":"Ivrea Rugby Club","data":"2026-12-20","ora":"14:30","campo":""},
+{"g":2,"gi":4,"h":"Highlanders Formigine Rugby","a":"Lions Tortona Rugby","data":"2026-12-20","ora":"14:30","campo":"CAMPO COMUNALE DI RUGBY"},
+{"g":2,"gi":4,"h":"Rugby Parma 1931 .s.D","a":"C.U.S. Genova","data":"2026-12-20","ora":"14:30","campo":"CAMPO \"GIUSEPPE BANCHINI\" N 1"},
+{"g":2,"gi":5,"h":"Highlanders Formigine Rugby","a":"C.U.S. Genova","data":"2027-01-17","ora":"14:30","campo":"CAMPO COMUNALE DI RUGBY"},
+{"g":2,"gi":5,"h":"Ivrea Rugby Club","a":"Rugby Parma 1931 .s.D","data":"2027-01-10","ora":"14:30","campo":"CAMPO DIEGO SANTI"},
+{"g":2,"gi":5,"h":"Lions Tortona Rugby","a":"","data":"2027-01-10","ora":"14:30","campo":"CENTRO SPORTIVO CUS PO"},
+{"g":2,"gi":6,"h":"C.U.S. Genova","a":"","data":"2027-01-24","ora":"14:30","campo":"STADIO CARLINI-BOLLESAN"},
+{"g":2,"gi":6,"h":"Ivrea Rugby Club","a":"Lions Tortona Rugby","data":"2027-01-24","ora":"14:30","campo":"CAMPO DIEGO SANTI"},
+{"g":2,"gi":6,"h":"Rugby Parma 1931 .s.D","a":"Highlanders Formigine Rugby","data":"2027-01-24","ora":"12:30","campo":"CAMPO \"GIUSEPPE BANCHINI\" N 1"},
+{"g":2,"gi":7,"h":"","a":"Rugby Parma 1931 .s.D","data":"2027-02-07","ora":"14:30","campo":""},
+{"g":2,"gi":7,"h":"Highlanders Formigine Rugby","a":"Ivrea Rugby Club","data":"2027-02-14","ora":"14:30","campo":"CAMPO COMUNALE DI RUGBY"},
+{"g":2,"gi":7,"h":"Lions Tortona Rugby","a":"C.U.S. Genova","data":"2027-02-14","ora":"14:30","campo":"CENTRO SPORTIVO CUS PO"},
+{"g":2,"gi":8,"h":"","a":"Highlanders Formigine Rugby","data":"2027-02-21","ora":"14:30","campo":""},
+{"g":2,"gi":8,"h":"Ivrea Rugby Club","a":"C.U.S. Genova","data":"2027-02-28","ora":"14:30","campo":"CAMPO DIEGO SANTI"},
+{"g":2,"gi":8,"h":"Rugby Parma 1931 .s.D","a":"Lions Tortona Rugby","data":"2027-02-28","ora":"14:30","campo":"CAMPO \"GIUSEPPE BANCHINI\" N 1"},
+{"g":2,"gi":9,"h":"C.U.S. Genova","a":"Rugby Parma 1931 .s.D","data":"2027-03-14","ora":"14:30","campo":"STADIO CARLINI-BOLLESAN"},
+{"g":2,"gi":9,"h":"Ivrea Rugby Club","a":"","data":"2027-03-14","ora":"14:30","campo":"CAMPO DIEGO SANTI"},
+{"g":2,"gi":9,"h":"Lions Tortona Rugby","a":"Highlanders Formigine Rugby","data":"2027-03-14","ora":"14:30","campo":"CENTRO SPORTIVO CUS PO"},
+{"g":2,"gi":10,"h":"","a":"Lions Tortona Rugby","data":"2027-03-21","ora":"15:30","campo":""},
+{"g":2,"gi":10,"h":"C.U.S. Genova","a":"Highlanders Formigine Rugby","data":"2027-03-21","ora":"13:30","campo":"STADIO CARLINI-BOLLESAN"},
+{"g":2,"gi":10,"h":"Rugby Parma 1931 .s.D","a":"Ivrea Rugby Club","data":"2027-03-21","ora":"15:30","campo":"CAMPO \"GIUSEPPE BANCHINI\" N 1"},
+{"g":3,"gi":1,"h":"Linci Rugby Club Femm. Milano","a":"Rugby Rho","data":"2026-11-08","ora":"14:30","campo":"CAMPO GF. CRESPI","arb":["ANNONI,NAIMA","MI"]},
+{"g":3,"gi":1,"h":"Rebels Rugby Vi.Est","a":"Rugby Calvisano","data":"2026-11-08","ora":"14:30","campo":"CAMPO SPORTIVO SAN BENEDETTO","arb":["GIORDINO,ALBERTO","VE"]},
+{"g":3,"gi":2,"h":"Rugby Calvisano","a":"Linci Rugby Club Femm. Milano","data":"2026-11-22","ora":"14:30","campo":"CAMPO SAN MICHELE 1","arb":["BARGNANI,GIULIO","BS"]},
+{"g":3,"gi":2,"h":"Rugby Rho","a":"Rebels Rugby Vi.Est","data":"2026-11-22","ora":"14:30","campo":"CAMPO SPORTIVO MOLINELLO","arb":["BAGAROLO,DANIELE","MI"]},
+{"g":3,"gi":3,"h":"Rebels Rugby Vi.Est","a":"Linci Rugby Club Femm. Milano","data":"2026-12-06","ora":"14:30","campo":"CAMPO SPORTIVO SAN BENEDETTO"},
+{"g":3,"gi":3,"h":"Rugby Calvisano","a":"Rugby Rho","data":"2026-12-06","ora":"12:30","campo":"CAMPO SAN MICHELE 1"},
+{"g":3,"gi":4,"h":"Rugby Calvisano","a":"Rebels Rugby Vi.Est","data":"2027-01-24","ora":"14:30","campo":"CAMPO SAN MICHELE 1"},
+{"g":3,"gi":4,"h":"Rugby Rho","a":"Linci Rugby Club Femm. Milano","data":"2027-01-24","ora":"14:30","campo":"CAMPO SPORTIVO MOLINELLO"},
+{"g":3,"gi":5,"h":"Linci Rugby Club Femm. Milano","a":"Rugby Calvisano","data":"2027-02-14","ora":"14:30","campo":"CENTRO SPORTIVO DE COUBERTIN"},
+{"g":3,"gi":5,"h":"Rebels Rugby Vi.Est","a":"Rugby Rho","data":"2027-02-14","ora":"14:30","campo":"CAMPO SPORTIVO SAN BENEDETTO"},
+{"g":3,"gi":6,"h":"Linci Rugby Club Femm. Milano","a":"Rebels Rugby Vi.Est","data":"2027-03-14","ora":"14:30","campo":"CENTRO SPORTIVO DE COUBERTIN"},
+{"g":3,"gi":6,"h":"Rugby Rho","a":"Rugby Calvisano","data":"2027-03-14","ora":"14:30","campo":"CAMPO SPORTIVO MOLINELLO"},
+{"g":4,"gi":1,"h":"Bisceglie Rugby","a":"Tigri Rugby Bari 1980","data":"2026-11-08","ora":"14:30","campo":"STADIO COMUNALE NICOLA LAPI","arb":["AMODIO,ALESSANDRO","BR"]},
+{"g":4,"gi":1,"h":"Rugby I Briganti","a":"","data":"2026-11-08","ora":"14:30","campo":"CAMPO XXV APRILE \"SAN TEODORO\""},
+{"g":4,"gi":1,"h":"U.R. Anconitana Dorica Legnami","a":"CUS L'Aquila","data":"2026-11-08","ora":"15:30","campo":"CAMPO PALLA OVALE \"NELSON MANDELA\"","arb":["BORGHETTI,FRANCESCA","AN"]},
+{"g":4,"gi":2,"h":"","a":"Bisceglie Rugby","data":"2026-11-22","ora":"14:30","campo":""},
+{"g":4,"gi":2,"h":"CUS L'Aquila","a":"Rugby I Briganti","data":"2026-11-22","ora":"14:00","campo":"CENTI COLELLA  Nø 2","arb":["COLAMARINO,ALESSIO SILVANO","AQ"]},
+{"g":4,"gi":2,"h":"Tigri Rugby Bari 1980","a":"U.R. Anconitana Dorica Legnami","data":"2026-11-22","ora":"11:00","campo":"ARENA DELLA VITTORIA","arb":["MENGA,PIETRO","BA"]},
+{"g":4,"gi":3,"h":"Bisceglie Rugby","a":"Rugby I Briganti","data":"2026-12-06","ora":"11:00","campo":"CAMPO GUSTAVO VENTURA"},
+{"g":4,"gi":3,"h":"CUS L'Aquila","a":"Tigri Rugby Bari 1980","data":"2026-12-06","ora":"14:30","campo":"CENTI COLELLA  Nø 2"},
+{"g":4,"gi":3,"h":"U.R. Anconitana Dorica Legnami","a":"","data":"2026-12-06","ora":"14:30","campo":"CAMPO PALLA OVALE \"NELSON MANDELA\""},
+{"g":4,"gi":4,"h":"Bisceglie Rugby","a":"CUS L'Aquila","data":"2026-12-20","ora":"14:30","campo":"CAMPO GUSTAVO VENTURA"},
+{"g":4,"gi":4,"h":"Rugby I Briganti","a":"U.R. Anconitana Dorica Legnami","data":"2026-10-25","ora":"11:30","campo":"CAMPO XXV APRILE \"SAN TEODORO\"","arb":["DI PIETRO,DEBORA","ME"]},
+{"g":4,"gi":5,"h":"Tigri Rugby Bari 1980","a":"Rugby I Briganti","data":"2027-01-10","ora":"14:30","campo":"ARENA DELLA VITTORIA"},
+{"g":4,"gi":5,"h":"U.R. Anconitana Dorica Legnami","a":"Bisceglie Rugby","data":"2027-01-10","ora":"14:30","campo":"CAMPO PALLA OVALE \"NELSON MANDELA\""},
+{"g":4,"gi":6,"h":"","a":"Rugby I Briganti","data":"2027-01-24","ora":"14:30","campo":""},
+{"g":4,"gi":6,"h":"CUS L'Aquila","a":"U.R. Anconitana Dorica Legnami","data":"2027-01-24","ora":"14:30","campo":"CENTI COLELLA  Nø 2"},
+{"g":4,"gi":6,"h":"Tigri Rugby Bari 1980","a":"Bisceglie Rugby","data":"2027-01-24","ora":"14:30","campo":"ARENA DELLA VITTORIA"},
+{"g":4,"gi":7,"h":"Bisceglie Rugby","a":"","data":"2027-02-07","ora":"14:30","campo":"CAMPO GUSTAVO VENTURA"},
+{"g":4,"gi":7,"h":"Rugby I Briganti","a":"CUS L'Aquila","data":"2027-02-14","ora":"14:30","campo":"CAMPO XXV APRILE \"SAN TEODORO\""},
+{"g":4,"gi":7,"h":"U.R. Anconitana Dorica Legnami","a":"Tigri Rugby Bari 1980","data":"2027-02-14","ora":"14:30","campo":"CAMPO PALLA OVALE \"NELSON MANDELA\""},
+{"g":4,"gi":8,"h":"","a":"U.R. Anconitana Dorica Legnami","data":"2027-02-21","ora":"14:30","campo":""},
+{"g":4,"gi":8,"h":"Rugby I Briganti","a":"Bisceglie Rugby","data":"2027-02-28","ora":"14:30","campo":"CAMPO XXV APRILE \"SAN TEODORO\""},
+{"g":4,"gi":8,"h":"Tigri Rugby Bari 1980","a":"CUS L'Aquila","data":"2027-02-28","ora":"14:30","campo":"ARENA DELLA VITTORIA"},
+{"g":4,"gi":9,"h":"CUS L'Aquila","a":"Bisceglie Rugby","data":"2027-03-14","ora":"14:30","campo":"CENTI COLELLA  Nø 2"},
+{"g":4,"gi":9,"h":"U.R. Anconitana Dorica Legnami","a":"Rugby I Briganti","data":"2027-03-14","ora":"14:30","campo":"CAMPO PALLA OVALE \"NELSON MANDELA\""},
+{"g":4,"gi":10,"h":"Bisceglie Rugby","a":"U.R. Anconitana Dorica Legnami","data":"2027-03-21","ora":"14:30","campo":"CAMPO GUSTAVO VENTURA"},
+{"g":4,"gi":10,"h":"Rugby I Briganti","a":"Tigri Rugby Bari 1980","data":"2027-03-21","ora":"12:00","campo":"CAMPO XXV APRILE \"SAN TEODORO\""}
+]/*ARBITRI-FINE*/;
 const arbOf=(ri,h,a)=>ARBITRI.find(x=>x.gi===ri+1&&x.h===h&&x.a===a)||ARBITRI.find(x=>x.gi===ri+1&&x.h===a&&x.a===h);
 const tcap=s=>String(s).toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
 const fmtP=p=>{if(!p)return"";const[c,n]=p[0].split(",");return tcap((n?n.trim()+" ":"")+c.trim())+(p[1]?` <span class="eq">(${p[1]})</span>`:"")};
 const surP=p=>p?tcap(p[0].split(",")[0].trim()):"";
 // Risultati per girone e giornata. Aggiornati in automatico da scripts/aggiorna.mjs (GitHub Action);
 // si possono anche correggere a mano: una riga per partita, mete tra parentesi.
-const DATA=/*DATI-INIZIO*/{}/*DATI-FINE*/;
+const DATA=/*DATI-INIZIO*/{
+"1":{
+ "1":[
+  "ROMA WOMEN RUGBY SSD A R.L. - CUS MILANO RUGBY ASD 20 - 39 ( 4- 7)",
+  "NEAPOLIS R.FEM.T.CAMPANIA FELIX SSD - RUGBY RIVIERA 1975 ASD 20 - 5 ( 4- 1)",
+  "ROMAGNA R.F.C. SSD A R.L. - SCANDICCI RUGBY ASD 26 - 41 ( 4- 7)"],
+ "2":[
+  "SCANDICCI RUGBY ASD - ROMA WOMEN RUGBY SSD A R.L. 30 - 14 ( 5- 2)",
+  "CUS MILANO RUGBY ASD - NEAPOLIS R.FEM.T.CAMPANIA FELIX SSD 10 - 12 ( 2- 2)",
+  "RUGBY RIVIERA 1975 ASD - ROMAGNA R.F.C. SSD A R.L. 0 - 30 ( 0- 4)"]},
+"2":{
+ "1":[
+  "LIONS TORTONA RUGBY ASD - IVREA RUGBY CLUB ASD 5 - 15 ( 1- 3)",
+  "HIGHLANDERS FORMIGINE RUGBY ASD - RUGBY PARMA F.C.1931 SOC.COOP.S.D. 7 - 51 ( 1- 9)"],
+ "2":[
+  "C.U.S. GENOVA ASD - LIONS TORTONA RUGBY ASD 46 - 7 ( 8- 1)",
+  "IVREA RUGBY CLUB ASD - HIGHLANDERS FORMIGINE RUGBY ASD 44 - 5 ( 8- 1)"]},
+"3":{
+ "1":[
+  "REBELS RUGBY VI.EST ASD - RUGBY CALVISANO SSD ARL 20 - 22 ( 4- 4)"],
+ "2":[
+  "RUGBY RHO ASD - REBELS RUGBY VI.EST ASD 10 - 45 ( 2- 7)"]},
+"4":{
+ "1":[
+  "U.R. ANCONITANA DORICA LEGNAMI - CUS L'AQUILA ASD 17 - 10 ( 3- 1)",
+  "ASD BISCEGLIE RUGBY - TIGRI RUGBY BARI 1980 ASD 25 - 5 ( 5- 1)"],
+ "2":[
+  "TIGRI RUGBY BARI 1980 ASD - U.R. ANCONITANA DORICA LEGNAMI 5 - 79 ( 1- 13)",
+  "CUS L'AQUILA ASD - ASD RUGBY I BRIGANTI APS 0 - 28 ( 0- 4)"],
+ "4":[
+  "ASD RUGBY I BRIGANTI APS - U.R. ANCONITANA DORICA LEGNAMI 12 - 22 ( 2- 4)"]}
+}/*DATI-FINE*/;
 
 const find=s=>{s=s.toUpperCase();return T.find(t=>t.re.test(s))};
 function parse(txt){const out=[],bad=[];
@@ -294,7 +445,7 @@ let rounds=Array.from({length:NG},(_,i)=>GIRONI.flatMap(g=>parse(((DATA[g]||{})[
 const lastR=g=>{let l=0;rounds.forEach((r,i)=>{if(r.some(x=>gOf(x.h)===g))l=i});return l};
 const gOf=n=>T.find(t=>t.n===n).g;
 
-const NGT=1,CAL={"1":[{"d":"","m":[]}]};
+const NGT=10,CAL={"1":[{"d":"2026-11-08","m":[["Roma Women Rugby","CUS Milano Rugby"],["Neapolis R.Fem.T.Campania Felix","Rugby Riviera 1975"],["Romagna R","Scandicci Rugby"]]},{"d":"2026-11-22","m":[["Scandicci Rugby","Roma Women Rugby"],["CUS Milano Rugby","Neapolis R.Fem.T.Campania Felix"],["Rugby Riviera 1975","Romagna R"]]},{"d":"2026-12-06","m":[["Romagna R","Roma Women Rugby"],["Neapolis R.Fem.T.Campania Felix","Scandicci Rugby"],["CUS Milano Rugby","Rugby Riviera 1975"]]},{"d":"2026-12-20","m":[["Rugby Riviera 1975","Roma Women Rugby"],["Romagna R","Neapolis R.Fem.T.Campania Felix"],["Scandicci Rugby","CUS Milano Rugby"]]},{"d":"2027-01-10","m":[["Neapolis R.Fem.T.Campania Felix","Roma Women Rugby"],["Rugby Riviera 1975","Scandicci Rugby"],["CUS Milano Rugby","Romagna R"]]},{"d":"2027-01-24","m":[["CUS Milano Rugby","Roma Women Rugby"],["Rugby Riviera 1975","Neapolis R.Fem.T.Campania Felix"],["Scandicci Rugby","Romagna R"]]},{"d":"2027-02-14","m":[["Roma Women Rugby","Scandicci Rugby"],["Neapolis R.Fem.T.Campania Felix","CUS Milano Rugby"],["Romagna R","Rugby Riviera 1975"]]},{"d":"2027-02-28","m":[["Roma Women Rugby","Romagna R"],["Scandicci Rugby","Neapolis R.Fem.T.Campania Felix"],["Rugby Riviera 1975","CUS Milano Rugby"]]},{"d":"2027-03-14","m":[["Roma Women Rugby","Rugby Riviera 1975"],["Neapolis R.Fem.T.Campania Felix","Romagna R"],["CUS Milano Rugby","Scandicci Rugby"]]},{"d":"2027-03-21","m":[["Roma Women Rugby","Neapolis R.Fem.T.Campania Felix"],["Scandicci Rugby","Rugby Riviera 1975"],["Romagna R","CUS Milano Rugby"]]}],"2":[{"d":"2026-11-08","m":[["Lions Tortona Rugby","Ivrea Rugby Club"],["Highlanders Formigine Rugby","Rugby Parma 1931 .s.D"],["","C.U.S. Genova"]]},{"d":"2026-11-22","m":[["Rugby Parma 1931 .s.D",""],["C.U.S. Genova","Lions Tortona Rugby"],["Ivrea Rugby Club","Highlanders Formigine Rugby"]]},{"d":"2026-12-06","m":[["Lions Tortona Rugby","Rugby Parma 1931 .s.D"],["Highlanders Formigine Rugby",""],["C.U.S. Genova","Ivrea Rugby Club"]]},{"d":"2026-12-20","m":[["Highlanders Formigine Rugby","Lions Tortona Rugby"],["","Ivrea Rugby Club"],["Rugby Parma 1931 .s.D","C.U.S. Genova"]]},{"d":"2027-01-10","m":[["Lions Tortona Rugby",""],["Ivrea Rugby Club","Rugby Parma 1931 .s.D"],["Highlanders Formigine Rugby","C.U.S. Genova"]]},{"d":"2027-01-24","m":[["Ivrea Rugby Club","Lions Tortona Rugby"],["C.U.S. Genova",""],["Rugby Parma 1931 .s.D","Highlanders Formigine Rugby"]]},{"d":"2027-02-14","m":[["Lions Tortona Rugby","C.U.S. Genova"],["","Rugby Parma 1931 .s.D"],["Highlanders Formigine Rugby","Ivrea Rugby Club"]]},{"d":"2027-02-28","m":[["Rugby Parma 1931 .s.D","Lions Tortona Rugby"],["","Highlanders Formigine Rugby"],["Ivrea Rugby Club","C.U.S. Genova"]]},{"d":"2027-03-14","m":[["Lions Tortona Rugby","Highlanders Formigine Rugby"],["Ivrea Rugby Club",""],["C.U.S. Genova","Rugby Parma 1931 .s.D"]]},{"d":"2027-03-21","m":[["","Lions Tortona Rugby"],["Rugby Parma 1931 .s.D","Ivrea Rugby Club"],["C.U.S. Genova","Highlanders Formigine Rugby"]]}],"3":[{"d":"2026-11-08","m":[["Rebels Rugby Vi.Est","Rugby Calvisano"],["Linci Rugby Club Femm. Milano","Rugby Rho"]]},{"d":"2026-11-22","m":[["Rugby Rho","Rebels Rugby Vi.Est"],["Rugby Calvisano","Linci Rugby Club Femm. Milano"]]},{"d":"2026-12-06","m":[["Rebels Rugby Vi.Est","Linci Rugby Club Femm. Milano"],["Rugby Calvisano","Rugby Rho"]]},{"d":"2027-01-24","m":[["Rugby Calvisano","Rebels Rugby Vi.Est"],["Rugby Rho","Linci Rugby Club Femm. Milano"]]},{"d":"2027-02-14","m":[["Rebels Rugby Vi.Est","Rugby Rho"],["Linci Rugby Club Femm. Milano","Rugby Calvisano"]]},{"d":"2027-03-14","m":[["Linci Rugby Club Femm. Milano","Rebels Rugby Vi.Est"],["Rugby Rho","Rugby Calvisano"]]}],"4":[{"d":"2026-11-08","m":[["U.R. Anconitana Dorica Legnami","CUS L'Aquila"],["Bisceglie Rugby","Tigri Rugby Bari 1980"],["Rugby I Briganti",""]]},{"d":"2026-11-22","m":[["","Bisceglie Rugby"],["Tigri Rugby Bari 1980","U.R. Anconitana Dorica Legnami"],["CUS L'Aquila","Rugby I Briganti"]]},{"d":"2026-12-06","m":[["U.R. Anconitana Dorica Legnami",""],["Bisceglie Rugby","Rugby I Briganti"],["CUS L'Aquila","Tigri Rugby Bari 1980"]]},{"d":"2026-10-25","m":[["Bisceglie Rugby","CUS L'Aquila"],["Rugby I Briganti","U.R. Anconitana Dorica Legnami"]]},{"d":"2027-01-10","m":[["U.R. Anconitana Dorica Legnami","Bisceglie Rugby"],["Tigri Rugby Bari 1980","Rugby I Briganti"]]},{"d":"2027-01-24","m":[["CUS L'Aquila","U.R. Anconitana Dorica Legnami"],["Tigri Rugby Bari 1980","Bisceglie Rugby"],["","Rugby I Briganti"]]},{"d":"2027-02-14","m":[["U.R. Anconitana Dorica Legnami","Tigri Rugby Bari 1980"],["Bisceglie Rugby",""],["Rugby I Briganti","CUS L'Aquila"]]},{"d":"2027-02-28","m":[["","U.R. Anconitana Dorica Legnami"],["Rugby I Briganti","Bisceglie Rugby"],["Tigri Rugby Bari 1980","CUS L'Aquila"]]},{"d":"2027-03-14","m":[["U.R. Anconitana Dorica Legnami","Rugby I Briganti"],["CUS L'Aquila","Bisceglie Rugby"]]},{"d":"2027-03-21","m":[["Bisceglie Rugby","U.R. Anconitana Dorica Legnami"],["Rugby I Briganti","Tigri Rugby Bari 1980"]]}]};
 const NGTG=g=>(CAL[g]||[]).length||NGT;
 const MESI=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],GG=["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
 const fdt=s=>{const d=new Date(s+"T12:00:00");return `${GG[d.getDay()]} ${d.getDate()} ${MESI[d.getMonth()]} ${d.getFullYear()}`};
@@ -447,13 +598,46 @@ const TABELLINI=/*TABELLINI-INIZIO*/[]/*TABELLINI-FINE*/;
 /* ===== SQUALIFICHE =====
    Dai comunicati del Giudice Sportivo (PDF su federugby.it): una voce per giocatore squalificato.
    Le aggiunge in automatico scripts/giudice.mjs; si possono correggere a mano (i comunicati già letti non vengono riscritti). */
-const SQUALIFICHE=/*SQUALIFICHE-INIZIO*/[]/*SQUALIFICHE-FINE*/;
+const SQUALIFICHE=/*SQUALIFICHE-INIZIO*/[
+{"com":1,"data":"2026-10-28","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM01GS2026.2027-1.pdf","vuoto":true},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","vuoto":true},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","vuoto":true}
+]/*SQUALIFICHE-FINE*/;
 
 /* ===== SANZIONI =====
    Le altre voci dei comunicati del Giudice Sportivo (ammende alle società, ammonizioni, sanzioni a dirigenti e tecnici...).
    Le aggiunge in automatico scripts/giudice.mjs; si possono correggere a mano. La pagina mostra nella scheda della partita
    solo le multe alle squadre, prese dal primo comunicato uscito dopo la partita. */
-const SANZIONI=/*SANZIONI-INIZIO*/[]/*SANZIONI-FINE*/;
+const SANZIONI=/*SANZIONI-INIZIO*/[
+{"com":1,"data":"2026-10-28","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM01GS2026.2027-1.pdf","vuoto":true},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"ANGELINI MARIA CHIARA, della UNIONE RUGBISTICA ANCONITANA SRL SD, espulso temporaneamente al 38° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"AVOLIO ENRICA, della NEAPOLIS R.FEM.T.CAMPANIA FELIX SSD, espulso temporaneamente al 36° del 1°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BARBUGLI ARIANNA, della SCANDICCI RUGBY ASD, espulso temporaneamente al 12° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BITOSSI FRANCESCA, della SCANDICCI RUGBY ASD, espulso temporaneamente al 32° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BOTTIGLIERI ALESSIA, della LIONS TORTONA RUGBY ASD, espulso temporaneamente al 16° del 1°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BREVIGLIERO GIULIA, della RUGBY RIVIERA 1975 ASD, espulso temporaneamente al 29° del 1°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"COLOMBARI TALITHA, della REBELS RUGBY VI.EST ASD, espulso temporaneamente al 30° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"DI LEO MARIA DARIA, della ASD BISCEGLIE RUGBY, espulso temporaneamente al 30° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"DOSI GAIA, della RUGBY PARMA F.C.1931 SOC.COOP.S.D., espulso temporaneamente al 19° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"GEREVINI BEATRICE, della RUGBY CALVISANO SSD ARL, espulso temporaneamente al 22° del 1°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"LOCATELLI GIORGIA, della RUGBY CALVISANO SSD ARL, espulso temporaneamente al 23° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"MORRA CRISTINA, della NEAPOLIS R.FEM.T.CAMPANIA FELIX SSD, espulso temporaneamente al 12° del 1°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"NESPOLI ANITA, della RUGBY RIVIERA 1975 ASD, espulso temporaneamente al 15° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"PICCO CHIARA, della REBELS RUGBY VI.EST ASD, espulso temporaneamente al 1° del 2°tempo"},
+{"com":2,"data":"2026-11-11","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM02GS2026.2027.pdf","sezione":"ILLECITI TECNICI A CARICO DI TESSERATI - INTERDIZIONI","testo":"CREMASCOLI LORENZO BORIS, Accompagnatore della RUGBY RHO ASD, infraz. Art. 028/01 lett. m) (sottoscrizione elenco giocatori non rispondente al vero in riferimento al regolare tesseramento dell’assistente allenatore Sig. Bernardi Alberico, il quale non risulta tesserato come tale per la corrente stagione sportiva), UN MESE DI INTERDIZIONE (dal 12/11/2026 al 11 Dicembre 2026 compresi)"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"AGRUSA BONIFACIO ASTRID CLAUDIA, della SCANDICCI RUGBY ASD, espulso temporaneamente al 39° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BATTAGLIA GIULIA, della ASD RUGBY I BRIGANTI APS, espulso temporaneamente al 21° del 1°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"BELTRAN GARCIA PAULA ALEJANDRA, della HIGHLANDERS FORMIGINE R.ASD, espulso temporaneamente al 29° del 1°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"CESALE ROS GIULIA, della IVREA RUGBY CLUB ASD, espulso temporaneamente al 38° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"COGGIOLA CECILIA, della LIONS TORTONA RUGBY ASD, espulso temporaneamente al 3° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"CUTRONE CLAUDIA, della TIGRI RUGBY BARI 1980 ASD, espulso temporaneamente al 26° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"DI MARCO MAURA, della CUS L'AQUILA ASD, espulso temporaneamente al 38° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"GIULI BEATRICE, della UNIONE RUGBISTICA ANCONITANA SRL SD, espulso temporaneamente al 12° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"NAPOLETANO GIULIA, della ROMAGNA R.F.C. SSD A R.L., espulso temporaneamente al 3° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"NOCELLI SARA, della CUS L'AQUILA ASD, espulso temporaneamente al 28° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"SCARSO GIULIA, della LIONS TORTONA RUGBY ASD, espulso temporaneamente al 36° del 2°tempo"},
+{"com":3,"data":"2026-11-25","pdf":"https://www.federugby.it/wp-content/uploads/COMAFEMM03GS2026.2027.pdf","sezione":"SANZIONI DI GIOCO ADOTTATE DALL'ARBITRO - AUTOMATICHE","testo":"TESTA LUANA, della ASD RUGBY I BRIGANTI APS, espulso temporaneamente al 28° del 2°tempo"}
+]/*SANZIONI-FINE*/;
 
 
 const NUMR={15:"estremo",14:"ala",13:"centro",12:"centro",11:"ala",10:"apertura",9:"m. mischia",8:"terza linea",7:"terza linea",6:"terza linea",5:"seconda linea",4:"seconda linea",3:"pilone",2:"tallonatore",1:"pilone"};
