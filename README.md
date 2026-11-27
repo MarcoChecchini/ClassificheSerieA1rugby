@@ -7,6 +7,16 @@ La pagina ha tre sezioni:
 - **Statistiche**: per ogni girone, all'ultima giornata giocata, miglior attacco e miglior difesa, i 5 giocatori con più punti, i 5 con più mete e i 5 migliori al piede (punti da trasformazioni e punizioni) e le classifiche dei cartellini gialli e rossi, più la **squadra più fallosa** (somma di gialli e rossi della squadra). Con pari merito sull'ultimo posto utile compaiono tutti. L'ultimo riquadro, **Tutti i gironi**, mette insieme i quattro gironi. Sotto i gironi si sceglie **Totale** oppure una singola giornata. Si aggiornano da sole con risultati e tabellini.
 - **Rose giocatori**: le rose 2026-27 dall'annuario *Rugby 2027* (Pacitti – Volpe), divise per girone e per ruolo. Nella pagina di ogni squadra, in cima, il pulsante **Info società** sotto il nome, che apre staff tecnico e società, più fondazione, colori, campo e sponsor, dall'annuario; blocco `STAFF` di `index.html`), poi i 5 migliori per punti, mete e punti al piede, più gialli e rossi. Toccando un giocatore si vede la sua scheda partita per partita.
 
+## Serie A Elite femminile
+
+Sotto la barra in alto, in tutte e due le pagine, c'è il banner per scegliere il campionato: **Serie A maschile** (`index.html`) oppure **Serie A Elite femminile** (`femminile.html`).
+
+La pagina femminile ha **Classifiche** (risultati della giornata, classifica con le prime 4 in semifinale e l'ultima che retrocede, andamento delle posizioni) e **Statistiche** delle squadre (miglior attacco e difesa, mete, bonus), per totale o per singola giornata. Girone unico da 8 squadre, 14 giornate.
+
+- I risultati stanno nel blocco `DATI` di `femminile.html` (giornata → una riga per partita, stesso formato della pagina maschile con le mete tra parentesi) e per ora **si aggiungono a mano**: l'Action automatica legge solo la Serie A maschile.
+- Le penalità in classifica stanno in `PEN` (CUS Torino −4).
+- Il calendario (`AND` e `RIT`) è quello FIR; il ritorno ha gli stessi accoppiamenti dell'andata a campi invertiti.
+
 Le statistiche dei giocatori sono calcolate nella pagina dal testo dei tabellini FIR, salvato nel blocco `TABELLINI` di `index.html`.
 
 ## Aggiornamento automatico
