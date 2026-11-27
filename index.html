@@ -1572,9 +1572,17 @@ const sqTxt=s=>s?[s.motivo,s.squalifica].filter(Boolean).join(" · "):"motivo no
   const c={};MATCHES.forEach(x=>x.T[tn]&&x.T[tn].pl.forEach(q=>{if(q.rid>=0&&sur(q.name)===sur(p.name))(c[q.rid]=c[q.rid]||new Set()).add(q.num)}));
   let ids=Object.keys(c);if(ids.length>1&&p.num)ids=ids.filter(i=>c[i].has(p.num));
   if(ids.length===1)p.rid=+ids[0]})))})();
+// Giocatori dei tabellini che non sono nella rosa dell'annuario: entrano comunque in rosa, con il nome
+// scritto nel tabellino e il ruolo della maglia indossata più spesso da titolare (senza dati anagrafici).
+(()=>{const add={};
+ MATCHES.forEach(m=>[m.h,m.a].forEach(tn=>m.T[tn].pl.forEach(p=>{if(p.rid>=0)return;
+  const d=ROSE[tn]||(ROSE[tn]={book:"",p:[]}),k=tn+"|"+norm(p.name);
+  if(!add[k]){const x=p.name.match(/^([A-ZÀ-Ý][a-zà-ÿ]{0,3}\.)\s*(.+)$/);d.p.push([x?x[1]:"",(x?x[2]:p.name).toUpperCase(),"","","","","",""]);add[k]={tn,i:d.p.length-1,r:{}}}
+  const a=add[k];p.rid=a.i;if(p.st&&NUMR[p.num])a.r[NUMR[p.num]]=(a.r[NUMR[p.num]]||0)+1})));
+ Object.values(add).forEach(a=>{const r=Object.entries(a.r).sort((x,y)=>y[1]-x[1])[0];if(r)ROSE[a.tn].p[a.i][6]=r[0]})})();
 const pkey=(tn,p)=>p.rid>=0?tn+"#"+p.rid:tn+"@"+norm(p.name);
 const tcase=s=>s.toLowerCase().replace(/(^|[\s’'-])(\S)/g,(a,b,c)=>b+c.toUpperCase());
-function pdisp(tn,p){if(p.rid>=0){const r=ROSE[tn].p[p.rid];return `${esc(r[0])} ${esc(tcase(r[1]))}`}return esc(p.name)}
+function pdisp(tn,p){if(p.rid>=0){const r=ROSE[tn].p[p.rid];return `${r[0]?esc(r[0])+" ":""}${esc(tcase(r[1]))}`}return esc(p.name)}
 const teamMatches=tn=>MATCHES.filter(m=>m.T[tn]).sort((a,b)=>a.ri-b.ri);
 const opp=(m,tn)=>m.h===tn?m.a:m.h;
 const cell=v=>v?v:"";
@@ -1616,7 +1624,7 @@ function playerModal(pk){
  const isR=pk.includes("#"),[tn,rest]=isR?pk.split("#"):pk.split("@");const rid=isR?+rest:-1;
  const rows=[];teamMatches(tn).forEach(m=>{const p=m.T[tn].pl.find(q=>pkey(tn,q)===pk);if(p)rows.push([m,p])});
  const r=rid>=0?ROSE[tn].p[rid]:null;
- const DK=mdlDeco([tn]);let h=`<div class="mdl deco" ${DK.a}>${DK.wm}<div class="tph"><div class="th">${logo(tn)}<div><h2>${r?pdisp(tn,{rid}):esc(rows.length?rows[0][1].name:rest)}</h2><div class="c">${nm(tn)}${r?` · ${esc(r[6])} · nato a ${esc(r[2])} il ${esc(r[3])}${r[4]?` · ${r[4]} kg`:""}${r[5]?` · ${r[5]} cm`:""}`:" · non presente nella rosa dell'annuario"}</div></div></div><button data-close="m" aria-label="Chiudi">✕</button></div>`;
+ const DK=mdlDeco([tn]);let h=`<div class="mdl deco" ${DK.a}>${DK.wm}<div class="tph"><div class="th">${logo(tn)}<div><h2>${r?pdisp(tn,{rid}):esc(rows.length?rows[0][1].name:rest)}</h2><div class="c">${nm(tn)}${r?`${r[6]?` · ${esc(r[6])}`:""}${r[2]?` · nato a ${esc(r[2])} il ${esc(r[3])}`:""}${r[4]?` · ${r[4]} kg`:""}${r[5]?` · ${r[5]} cm`:""}`:""}</div></div></div><button data-close="m" aria-label="Chiudi">✕</button></div>`;
  if(!rows.length)h+=`<div class="msg">Nessuna presenza nei tabellini inseriti finora.</div>`;
  else{const tot={min:0,m:0,tr:0,cp:0,dr:0,pts:0,y:0,r:0};let nd=0;rows.forEach(([,p])=>Object.keys(tot).forEach(k=>{if(k==="min"&&p.min==null){nd++;return}tot[k]+=p[k]}));if(nd===rows.length)tot.min=null;
   h+=`<div class="scroll"><table class="st"><thead><tr><th class="t">Giornata</th><th class="t">Avversario</th><th>Ris.</th><th class="t">N° / ruolo</th>${STHEAD}</tr></thead><tbody>`+
